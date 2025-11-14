@@ -28,17 +28,16 @@
     gap: 1rem;
     margin: 0;
     padding: 0;
-  }
 
-  .navbar-links a {
-    text-decoration: none;
-    color: #ccc;
-    font-size: 0.95rem;
-  }
+    & a {
+      text-decoration: none;
+      color: #ccc;
+      font-size: 0.95rem;
 
-  .navbar-links a.active,
-  .navbar-links a:hover {
-    color: #fff;
+      &.active, &.hover {
+        color: #fff;
+      }
+    }
   }
 }
 
