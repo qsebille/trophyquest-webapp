@@ -9,9 +9,9 @@ import {NgOptimizedImage} from '@angular/common';
     RouterLink,
     NgOptimizedImage,
   ],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.scss',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss',
 })
-export class Navbar {
+export class NavbarComponent {
 
 }
