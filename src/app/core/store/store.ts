@@ -1,6 +1,7 @@
 import {computed, Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {GameService} from '../services/game.service';
 import {Game} from '../models/game';
+import {LoadingStatus} from '../models/loading-status.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -8,30 +9,26 @@ import {Game} from '../models/game';
 export class Store {
 
   private readonly _games: WritableSignal<Game[]> = signal<Game[]>([]);
-  private readonly _gamesLoading: WritableSignal<boolean> = signal(false);
-  private readonly _gamesLoadingError: WritableSignal<boolean> = signal<boolean>(false);
+  private readonly _gamesLoadingStatus: WritableSignal<LoadingStatus> = signal(LoadingStatus.NONE);
 
   readonly games: Signal<Game[]> = computed(() => this._games());
-  readonly gamesLoading: Signal<boolean> = computed(() => this._gamesLoading());
-  readonly gamesLoadingError: Signal<boolean> = computed(() => this._gamesLoadingError());
-  readonly hasGames: Signal<boolean> = computed(() => this._games().length > 0 && !this._gamesLoadingError());
+  readonly gamesLoadingStatus: Signal<LoadingStatus> = computed(() => this._gamesLoadingStatus());
+  readonly hasGames: Signal<boolean> = computed(() => this._games().length > 0 && this._gamesLoadingStatus() === LoadingStatus.SUCCESS);
 
   constructor(private gameService: GameService) {
   }
 
   loadGames(): void {
-    this._gamesLoading.set(true);
-    this._gamesLoadingError.set(false);
+    this._gamesLoadingStatus.set(LoadingStatus.LOADING);
 
     this.gameService.getGameList().subscribe({
       next: games => {
         this._games.set(games);
-        this._gamesLoading.set(false);
+        this._gamesLoadingStatus.set(LoadingStatus.SUCCESS);
       },
       error: err => {
         console.error(err);
-        this._gamesLoadingError.set(true);
-        this._gamesLoading.set(false);
+        this._gamesLoadingStatus.set(LoadingStatus.ERROR);
       },
     });
   }

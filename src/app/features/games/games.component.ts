@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MatCard, MatCardHeader, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {Store} from '../../core/store/store';
+import {LoadingStatus} from '../../core/models/loading-status.enum';
 
 @Component({
   selector: 'app-games',
@@ -15,6 +16,7 @@ import {Store} from '../../core/store/store';
   styleUrl: './games.component.scss',
 })
 export class GamesComponent {
+  protected readonly LoadingStatus = LoadingStatus;
 
   constructor(public store: Store) {
   }

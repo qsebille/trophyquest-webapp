@@ -1,28 +1,34 @@
 <div class="game-page container">
   <h1 class="text-center">List of games</h1>
 
-  @if (this.store.hasGames()) {
-    <h2>{{ this.store.games().length }} games found</h2>
+  @switch (this.store.gamesLoadingStatus()) {
+    @case (LoadingStatus.LOADING) {
+      <p>Loading games...</p>
+    }
+    @case (LoadingStatus.SUCCESS) {
+      <h2>{{ this.store.games().length }} games found</h2>
 
-    <div class="row g-3">
-      @for (game of this.store.games(); track game.id) {
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <mat-card class="game-card h-100">
-            <mat-card-header class="h-25">
-              <mat-card-title>{{ game.title }}</mat-card-title>
-              <mat-card-subtitle>{{ game.platform }}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="{{ game.imageUrl }}" class="game-card-image" alt="{{game.title}}">
-          </mat-card>
-        </div>
-      } @empty {
-        <p>No games found</p>
-      }
-    </div>
-  } @else if (this.store.gamesLoading()) {
-    <p>Loading games...</p>
-  } @else if (this.store.gamesLoadingError()) {
-    <p>An error has occurred when fetching game list !</p>
+      <div class="row g-3">
+        @for (game of this.store.games(); track game.id; let i = $index) {
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 game-card-wrapper">
+            <mat-card
+              [style.animationDelay.ms]="80 * i" animate.enter="game-card-enter" class="game-card h-100">
+              <mat-card-header class="h-25">
+                <mat-card-title>{{ game.title }}</mat-card-title>
+                <mat-card-subtitle>{{ game.platform }}</mat-card-subtitle>
+              </mat-card-header>
+              <img alt="{{game.title}}" class="game-card-image" mat-card-image src="{{ game.imageUrl }}">
+            </mat-card>
+          </div>
+        }
+      </div>
+    }
+    @case (LoadingStatus.ERROR) {
+      <p>An error has occurred when fetching game list !</p>
+    }
+    @default {
+      <p>!!</p>
+    }
   }
 
 </div>
