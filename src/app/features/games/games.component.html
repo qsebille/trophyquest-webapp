@@ -1,11 +1,11 @@
 <div class="game-page container">
   <h1 class="text-center">List of games</h1>
 
-  @if (games$ | async; as games) {
-    <h2>{{ games.length }} games found.</h2>
+  @if (this.store.hasGames()) {
+    <h2>{{ this.store.games().length }} games found</h2>
 
     <div class="row g-3">
-      @for (game of games; track game.id) {
+      @for (game of this.store.games(); track game.id) {
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
           <mat-card class="game-card h-100">
             <mat-card-header class="h-25">
@@ -19,8 +19,10 @@
         <p>No games found</p>
       }
     </div>
-  } @else {
+  } @else if (this.store.gamesLoading()) {
     <p>Loading games...</p>
+  } @else if (this.store.gamesLoadingError()) {
+    <p>An error has occurred when fetching game list !</p>
   }
 
 </div>

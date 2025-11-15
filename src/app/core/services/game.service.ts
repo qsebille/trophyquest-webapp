@@ -6,7 +6,7 @@ import {Game} from '../models/game';
 @Injectable({
   providedIn: 'root',
 })
-export class GameListService {
+export class GameService {
   private readonly API_URL = "http://localhost:8080/api/games";
 
   public games: Game[] = [];

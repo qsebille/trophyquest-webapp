@@ -1,43 +1,26 @@
-import { Component } from '@angular/core';
-import {GameListService} from '../../core/services/game-list.service';
-import {Observable} from 'rxjs';
-import {Game} from '../../core/models/game';
-import {AsyncPipe, NgOptimizedImage} from '@angular/common';
-import {
-  MatCard,
-  MatCardActions,
-  MatCardContent,
-  MatCardHeader, MatCardImage,
-  MatCardSubtitle,
-  MatCardTitle
-} from '@angular/material/card';
+import {Component} from '@angular/core';
+import {MatCard, MatCardHeader, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
+import {Store} from '../../core/store/store';
 
 @Component({
   selector: 'app-games',
   imports: [
-    AsyncPipe,
     MatCard,
     MatCardHeader,
     MatCardTitle,
     MatCardSubtitle,
-    MatCardContent,
-    MatCardActions,
-    MatCardImage,
-    NgOptimizedImage
+    MatCardImage
   ],
   templateUrl: './games.component.html',
   styleUrl: './games.component.scss',
 })
 export class GamesComponent {
 
-  constructor(public gameListService: GameListService) {
+  constructor(public store: Store) {
   }
-
-  public games$: Observable<Game[]> | undefined;
 
   ngOnInit(): void {
-    this.games$ = this.gameListService.getGameList();
+    this.store.loadGames();
   }
-
 
 }
