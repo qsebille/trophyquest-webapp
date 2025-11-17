@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Game} from '../models/game';
+import {GameSearchResult} from '../models/dto/game-search-result';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +9,17 @@ import {Game} from '../models/game';
 export class GameService {
   private readonly API_URL = "http://localhost:8080/api/games";
 
-  public games: Game[] = [];
-
   constructor(private http: HttpClient) {
   }
 
-  getGameList(): Observable<Game[]> {
-    return this.http.get<Game[]>(this.API_URL, {});
+  searchGames(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<GameSearchResult> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
+    return this.http.get<GameSearchResult>(this.API_URL, {params});
   }
 
-  getGame(id: number): Observable<Game> {
-    return this.http.get<Game>(`${this.API_URL}/${id}`);
-  }
 }
