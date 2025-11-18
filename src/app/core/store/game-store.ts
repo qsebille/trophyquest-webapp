@@ -33,7 +33,6 @@ export class GameStore {
     this._gameService.searchGames(this._pageNumber(), this._pageSize())
       .subscribe({
         next: result => {
-          console.log(result.content[0]);
           this._list.update((current) => [...current, ...result.content]);
           this._totalElements.set(result.totalElements);
           this._loadingStatus.set(LoadingStatus.SUCCESS);

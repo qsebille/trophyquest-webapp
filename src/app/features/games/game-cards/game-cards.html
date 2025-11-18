@@ -1,0 +1,14 @@
+<div class="game-cards row g-3">
+  @for (game of this.gameList; track game.gameId; let i = $index) {
+    <div class="col-12 col-sm-12 col-md-4 col-lg-3 game-card-wrapper">
+      <mat-card
+        [style.animationDelay.ms]="80 * i" animate.enter="game-card-enter" class="game-card h-100">
+        <mat-card-header>
+          <mat-card-title [title]="game.gameName" class="game-name">{{ game.gameName }}</mat-card-title>
+          <mat-card-subtitle class="game-platforms">{{ getGamePlatforms(game) }}</mat-card-subtitle>
+        </mat-card-header>
+        <img alt="{{game.gameName}}" class="game-card-image" mat-card-image src="{{ game.imageUrl }}">
+      </mat-card>
+    </div>
+  }
+</div>

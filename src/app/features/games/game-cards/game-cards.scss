@@ -1,25 +1,3 @@
-.game-card-enter {
-  animation-name: game-card-enter;
-  animation-duration: 500ms;
-  animation-timing-function: ease-out;
-  animation-fill-mode: both;
-}
-
-@keyframes game-card-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.game-page {
-  max-height: 80vh;
-  overflow-y: auto;
-}
 
 .game-card {
   cursor: pointer;
@@ -50,5 +28,3 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 }
-
-

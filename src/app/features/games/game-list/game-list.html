@@ -1,0 +1,19 @@
+<mat-accordion [multi]="true" class="game-list">
+  @for (game of gameList; track game.gameId; let i = $index) {
+    <mat-expansion-panel [ngClass]="i % 2 === 0 ? 'panel-even' : 'panel-odd'"
+                         class="game-list-element">
+      <mat-expansion-panel-header>
+        <mat-panel-title [title]="game.gameName" class="game-title">
+          <img [alt]="game.gameName" [src]="game.imageUrl" class="game-cover"/>
+          <span class="game-name">{{ game.gameName }}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="game-details">
+        <div class="game-meta">
+          <p><strong>Plateformes :</strong> PS4, PS5</p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  }
+</mat-accordion>
