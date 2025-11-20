@@ -8,6 +8,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {GameCards} from './game-cards/game-cards';
+import {UserStore} from '../../core/store/user-store';
 
 @Component({
   selector: 'app-games',
@@ -27,11 +28,15 @@ export class GamePage {
   readonly viewMode = signal<'cards' | 'list'>('list');
   protected readonly LoadingStatus = LoadingStatus;
 
-  constructor(public gameStore: GameStore) {
+  constructor(
+    private _userStore: UserStore,
+    public gameStore: GameStore
+  ) {
   }
 
   ngOnInit(): void {
-    this.gameStore.searchGames();
+    this._userStore.selectUser("baa68306-fa01-39a1-a934-995d61f94b65");
+    setTimeout(() => this.gameStore.searchGames(this._userStore.selected()?.id), 1000); // todo
   }
 
   setView(mode: 'cards' | 'list') {

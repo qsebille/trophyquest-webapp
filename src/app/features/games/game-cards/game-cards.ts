@@ -19,11 +19,4 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 export class GameCards {
   @Input({required: true}) gameList: Game[] = [];
 
-  getGamePlatforms(game: Game): string {
-    if (!game?.trophySets?.length) {
-      return '';
-    }
-    const platforms = game.trophySets.map(s => s.platform);
-    return Array.from(new Set(platforms)).sort().join(' · ');
-  }
 }

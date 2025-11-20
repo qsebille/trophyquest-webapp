@@ -47,6 +47,17 @@
       }
     }
   }
+
+  .navbar-user {
+    .user-profile-avatar {
+      border-radius: 5px;
+      border: 1px solid #000;
+    }
+
+    .user-profile-name {
+      padding-left: 10px;
+    }
+  }
 }
 
 
