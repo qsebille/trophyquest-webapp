@@ -1,7 +1,6 @@
 <mat-accordion [multi]="true" class="game-list">
   @for (game of gameList; track game.id; let i = $index) {
-    <mat-expansion-panel [ngClass]="i % 2 === 0 ? 'panel-even' : 'panel-odd'"
-                         class="game-list-element">
+    <mat-expansion-panel [ngClass]="i % 2 === 0 ? 'panel-even' : 'panel-odd'" class="game-list-element">
       <mat-expansion-panel-header>
         <mat-panel-title [title]="game.title" class="game-title">
           <img [alt]="game.title" [src]="game.imageUrl" class="game-cover"/>

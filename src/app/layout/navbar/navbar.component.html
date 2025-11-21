@@ -6,11 +6,6 @@
 
   <ul class="navbar-links">
     <li><a routerLink="/games" routerLinkActive="active">Jeux</a></li>
-    <li><a routerLink="/trophies" routerLinkActive="active">Trophées</a></li>
+    <li><a routerLink="/users" routerLinkActive="active">Utilisateurs</a></li>
   </ul>
-
-  <div class="navbar-user">
-    <img alt="" class="user-profile-avatar" height="32" ngSrc="{{ userStore.selected()?.avatarUrl }}" width="32"/>
-    <span class="user-profile-name">{{ userStore.selected()?.profileName }}</span>
-  </div>
 </nav>

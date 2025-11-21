@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Game} from '../../../core/models/dto/game';
+import {Game} from '../../core/models/dto/game';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NgClass} from '@angular/common';
 

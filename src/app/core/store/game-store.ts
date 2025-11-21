@@ -3,8 +3,6 @@ import {Game} from '../models/dto/game';
 import {GameService} from '../services/game.service';
 import {LoadingStatus} from '../models/loading-status.enum';
 import {UserService} from '../services/user.service';
-import {GameSearchResult} from '../models/dto/game-search-result';
-import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,19 +27,22 @@ export class GameStore {
   ) {
   }
 
-  public loadNextPage(userId: string | undefined = undefined): void {
+  public loadNextPage(): void {
     this._pageNumber.set(this._pageNumber() + 1);
-    this.searchGames(userId);
+    this.searchGames();
   }
 
-  public searchGames(userId: string | undefined = undefined): void {
+  public resetSearch(): void {
+    this._list.set([]);
+    this._totalElements.set(0);
+    this._loadingStatus.set(LoadingStatus.NONE);
+    this._pageNumber.set(0);
+  }
+
+  public searchGames(): void {
     this._loadingStatus.set(LoadingStatus.LOADING);
 
-    const searchResult: Observable<GameSearchResult> = (userId === undefined) ?
-      this._gameService.searchGames(this._pageNumber(), this._pageSize()) :
-      this._userService.searchUserGames(userId, this._pageNumber(), this._pageSize());
-
-    searchResult.subscribe({
+    this._gameService.searchGames(this._pageNumber(), this._pageSize()).subscribe({
       next: result => {
         this._list.update((current) => [...current, ...result.content]);
         this._totalElements.set(result.totalElements);

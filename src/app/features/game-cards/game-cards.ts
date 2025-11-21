@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatCard, MatCardHeader, MatCardImage, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
-import {Game} from '../../../core/models/dto/game';
+import {Game} from '../../core/models/dto/game';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @Component({

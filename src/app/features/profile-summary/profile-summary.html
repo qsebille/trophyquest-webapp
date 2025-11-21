@@ -1,0 +1,39 @@
+<mat-card class="profile-card">
+  <div class="profile-header">
+    <div class="avatar-wrapper">
+      <img [src]="profile?.avatarUrl" alt="Avatar"/>
+    </div>
+
+    <div class="profile-name">
+      {{ profile?.profileName || 'Nom du Profil' }}
+    </div>
+  </div>
+
+  <div class="trophy-summary">
+    <div class="trophy-summary-title">
+      Résumé des trophées
+    </div>
+
+    <div class="trophy-summary-content">
+      <div class="trophy-item">
+        <img alt="Trophées platine" height="64" ngSrc="assets/icons/trophy_platinum_128.png" width="64"/>
+        <span class="trophy-count">{{ trophyCount.platinum || 0 }}</span>
+      </div>
+
+      <div class="trophy-item">
+        <img alt="Trophées or" height="64" ngSrc="assets/icons/trophy_gold_128.png" width="64"/>
+        <span class="trophy-count">{{ trophyCount.gold || 0 }}</span>
+      </div>
+
+      <div class="trophy-item">
+        <img alt="Trophées argent" height="64" ngSrc="assets/icons/trophy_silver_128.png" width="64"/>
+        <span class="trophy-count">{{ trophyCount.silver || 0 }}</span>
+      </div>
+
+      <div class="trophy-item">
+        <img alt="Trophées bronze" height="64" ngSrc="assets/icons/trophy_bronze_128.png" width="64"/>
+        <span class="trophy-count">{{ trophyCount.bronze || 0 }}</span>
+      </div>
+    </div>
+  </div>
+</mat-card>

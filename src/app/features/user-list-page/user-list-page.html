@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="user-cards row">
+    @for (user of userStore.list(); track user.id; let i = $index) {
+      <div class="col-12 col-md-2 user-card-wrapper">
+        <mat-card
+          [style.animationDelay.ms]="80 * i" animate.enter="user-card-enter" class="user-card">
+          <mat-card-header>
+            <mat-card-title [title]="user.profileName" class="user-name">{{ user.profileName }}</mat-card-title>
+          </mat-card-header>
+          <img alt="{{user.profileName}}" class="user-card-image" mat-card-image src="{{ user.avatarUrl }}">
+          <mat-card-actions>
+            <button (click)="goToProfile(user.id)" mat-button>Voir le profil</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    }
+  </div>
+</div>

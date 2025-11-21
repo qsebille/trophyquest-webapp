@@ -1,0 +1,24 @@
+import {Component, Input} from '@angular/core';
+import {User} from '../../core/models/dto/user';
+import {MatCardModule} from '@angular/material/card';
+import {TrophyCount} from '../../core/models/dto/trophy-count';
+import {NgOptimizedImage} from '@angular/common';
+
+@Component({
+  selector: 'app-profile-summary',
+  imports: [
+    MatCardModule,
+    NgOptimizedImage,
+  ],
+  templateUrl: './profile-summary.html',
+  styleUrl: './profile-summary.scss',
+})
+export class ProfileSummary {
+  @Input({required: true}) profile: User | undefined;
+  @Input({required: true}) trophyCount: TrophyCount = {
+    platinum: 0,
+    gold: 0,
+    silver: 0,
+    bronze: 0,
+  };
+}
