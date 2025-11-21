@@ -1,0 +1,22 @@
+.profile-block-enter {
+  animation-name: profile-block-enter;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes profile-block-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.profile-collection-wrapper {
+  padding-top: 10px;
+}

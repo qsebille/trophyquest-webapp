@@ -9,7 +9,11 @@
           </mat-card-header>
           <img alt="{{user.profileName}}" class="user-card-image" mat-card-image src="{{ user.avatarUrl }}">
           <mat-card-actions>
-            <button (click)="goToProfile(user.id)" mat-button>Voir le profil</button>
+            <button (click)="goToProfile(user.id)"
+                    class="user-see-profile-button"
+                    mat-button matButton="filled">
+              Voir le profil
+            </button>
           </mat-card-actions>
         </mat-card>
       </div>

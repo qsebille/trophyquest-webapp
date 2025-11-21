@@ -1,50 +1,74 @@
-import {computed, Injectable, Signal, signal, WritableSignal} from '@angular/core';
-import {User} from '../models/dto/user';
+import {computed, Injectable, signal} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {Router} from '@angular/router';
-import {TrophyCount} from '../models/dto/trophy-count';
 import {forkJoin} from 'rxjs';
+import {ProfileState} from '../models/dto/profile-state';
+import {ProfilePagination} from '../models/dto/profile-pagination';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileStore {
-  private readonly _user: WritableSignal<User | undefined> = signal<User | undefined>(undefined);
-  readonly user: Signal<User | undefined> = computed(() => this._user());
-
-  private readonly _trophyCount: WritableSignal<TrophyCount> = signal<TrophyCount>({
-    platinum: 0,
-    gold: 0,
-    silver: 0,
-    bronze: 0
+  private readonly _state = signal<ProfileState>({
+    user: undefined,
+    trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0},
+    gameList: [],
+    error: undefined,
   });
-  readonly trophyCount: Signal<TrophyCount> = computed(() => this._trophyCount());
+  readonly user = computed(() => this._state().user);
+  readonly gameList = computed(() => this._state().gameList);
+  readonly trophyCount = computed(() => this._state().trophyCount);
 
-  constructor(private _userService: UserService, private _router: Router) {
+  private readonly _pagination = signal<ProfilePagination>({
+    gamePage: 0,
+    gameTotalCount: 0,
+    trophyPage: 0,
+    trophyTotalCount: 0,
+  })
+
+  constructor(
+    private readonly _userService: UserService,
+    private readonly _router: Router,
+  ) {
   }
 
-  public fetch(userProfileId: string | null): void {
-    if (null === userProfileId) {
-      this._goToErrorPage();
-    } else {
-      forkJoin({
-        user: this._userService.fetchUser(userProfileId),
-        trophyCount: this._userService.getTrophyCount(userProfileId)
-      }).subscribe({
-        next: ({user, trophyCount}) => {
-          this._user.set(user);
-          this._trophyCount.set(trophyCount)
-        },
-        error: error => {
-          console.error("Unable to fetch user info")
-          this._goToErrorPage();
-        },
-      });
+  fetch(userProfileId: string | null): void {
+    if (!userProfileId) {
+      this._setErrorAndRedirect('Missing user id');
+      return;
     }
+
+    this._state.update((s) => ({...s, loading: true, error: undefined}));
+    this._pagination.set({
+      gamePage: 0,
+      gameTotalCount: 0,
+      trophyPage: 0,
+      trophyTotalCount: 0,
+    });
+
+    forkJoin({
+      user: this._userService.fetchUser(userProfileId),
+      trophyCount: this._userService.getTrophyCount(userProfileId),
+      gameSearch: this._userService.searchUserGames(userProfileId, this._pagination().gamePage, 50),
+    }).subscribe({
+      next: ({user, trophyCount, gameSearch}) => {
+        this._state.set({
+          user,
+          trophyCount,
+          gameList: gameSearch.content,
+          error: undefined,
+        });
+        this._pagination.update((p) => ({...p, gameTotalCount: gameSearch.totalElements}));
+      },
+      error: (err) => {
+        console.error('Unable to fetch user info', err);
+        this._setErrorAndRedirect('load_failed');
+      },
+    });
   }
 
-  private _goToErrorPage(): void {
-    this._router.navigate(['/error'])
+  private _setErrorAndRedirect(message: string): void {
+    this._state.update((s) => ({...s, error: message}));
+    this._router.navigate(['/error']);
   }
-
 }

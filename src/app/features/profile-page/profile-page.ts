@@ -2,11 +2,15 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
 import {ProfileSummary} from '../profile-summary/profile-summary';
+import {ProfileGameList} from '../profile-game-list/profile-game-list';
+import {ProfileTrophyList} from '../profile-trophy-list/profile-trophy-list';
 
 @Component({
   selector: 'app-profile-page',
   imports: [
-    ProfileSummary
+    ProfileSummary,
+    ProfileGameList,
+    ProfileTrophyList
   ],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',

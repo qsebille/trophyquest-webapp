@@ -1,3 +1,5 @@
+@use 'styles/colors' as *;
+
 .user-card-enter {
   animation-name: user-card-enter;
   animation-duration: 500ms;
@@ -21,6 +23,7 @@
 }
 
 .user-card {
+  background-color: $blue-light;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.15s ease;
 
@@ -33,10 +36,6 @@
     max-width: 100%;
   }
 
-  .user-platforms {
-    color: #02365a;
-  }
-
   .user-card-image {
     width: 100%;
     max-height: 350px;
@@ -46,6 +45,10 @@
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px $blue-medium;
+  }
+
+  .user-see-profile-button {
+    background-color: $blue-main;
   }
 }

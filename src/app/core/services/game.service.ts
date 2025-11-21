@@ -13,10 +13,7 @@ export class GameService {
   constructor(private http: HttpClient) {
   }
 
-  searchGames(
-    pageNumber: number,
-    pageSize: number
-  ): Observable<SearchResult<Game>> {
+  searchGames(pageNumber: number, pageSize: number): Observable<SearchResult<Game>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);

@@ -3,8 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../models/dto/user';
 import {SearchResult} from '../models/dto/search-result';
-import {Game} from '../models/dto/game';
 import {TrophyCount} from '../models/dto/trophy-count';
+import {UserGame} from '../models/dto/user-game';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +27,11 @@ export class UserService {
     return this.http.get<TrophyCount>(`${this.API_URL}/${userId}/trophy-count`);
   }
 
-  searchUserGames(userId: string, pageNumber: number, pageSize: number): Observable<SearchResult<Game>> {
+  searchUserGames(userId: string, pageNumber: number, pageSize: number): Observable<SearchResult<UserGame>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
-    return this.http.get<SearchResult<Game>>(`${this.API_URL}/${userId}/games`, {params});
+    return this.http.get<SearchResult<UserGame>>(`${this.API_URL}/${userId}/games`, {params});
   }
 
 }
