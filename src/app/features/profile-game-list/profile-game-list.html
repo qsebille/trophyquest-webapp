@@ -24,7 +24,7 @@
           </div>
 
           <div class="profile-game-content">
-            <div class="profile-game-title">{{ game.title }} ({{ game.platform }})</div>
+            <div class="profile-game-title">{{ game.title }}</div>
             <div class="profile-game-trophies">
               @if (game.earnedTrophies.platinum > 0) {
                 <div class="profile-game-trophy-count">
@@ -56,10 +56,6 @@
               }
             </div>
           </div>
-
-          <span class="profile-game-indicator" aria-hidden="true">
-            <span class="chevron" [class.open]="isExpanded(game.id)">⌄</span>
-          </span>
         </div>
       </button>
 

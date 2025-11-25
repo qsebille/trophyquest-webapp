@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProfileGameList } from './profile-game-list';
-import { UserGame } from '../../core/models/dto/user-game';
+import {ProfileGameList} from './profile-game-list';
+import {UserGame} from '../../core/models/dto/user-game';
 
 describe('ProfileGameList', () => {
   let component: ProfileGameList;
@@ -11,7 +11,6 @@ describe('ProfileGameList', () => {
     id: '1',
     title: 'Mock Game',
     imageUrl: '/mock-image.png',
-    platform: 'PS5',
     earnedTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
     totalTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4}
   };
@@ -20,7 +19,7 @@ describe('ProfileGameList', () => {
     await TestBed.configureTestingModule({
       imports: [ProfileGameList]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ProfileGameList);
     component = fixture.componentInstance;
