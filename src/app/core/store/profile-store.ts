@@ -62,7 +62,11 @@ export class ProfileStore {
           trophyList: trophySearch.content,
           error: undefined,
         });
-        this._pagination.update((p) => ({...p, gameTotalCount: gameSearch.totalElements}));
+        this._pagination.update((p) => ({
+          ...p,
+          gameTotalCount: gameSearch.totalElements,
+          trophyTotalCount: trophySearch.totalElements
+        }));
       },
       error: (err) => {
         console.error('Unable to fetch user info', err);
