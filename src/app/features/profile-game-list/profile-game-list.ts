@@ -17,6 +17,24 @@ export class ProfileGameList {
 
   readonly gameIconSize: number = 64
   readonly trophyIconSize: number = 32
+  private readonly expandedGameIds: Set<string> = new Set<string>();
+
+  toggle(gameId: string): void {
+    if (this.expandedGameIds.has(gameId)) {
+      this.expandedGameIds.delete(gameId);
+      return;
+    }
+
+    this.expandedGameIds.add(gameId);
+  }
+
+  isExpanded(gameId: string): boolean {
+    return this.expandedGameIds.has(gameId);
+  }
+
+  getToggleAriaLabel(game: UserGame): string {
+    return `${this.isExpanded(game.id) ? 'Réduire' : 'Développer'} ${game.title}`;
+  }
 
   isUserGameComplete(userGame: UserGame): boolean {
     return userGame.earnedTrophies.platinum === userGame.totalTrophies.platinum &&

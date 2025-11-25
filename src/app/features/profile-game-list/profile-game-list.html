@@ -4,50 +4,77 @@
   @for (game of gameList; track game.id; let i = $index) {
     <mat-card
       [class.completed]="isUserGameComplete(game)"
+      [class.expanded]="isExpanded(game.id)"
       [style.animationDelay.ms]="200 + i * 80"
       animate.enter="game-element-enter"
       class="profile-game-card"
       role="listitem"
     >
-      <div class="profile-game-card-inner">
-        <div class="profile-game-image-wrapper">
-          <img [alt]="game.title" [height]="gameIconSize" [ngSrc]="game.imageUrl" [width]="gameIconSize"/>
-        </div>
+      <button
+        (click)="toggle(game.id)"
+        [attr.aria-expanded]="isExpanded(game.id)"
+        [attr.aria-label]="getToggleAriaLabel(game)"
+        [attr.data-testid]="'game-toggle-' + game.id"
+        class="profile-game-header"
+        type="button"
+      >
+        <div class="profile-game-card-inner">
+          <div class="profile-game-image-wrapper">
+            <img [alt]="game.title" [height]="gameIconSize" [ngSrc]="game.imageUrl" [width]="gameIconSize"/>
+          </div>
 
-        <div class="profile-game-content">
-          <div class="profile-game-title">{{ game.title }} ({{ game.platform }})</div>
-          <div class="profile-game-trophies">
-            @if (game.earnedTrophies.platinum > 0) {
-              <div class="profile-game-trophy-count">
-                <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                     ngSrc="assets/icons/trophy_platinum_128.png"/>
-                <span class="trophy-count">{{ game.earnedTrophies.platinum || '-' }}</span>
-              </div>
-            }
-            @if (game.earnedTrophies.gold > 0) {
-              <div class="profile-game-trophy-count">
-                <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                     ngSrc="assets/icons/trophy_gold_128.png"/>
-                <span class="trophy-count">{{ game.earnedTrophies.gold || '-' }}</span>
-              </div>
-            }
-            @if (game.earnedTrophies.silver > 0) {
-              <div class="profile-game-trophy-count">
-                <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                     ngSrc="assets/icons/trophy_silver_128.png"/>
-                <span class="trophy-count">{{ game.earnedTrophies.silver || '-' }}</span>
-              </div>
-            }
-            @if (game.earnedTrophies.bronze > 0) {
-              <div class="profile-game-trophy-count">
-                <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                     ngSrc="assets/icons/trophy_bronze_128.png"/>
-                <span class="trophy-count">{{ game.earnedTrophies.bronze || '-' }}</span>
-              </div>
-            }
+          <div class="profile-game-content">
+            <div class="profile-game-title">{{ game.title }} ({{ game.platform }})</div>
+            <div class="profile-game-trophies">
+              @if (game.earnedTrophies.platinum > 0) {
+                <div class="profile-game-trophy-count">
+                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
+                       ngSrc="assets/icons/trophy_platinum_128.png"/>
+                  <span class="trophy-count">{{ game.earnedTrophies.platinum || '-' }}</span>
+                </div>
+              }
+              @if (game.earnedTrophies.gold > 0) {
+                <div class="profile-game-trophy-count">
+                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
+                       ngSrc="assets/icons/trophy_gold_128.png"/>
+                  <span class="trophy-count">{{ game.earnedTrophies.gold || '-' }}</span>
+                </div>
+              }
+              @if (game.earnedTrophies.silver > 0) {
+                <div class="profile-game-trophy-count">
+                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
+                       ngSrc="assets/icons/trophy_silver_128.png"/>
+                  <span class="trophy-count">{{ game.earnedTrophies.silver || '-' }}</span>
+                </div>
+              }
+              @if (game.earnedTrophies.bronze > 0) {
+                <div class="profile-game-trophy-count">
+                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
+                       ngSrc="assets/icons/trophy_bronze_128.png"/>
+                  <span class="trophy-count">{{ game.earnedTrophies.bronze || '-' }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <span class="profile-game-indicator" aria-hidden="true">
+            <span class="chevron" [class.open]="isExpanded(game.id)">⌄</span>
+          </span>
+        </div>
+      </button>
+
+      @if (isExpanded(game.id)) {
+        <div
+          [attr.data-testid]="'game-details-' + game.id"
+          [class.open]="isExpanded(game.id)"
+          class="profile-game-details"
+          role="region"
+        >
+          <div class="profile-game-details-content">
+            Collection de trophées (bientôt disponible)
           </div>
         </div>
-      </div>
+      }
     </mat-card>
   }
 </div>
