@@ -63,18 +63,18 @@
         </div>
       </button>
 
-      <div
-        [attr.data-testid]="'game-details-' + game.id"
-        [class.open]="isExpanded(game.id)"
-        class="profile-game-details"
-        role="region"
-      >
-        @if (isExpanded(game.id)) {
+      @if (isExpanded(game.id)) {
+        <div
+          [attr.data-testid]="'game-details-' + game.id"
+          [class.open]="isExpanded(game.id)"
+          class="profile-game-details"
+          role="region"
+        >
           <div class="profile-game-details-content">
             Collection de trophées (bientôt disponible)
           </div>
-        }
-      </div>
+        </div>
+      }
     </mat-card>
   }
 </div>
