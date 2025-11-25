@@ -32,12 +32,12 @@
 
     &.expanded {
       border-color: $blue-medium;
-      box-shadow: 0 2px 10px rgba($blue-medium, 0.25);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 2px 6px $blue-medium;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     .profile-game-header {

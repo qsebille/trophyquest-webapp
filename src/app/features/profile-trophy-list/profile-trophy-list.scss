@@ -1,0 +1,40 @@
+.trophy-element-enter {
+  animation-name: trophy-element-enter;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes trophy-element-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-trophy-card {
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 0.75rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.profile-trophy-title {
+  font-size: 1rem;
+
+  img {
+    padding-right: 5px;
+  }
+}
+
+.profile-trophy-description {
+  font-size: 0.875rem;
+}

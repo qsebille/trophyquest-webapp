@@ -4,15 +4,18 @@
     [style.animationDelay.ms]="100"
     [trophyCount]="profileStore.trophyCount()"
     animate.enter="profile-block-enter"/>
+
   <div class="profile-collection-wrapper row">
     <app-profile-game-list
       [gameList]="profileStore.gameList()"
       [style.animationDelay.ms]="200"
       animate.enter="profile-block-enter"
-      class="w-75"/>
+      class="profile-collection-games"/>
     <app-profile-trophy-list
       [style.animationDelay.ms]="300"
+      [trophyList]="profileStore.trophyList()"
       animate.enter="profile-block-enter"
-      class="w-25"/>
+      class="profile-collection-trophies"/>
   </div>
+
 </div>

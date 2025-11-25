@@ -1,11 +1,11 @@
 <div class="profile-game-list">
-  <h3>Derniers jeux joués</h3>
+  <h4>Derniers jeux joués</h4>
 
   @for (game of gameList; track game.id; let i = $index) {
     <mat-card
       [class.completed]="isUserGameComplete(game)"
       [class.expanded]="isExpanded(game.id)"
-      [style.animationDelay.ms]="200 + i * 80"
+      [style.animationDelay.ms]="300 + i * 80"
       animate.enter="game-element-enter"
       class="profile-game-card"
       role="listitem"
