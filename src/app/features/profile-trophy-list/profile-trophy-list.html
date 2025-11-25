@@ -11,18 +11,20 @@
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title [title]="trophy.trophyTitle" class="profile-trophy-title">
-            <img [alt]="trophy.trophyTitle" [height]="iconSize" [ngSrc]="trophy.iconUrl" [width]="iconSize"/>
+            <img [alt]="trophy.trophyTitle" [height]="iconSize" [src]="trophy.iconUrl"/>
             {{ trophy.trophyTitle }}
           </mat-card-title>
           <mat-card-subtitle class="profile-trophy-description">
-            {{ trophy.trophyDescription }}
+            <i>{{ trophy.trophyDescription }}</i>
           </mat-card-subtitle>
 
-          <img alt="" height="32" ngSrc="assets/icons/trophy_{{trophy.trophyType}}_128.png" width="32"/>
+          <img [height]="trophyTypeSize" [width]="trophyTypeSize" alt=""
+               ngSrc="assets/icons/trophy_{{trophy.trophyType}}_128.png"/>
         </mat-card-title-group>
       </mat-card-header>
 
       <mat-card-content>
+        <b>{{ trophy.gameTitle }}</b> <br/>
         Obtenu le : {{ trophy.earnedDate | date: 'dd/MM/yyyy' }}
       </mat-card-content>
     </mat-card>
