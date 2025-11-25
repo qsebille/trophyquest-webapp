@@ -13,10 +13,12 @@ export class ProfileStore {
     user: undefined,
     trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0},
     gameList: [],
+    trophyList: [],
     error: undefined,
   });
   readonly user = computed(() => this._state().user);
   readonly gameList = computed(() => this._state().gameList);
+  readonly trophyList = computed(() => this._state().trophyList);
   readonly trophyCount = computed(() => this._state().trophyCount);
 
   private readonly _pagination = signal<ProfilePagination>({
@@ -49,16 +51,22 @@ export class ProfileStore {
     forkJoin({
       user: this._userService.fetchUser(userProfileId),
       trophyCount: this._userService.getTrophyCount(userProfileId),
-      gameSearch: this._userService.searchUserGames(userProfileId, this._pagination().gamePage, 50),
+      gameSearch: this._userService.searchGames(userProfileId, this._pagination().gamePage, 50),
+      trophySearch: this._userService.searchEarnedTrophies(userProfileId, this._pagination().trophyPage, 50),
     }).subscribe({
-      next: ({user, trophyCount, gameSearch}) => {
+      next: ({user, trophyCount, gameSearch, trophySearch}) => {
         this._state.set({
           user,
           trophyCount,
           gameList: gameSearch.content,
+          trophyList: trophySearch.content,
           error: undefined,
         });
-        this._pagination.update((p) => ({...p, gameTotalCount: gameSearch.totalElements}));
+        this._pagination.update((p) => ({
+          ...p,
+          gameTotalCount: gameSearch.totalElements,
+          trophyTotalCount: trophySearch.totalElements
+        }));
       },
       error: (err) => {
         console.error('Unable to fetch user info', err);

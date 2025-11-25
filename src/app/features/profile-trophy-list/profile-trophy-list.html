@@ -1,1 +1,32 @@
-<p>Coming soon : latest trophies!</p>
+<div class="profile-trophy-list">
+  <h4>Derniers trophées obtenus</h4>
+
+  @for (trophy of trophyList; track trophy.id; let i = $index) {
+    <mat-card
+      [style.animationDelay.ms]="400 + i * 80"
+      animate.enter="trophy-element-enter"
+      class="profile-trophy-card"
+      role="listitem"
+    >
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title [title]="trophy.trophyTitle" class="profile-trophy-title">
+            <img [alt]="trophy.trophyTitle" [height]="iconSize" [src]="trophy.iconUrl"/>
+            {{ trophy.trophyTitle }}
+          </mat-card-title>
+          <mat-card-subtitle class="profile-trophy-description">
+            <i>{{ trophy.trophyDescription }}</i>
+          </mat-card-subtitle>
+
+          <img [height]="trophyTypeSize" [width]="trophyTypeSize" alt=""
+               ngSrc="assets/icons/trophy_{{trophy.trophyType}}_128.png"/>
+        </mat-card-title-group>
+      </mat-card-header>
+
+      <mat-card-content>
+        <b>{{ trophy.gameTitle }}</b> <br/>
+        Obtenu le : {{ trophy.earnedDate | date: 'dd/MM/yyyy' }}
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
