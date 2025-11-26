@@ -41,7 +41,18 @@ describe('UserListPage', () => {
   });
 
   it('should navigate to profile page', () => {
-    component.goToProfile('123');
+    userStoreSpy.list.and.returnValue([{
+      id: '123',
+      profileName: 'John Doe',
+      avatarUrl: 'avatar.png',
+    }]);
+
+    fixture.detectChanges();
+
+    const goToProfileButton = fixture.nativeElement.querySelector('.user-see-profile-button') as HTMLButtonElement;
+
+    goToProfileButton.click();
+
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/profile', '123']);
   });
 
