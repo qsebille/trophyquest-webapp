@@ -12,10 +12,10 @@ import {Router} from '@angular/router';
     MatCardModule,
     MatButton,
   ],
-  templateUrl: './user-list-page.html',
-  styleUrl: './user-list-page.scss',
+  templateUrl: './user-page.component.html',
+  styleUrl: './user-page.component.scss',
 })
-export class UserListPage {
+export class UserPage {
 
   constructor(public userStore: UserStore, private _router: Router) {
   }
