@@ -12,7 +12,11 @@ describe('ProfileGameList', () => {
     title: 'Mock Game',
     imageUrl: '/mock-image.png',
     earnedTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
-    totalTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4}
+    totalTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
+    trophyCollections: [
+      {id: 'coll-1', title: 'Collection 1', platform: 'ps4', imageUrl: '/mock-image-2.png'},
+      {id: 'coll-2', title: 'Collection 2', platform: 'ps5', imageUrl: '/mock-image-3.png'}
+    ]
   };
 
   beforeEach(async () => {

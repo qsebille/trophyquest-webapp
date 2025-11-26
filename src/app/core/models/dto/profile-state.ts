@@ -8,5 +8,4 @@ export interface ProfileState {
   trophyCount: TrophyCount;
   gameList: UserGame[];
   trophyList: EarnedTrophy[];
-  error?: string;
 }

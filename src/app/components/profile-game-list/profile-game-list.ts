@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {UserGame} from '../../core/models/dto/user-game';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-game-list',
@@ -19,6 +20,25 @@ export class ProfileGameList {
   readonly trophyIconSize: number = 32
   private readonly expandedGameIds: Set<string> = new Set<string>();
 
+  constructor(private readonly _router: Router) {
+  }
+
+  /**
+   * Handles the click event on a game card. Depending on the game's trophy collections,
+   * it either toggles the display of the game's details or navigates to the game detail page.
+   *
+   * @param {UserGame} game - The game object associated with the clicked game card.
+   * @return {void} This method does not return a value.
+   */
+  handleClickOnGameCard(game: UserGame): void {
+    console.info(`Clicked on game card: ${game.title}`);
+    if (game.trophyCollections.length > 1) {
+      this.toggle(game.id);
+    } else {
+      this._router.navigate(['/game', game.id]).then(() => console.info(`Navigated to game page: ${game.title}`));
+    }
+  }
+
   toggle(gameId: string): void {
     if (this.expandedGameIds.has(gameId)) {
       this.expandedGameIds.delete(gameId);
@@ -30,10 +50,6 @@ export class ProfileGameList {
 
   isExpanded(gameId: string): boolean {
     return this.expandedGameIds.has(gameId);
-  }
-
-  getToggleAriaLabel(game: UserGame): string {
-    return `${this.isExpanded(game.id) ? 'Réduire' : 'Développer'} ${game.title}`;
   }
 
   isUserGameComplete(userGame: UserGame): boolean {
