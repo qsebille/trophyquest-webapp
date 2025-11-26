@@ -36,7 +36,6 @@ export class ProfileStore {
       return;
     }
 
-    this._state.update(s => ({...s, loading: true, error: undefined}));
     this._pagination.set({
       gamePage: 0,
       gameTotalCount: 0,
