@@ -1,7 +1,7 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {UserService} from '../services/user.service';
 import {forkJoin} from 'rxjs';
-import {ProfileState} from '../models/dto/profile-state';
+import {ProfileState} from '../models/states/profile-state';
 import {ProfilePagination} from '../models/dto/profile-pagination';
 import {ErrorService} from '../services/error.service';
 
@@ -36,7 +36,7 @@ export class ProfileStore {
       return;
     }
 
-    this._state.update((s) => ({...s, loading: true, error: undefined}));
+    this._state.update(s => ({...s, loading: true, error: undefined}));
     this._pagination.set({
       gamePage: 0,
       gameTotalCount: 0,

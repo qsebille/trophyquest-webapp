@@ -14,7 +14,7 @@ import {JsonPipe} from '@angular/common';
 export class GamePage {
   gameId!: string | null;
 
-  constructor(private _route: ActivatedRoute, public gameStore: GameStore) {
+  constructor(private readonly _route: ActivatedRoute, public readonly gameStore: GameStore) {
   }
 
   ngOnInit(): void {

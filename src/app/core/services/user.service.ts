@@ -21,7 +21,7 @@ export class UserService {
    *
    * @return {Observable<SearchResult<User>>} An observable emitting the search result containing users.
    */
-  getUsers(): Observable<SearchResult<User>> {
+  search(): Observable<SearchResult<User>> {
     return this.http.get<SearchResult<User>>(`${this.API_URL}/search`);
   }
 
