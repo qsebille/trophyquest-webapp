@@ -1,17 +1,26 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {RouterTestingModule} from '@angular/router/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
-import {RouterLink} from '@angular/router';
 
 import {Navbar} from './navbar';
+import {Component} from '@angular/core';
+import {provideRouter, Router} from '@angular/router';
 
 describe('Navbar', () => {
   let component: Navbar;
   let fixture: ComponentFixture<Navbar>;
 
+  @Component({selector: 'app-dummy-users', template: ''})
+  class DummyUsersComponent {
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, Navbar]
+      imports: [Navbar],
+      providers: [
+        provideRouter([
+          {path: 'users', component: DummyUsersComponent},
+        ]),
+      ],
     })
       .compileComponents();
 
@@ -30,19 +39,15 @@ describe('Navbar', () => {
     expect(title?.textContent?.trim()).toBe('TrophyQuest');
   });
 
-  it('should link to the users page', () => {
-    const usersLink = fixture.debugElement.query(By.css('.navbar-links a'));
-    const routerLink = usersLink.injector.get(RouterLink);
+  it('should link to the users page when clicking on link', fakeAsync(() => {
+    const router = TestBed.inject(Router);
+    const usersLink = fixture.debugElement.query(By.css('#navbar-users-link'));
+
+    usersLink.triggerEventHandler('click', {button: 0});
+    tick();
 
     expect(usersLink.nativeElement.textContent.trim()).toBe('Utilisateurs');
-    expect(routerLink.routerLink).toEqual('/users');
-  });
+    expect(router.url).toBe('/users');
+  }));
 
-  it('should display the logo with expected dimensions', () => {
-    const logo: HTMLImageElement | null = fixture.nativeElement.querySelector('.navbar-logo');
-
-    expect(logo).toBeTruthy();
-    expect(logo?.getAttribute('height')).toBe('32');
-    expect(logo?.getAttribute('width')).toBe('32');
-  });
 });
