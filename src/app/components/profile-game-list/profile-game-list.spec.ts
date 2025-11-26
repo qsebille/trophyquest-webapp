@@ -7,15 +7,25 @@ describe('ProfileGameList', () => {
   let component: ProfileGameList;
   let fixture: ComponentFixture<ProfileGameList>;
 
-  const mockGame: UserGame = {
+  const mockGame1: UserGame = {
     id: '1',
-    title: 'Mock Game',
-    imageUrl: '/mock-image.png',
+    title: 'Mock Game 1',
+    imageUrl: '/mock-game-image-1.png',
     earnedTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
     totalTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
     trophyCollections: [
-      {id: 'coll-1', title: 'Collection 1', platform: 'ps4', imageUrl: '/mock-image-2.png'},
-      {id: 'coll-2', title: 'Collection 2', platform: 'ps5', imageUrl: '/mock-image-3.png'}
+      {id: 'coll-1', title: 'Collection 1', platform: 'ps4', imageUrl: '/mock-collection-img-1.png'},
+      {id: 'coll-2', title: 'Collection 2', platform: 'ps5', imageUrl: '/mock-collection-img-2.png'}
+    ]
+  };
+  const mockGame2: UserGame = {
+    id: '2',
+    title: 'Mock Game 2',
+    imageUrl: '/mock-game-image-2.png',
+    earnedTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
+    totalTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
+    trophyCollections: [
+      {id: 'coll-1', title: 'Collection 1', platform: 'ps4', imageUrl: '/mock-collection-img-1.png'}
     ]
   };
 
@@ -27,6 +37,7 @@ describe('ProfileGameList', () => {
 
     fixture = TestBed.createComponent(ProfileGameList);
     component = fixture.componentInstance;
+    component.gameList = [mockGame1, mockGame2];
     fixture.detectChanges();
   });
 
@@ -35,17 +46,17 @@ describe('ProfileGameList', () => {
   });
 
   it('should toggle expansion state for a game id', () => {
-    expect(component.isExpanded(mockGame.id)).toBeFalse();
+    expect(component.isExpanded(mockGame1.id)).toBeFalse();
 
-    component.toggle(mockGame.id);
-    expect(component.isExpanded(mockGame.id)).toBeTrue();
+    component.toggle(mockGame1.id);
+    expect(component.isExpanded(mockGame1.id)).toBeTrue();
 
-    component.toggle(mockGame.id);
-    expect(component.isExpanded(mockGame.id)).toBeFalse();
+    component.toggle(mockGame1.id);
+    expect(component.isExpanded(mockGame1.id)).toBeFalse();
   });
 
   it('should render details only when expanded', () => {
-    component.gameList = [mockGame];
+    component.gameList = [mockGame1];
     fixture.detectChanges();
 
     const toggleButton: HTMLButtonElement | null = fixture.nativeElement.querySelector(

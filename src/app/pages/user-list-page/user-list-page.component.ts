@@ -12,12 +12,15 @@ import {Router} from '@angular/router';
     MatCardModule,
     MatButton,
   ],
-  templateUrl: './user-page.component.html',
-  styleUrl: './user-page.component.scss',
+  templateUrl: './user-list-page.component.html',
+  styleUrl: './user-list-page.component.scss',
 })
-export class UserPage {
+export class UserListPage {
 
-  constructor(public userStore: UserStore, private _router: Router) {
+  constructor(
+    private readonly _router: Router,
+    public readonly userStore: UserStore,
+  ) {
   }
 
   ngOnInit(): void {
@@ -26,7 +29,7 @@ export class UserPage {
   }
 
   goToProfile(userProfileId: string) {
-    this._router.navigate(['/profile', userProfileId]);
+    this._router.navigate(['/profile', userProfileId]).then(() => console.info(`Navigated to profile page: ${userProfileId}`));
   }
 
 }
