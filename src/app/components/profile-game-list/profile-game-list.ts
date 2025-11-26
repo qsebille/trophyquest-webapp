@@ -1,8 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {UserGame} from '../../core/models/dto/user-game';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-game-list',
@@ -15,13 +14,11 @@ import {Router} from '@angular/router';
 })
 export class ProfileGameList {
   @Input({required: true}) gameList: UserGame[] = [];
+  @Output() public readonly gameClicked = new EventEmitter<UserGame>();
 
   readonly gameIconSize: number = 64
   readonly trophyIconSize: number = 32
   private readonly expandedGameIds: Set<string> = new Set<string>();
-
-  constructor(private readonly _router: Router) {
-  }
 
   /**
    * Handles the click event on a game card. Depending on the game's trophy collections,
@@ -35,7 +32,7 @@ export class ProfileGameList {
     if (game.trophyCollections.length > 1) {
       this.toggle(game.id);
     } else {
-      this._router.navigate(['/game', game.id]).then(() => console.info(`Navigated to game page: ${game.title}`));
+      this.gameClicked.emit(game);
     }
   }
 
