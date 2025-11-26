@@ -1,42 +1,38 @@
-import {computed, Injectable, Signal, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, Signal, signal} from '@angular/core';
 import {User} from '../models/dto/user';
 import {UserService} from '../services/user.service';
 import {LoadingStatus} from '../models/loading-status.enum';
+import {SearchState} from '../models/states/search-state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserStore {
-  private readonly _list: WritableSignal<User[]> = signal<User[]>([]);
+  private readonly _searchState = signal<SearchState>({
+    total: 0,
+    pageNumber: 0,
+    loadingStatus: LoadingStatus.NONE,
+  });
+
+  private readonly _list = signal<User[]>([]);
   readonly list: Signal<User[]> = computed(() => this._list());
 
-  private readonly _total: WritableSignal<number> = signal<number>(0);
-  private readonly _pageNumber: WritableSignal<number> = signal<number>(0);
-  private readonly _loadingStatus: WritableSignal<LoadingStatus> = signal<LoadingStatus>(LoadingStatus.NONE);
-
-  constructor(private _userService: UserService) {
+  constructor(private readonly _userService: UserService) {
   }
 
-  public reset(): void {
+  reset(): void {
+    this._searchState.set({total: 0, pageNumber: 0, loadingStatus: LoadingStatus.NONE});
     this._list.set([]);
-    this._total.set(0);
-    this._loadingStatus.set(LoadingStatus.NONE);
-    this._pageNumber.set(0);
   }
 
-  public search(): void {
-    this._userService.getUsers().subscribe({
+  search(): void {
+    this._userService.search().subscribe({
       next: users => {
         this._list.set(users.content);
-        this._total.set(users.totalElements);
+        this._searchState.update(state => ({...state, total: users.totalElements,}));
       },
       error: error => console.error(error),
     });
-  }
-
-  public loadNextPage(): void {
-    this._pageNumber.set(this._pageNumber() + 1);
-    this.search();
   }
 
 }
