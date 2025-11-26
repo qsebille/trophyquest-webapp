@@ -18,7 +18,7 @@ import {ProfileTrophyList} from '../../components/profile-trophy-list/profile-tr
 export class ProfilePage {
   userProfileId!: string | null;
 
-  constructor(private _route: ActivatedRoute, public profileStore: ProfileStore) {
+  constructor(private readonly _route: ActivatedRoute, public readonly profileStore: ProfileStore) {
   }
 
   ngOnInit(): void {

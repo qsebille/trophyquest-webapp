@@ -1,13 +1,13 @@
-import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
+import {of, throwError} from 'rxjs';
 
-import { ProfileStore } from './profile-store';
-import { UserService } from '../services/user.service';
-import { ErrorService } from '../services/error.service';
-import { User } from '../models/dto/user';
-import { TrophyCount } from '../models/dto/trophy-count';
-import { UserGame } from '../models/dto/user-game';
-import { EarnedTrophy } from '../models/dto/earned-trophy';
+import {ProfileStore} from './profile-store';
+import {UserService} from '../services/user.service';
+import {ErrorService} from '../services/error.service';
+import {User} from '../models/dto/user';
+import {TrophyCount} from '../models/dto/trophy-count';
+import {UserGame} from '../models/dto/user-game';
+import {EarnedTrophy} from '../models/dto/earned-trophy';
 
 describe('ProfileStore', () => {
   let store: ProfileStore;
@@ -25,7 +25,6 @@ describe('ProfileStore', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        ProfileStore,
         {provide: UserService, useValue: userServiceSpy},
         {provide: ErrorService, useValue: errorServiceSpy}
       ]
@@ -44,7 +43,7 @@ describe('ProfileStore', () => {
     expect(userServiceSpy.fetchUser).not.toHaveBeenCalled();
   });
 
-  it('should populate state when fetch succeeds', () => {
+  it('should populate state when fetch succeeds', fakeAsync(() => {
     const user: User = {id: '123', profileName: 'Test User', avatarUrl: 'avatar.png'};
     const trophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
     const games: UserGame[] = [
@@ -75,6 +74,7 @@ describe('ProfileStore', () => {
     userServiceSpy.searchEarnedTrophies.and.returnValue(of({content: trophies, totalElements: trophies.length}));
 
     store.fetch('123');
+    flushMicrotasks();
 
     expect(userServiceSpy.fetchUser).toHaveBeenCalledWith('123');
     expect(userServiceSpy.searchGames).toHaveBeenCalledWith('123', 0, 50);
@@ -83,7 +83,7 @@ describe('ProfileStore', () => {
     expect(store.gameList()).toEqual(games);
     expect(store.trophyList()).toEqual(trophies);
     expect(errorServiceSpy.logErrorAndRedirect).not.toHaveBeenCalled();
-  });
+  }));
 
   it('should log an error when fetch fails', () => {
     userServiceSpy.fetchUser.and.returnValue(throwError(() => new Error('failure')));
