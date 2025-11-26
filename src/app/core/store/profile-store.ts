@@ -1,9 +1,9 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {UserService} from '../services/user.service';
-import {Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {ProfileState} from '../models/dto/profile-state';
 import {ProfilePagination} from '../models/dto/profile-pagination';
+import {ErrorService} from '../services/error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,6 @@ export class ProfileStore {
     trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0},
     gameList: [],
     trophyList: [],
-    error: undefined,
   });
   readonly user = computed(() => this._state().user);
   readonly gameList = computed(() => this._state().gameList);
@@ -28,15 +27,12 @@ export class ProfileStore {
     trophyTotalCount: 0,
   })
 
-  constructor(
-    private readonly _userService: UserService,
-    private readonly _router: Router,
-  ) {
+  constructor(private readonly _userService: UserService, private readonly _errorService: ErrorService) {
   }
 
   fetch(userProfileId: string | null): void {
-    if (!userProfileId) {
-      this._setErrorAndRedirect('Missing user id');
+    if (null == userProfileId) {
+      this._errorService.logErrorAndRedirect('Invalid user id');
       return;
     }
 
@@ -60,7 +56,6 @@ export class ProfileStore {
           trophyCount,
           gameList: gameSearch.content,
           trophyList: trophySearch.content,
-          error: undefined,
         });
         this._pagination.update((p) => ({
           ...p,
@@ -68,15 +63,8 @@ export class ProfileStore {
           trophyTotalCount: trophySearch.totalElements
         }));
       },
-      error: (err) => {
-        console.error('Unable to fetch user info', err);
-        this._setErrorAndRedirect('load_failed');
-      },
+      error: () => this._errorService.logErrorAndRedirect('Failed loading profile: ' + userProfileId),
     });
   }
 
-  private _setErrorAndRedirect(message: string): void {
-    this._state.update((s) => ({...s, error: message}));
-    this._router.navigate(['/error']);
-  }
 }

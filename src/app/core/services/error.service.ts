@@ -1,0 +1,16 @@
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ErrorService {
+
+  constructor(private _router: Router) {
+  }
+
+  logErrorAndRedirect(message: string): void {
+    this._router.navigate(['/error']).then(() => console.error(message));
+  }
+
+}

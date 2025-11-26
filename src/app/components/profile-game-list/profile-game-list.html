@@ -11,9 +11,8 @@
       role="listitem"
     >
       <button
-        (click)="toggle(game.id)"
+        (click)="handleClickOnGameCard(game)"
         [attr.aria-expanded]="isExpanded(game.id)"
-        [attr.aria-label]="getToggleAriaLabel(game)"
         [attr.data-testid]="'game-toggle-' + game.id"
         class="profile-game-header"
         type="button"
