@@ -1,6 +1,6 @@
 <div class="trophy-count-displayer">
   @if (trophyCount.platinum > 0) {
-    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item">
+    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item platinum-trophy">
       <img [height]="iconSize" [width]="iconSize" alt="Trophées platine"
            ngSrc="../../../assets/icons/trophy_platinum_128.png"/>
       <span [style.font-size]="textSizePx + 'px'" class="trophy-count">{{ trophyCount.platinum || '-' }}</span>
@@ -8,7 +8,7 @@
   }
 
   @if (trophyCount.gold > 0) {
-    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item">
+    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item gold-trophy">
       <img [height]="iconSize" [width]="iconSize" alt="Trophées or"
            ngSrc="../../../assets/icons/trophy_gold_128.png"/>
       <span [style.font-size]="textSizePx + 'px'" class="trophy-count">{{ trophyCount.gold || '-' }}</span>
@@ -16,7 +16,7 @@
   }
 
   @if (trophyCount.silver > 0) {
-    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item">
+    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item silver-trophy">
       <img [height]="iconSize" [width]="iconSize" alt="Trophées argent"
            ngSrc="../../../assets/icons/trophy_silver_128.png"/>
       <span [style.font-size]="textSizePx + 'px'" class="trophy-count">{{ trophyCount.silver || '-' }}</span>
@@ -24,7 +24,7 @@
   }
 
   @if (trophyCount.bronze > 0) {
-    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item">
+    <div [style.flex-direction]="computeFlexDirection()" class="trophy-item bronze-trophy">
       <img [height]="iconSize" [width]="iconSize" alt="Trophées bronze"
            ngSrc="../../../assets/icons/trophy_bronze_128.png"/>
       <span [style.font-size]="textSizePx + 'px'" class="trophy-count">{{ trophyCount.bronze || '-' }}</span>

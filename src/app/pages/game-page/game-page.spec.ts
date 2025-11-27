@@ -40,6 +40,7 @@ describe('GamePage', () => {
   });
 
   it('should fetch game on init', () => {
+    expect(component.gameId).toEqual(gameId);
     expect(gameStoreSpy.fetch).toHaveBeenCalledWith(gameId);
   });
 

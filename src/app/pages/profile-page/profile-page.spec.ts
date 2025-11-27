@@ -84,7 +84,6 @@ describe('ProfilePage', () => {
 
     component.navigateToGamePage(event);
 
-
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(
       ['/game', game.id],
       {queryParams: {collectionId: event.collectionId}}
