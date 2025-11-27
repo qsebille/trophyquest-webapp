@@ -2,13 +2,13 @@ import {Component, Input} from '@angular/core';
 import {User} from '../../core/models/dto/user';
 import {MatCardModule} from '@angular/material/card';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
-import {NgOptimizedImage} from '@angular/common';
+import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
 
 @Component({
   selector: 'app-profile-summary',
   imports: [
     MatCardModule,
-    NgOptimizedImage,
+    TrophyCountDisplayer,
   ],
   templateUrl: './profile-summary.html',
   styleUrl: './profile-summary.scss',
