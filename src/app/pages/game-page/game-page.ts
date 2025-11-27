@@ -13,12 +13,14 @@ import {JsonPipe} from '@angular/common';
 })
 export class GamePage {
   gameId!: string | null;
+  collectionId!: string | null;
 
   constructor(private readonly _route: ActivatedRoute, public readonly gameStore: GameStore) {
   }
 
   ngOnInit(): void {
     this.gameId = this._route.snapshot.paramMap.get('gameId');
+    this.collectionId = this._route.snapshot.queryParamMap.get('collectionId');
     this.gameStore.fetch(this.gameId);
   }
 

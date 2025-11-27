@@ -10,6 +10,7 @@ describe('GamePage', () => {
   let gameStoreSpy: jasmine.SpyObj<GameStore>;
 
   const gameId = '123';
+  const collectionId = '456';
 
   beforeEach(async () => {
     gameStoreSpy = jasmine.createSpyObj('GameStore', ['fetch', 'game']);
@@ -19,7 +20,10 @@ describe('GamePage', () => {
       imports: [GamePage],
       providers: [
         {provide: GameStore, useValue: jasmine.createSpyObj('GameStore', ['fetch'])},
-        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => gameId}}}}
+        {
+          provide: ActivatedRoute,
+          useValue: {snapshot: {paramMap: {get: () => gameId}, queryParamMap: {get: () => collectionId}}}
+        }
       ]
     })
       .compileComponents();
@@ -38,5 +42,9 @@ describe('GamePage', () => {
   it('should fetch game on init', () => {
     expect(gameStoreSpy.fetch).toHaveBeenCalledWith(gameId);
   });
-  
+
+  it('should read collection id from query parameters', () => {
+    expect(component.collectionId).toEqual(collectionId);
+  });
+
 });
