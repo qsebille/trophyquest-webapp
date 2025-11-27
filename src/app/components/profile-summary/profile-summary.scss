@@ -54,38 +54,6 @@
   margin-bottom: 0.75rem;
 }
 
-.trophy-summary-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
-  padding: 0.5rem 1rem;
-}
-
-.trophy-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.trophy-item img {
-  display: block;
-}
-
-.trophy-count {
-  margin-top: 0.25rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #000;
-}
-
-
-@media (max-width: 576px) {
-  .trophy-summary-content {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
 
 @media (max-width: 600px) {
   .profile-card {

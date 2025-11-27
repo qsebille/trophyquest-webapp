@@ -13,7 +13,7 @@
       <button
         (click)="handleClickOnGameCard(game)"
         [attr.aria-expanded]="isExpanded(game.id)"
-        [attr.data-testid]="'game-toggle-' + game.id"
+        [attr.data-profilegamelistid]="'game-toggle-' + game.id"
         class="profile-game-header"
         type="button"
       >
@@ -24,50 +24,30 @@
 
           <div class="profile-game-content">
             <div class="profile-game-title">{{ game.title }}</div>
-            <div class="profile-game-trophies">
-              @if (game.earnedTrophies.platinum > 0) {
-                <div class="profile-game-trophy-count">
-                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                       ngSrc="../../../assets/icons/trophy_platinum_128.png"/>
-                  <span class="trophy-count">{{ game.earnedTrophies.platinum || '-' }}</span>
-                </div>
-              }
-              @if (game.earnedTrophies.gold > 0) {
-                <div class="profile-game-trophy-count">
-                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                       ngSrc="../../../assets/icons/trophy_gold_128.png"/>
-                  <span class="trophy-count">{{ game.earnedTrophies.gold || '-' }}</span>
-                </div>
-              }
-              @if (game.earnedTrophies.silver > 0) {
-                <div class="profile-game-trophy-count">
-                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                       ngSrc="../../../assets/icons/trophy_silver_128.png"/>
-                  <span class="trophy-count">{{ game.earnedTrophies.silver || '-' }}</span>
-                </div>
-              }
-              @if (game.earnedTrophies.bronze > 0) {
-                <div class="profile-game-trophy-count">
-                  <img [height]="trophyIconSize" [width]="trophyIconSize" alt=""
-                       ngSrc="../../../assets/icons/trophy_bronze_128.png"/>
-                  <span class="trophy-count">{{ game.earnedTrophies.bronze || '-' }}</span>
-                </div>
-              }
-            </div>
+            <app-trophy-count-displayer [iconSize]="trophyIconSize" [labelOrientation]="'horizontal'"
+                                        [textSizePx]="14" [trophyCount]="game.earnedTrophies"
+                                        class="profile-game-trophies"/>
           </div>
         </div>
       </button>
 
       @if (isExpanded(game.id)) {
         <div
-          [attr.data-testid]="'game-details-' + game.id"
+          [attr.data-profilegamelistid]="'game-details-' + game.id"
           [class.open]="isExpanded(game.id)"
           class="profile-game-details"
-          role="region"
         >
-          <div class="profile-game-details-content">
-            Collection de trophées (bientôt disponible)
-          </div>
+          @for (collection of game.trophyCollections; track collection.id) {
+            <div
+              [attr.data-profilegamelistid]="'game-'+ game.id + '-collection-details-' + collection.id"
+              class="profile-game-collection">
+              <img [alt]="collection.title" class="collection-image" src="{{collection.imageUrl}}"/>
+              <div (click)="clickOnCollection(game.id, collection.id)" class="collection-title-wrapper">
+                <span class="collection-title">{{ collection.title }}</span>
+                <span class="collection-platform">{{ collection.platform }}</span>
+              </div>
+            </div>
+          }
         </div>
       }
     </mat-card>

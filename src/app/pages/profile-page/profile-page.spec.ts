@@ -68,8 +68,12 @@ describe('ProfilePage', () => {
 
   it('should navigate to game page when clicking on game card', () => {
     const mockedTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
+    const event: { gameId: string, collectionId: string } = {
+      gameId: '123',
+      collectionId: 'collection-456',
+    };
     const game: UserGame = {
-      id: '123',
+      id: event.gameId,
       title: 'Game 1',
       imageUrl: 'game.png',
       earnedTrophies: mockedTrophyCount,
@@ -78,10 +82,12 @@ describe('ProfilePage', () => {
     };
     routerSpy.navigate.and.returnValue(Promise.resolve(true));
 
-    component.navigateToGamePage(game);
+    component.navigateToGamePage(event);
 
-
-    expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/game', game.id]);
+    expect(routerSpy.navigate).toHaveBeenCalledOnceWith(
+      ['/game', game.id],
+      {queryParams: {collectionId: event.collectionId}}
+    );
   });
 
 });

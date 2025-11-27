@@ -60,15 +60,15 @@ describe('ProfileGameList', () => {
     fixture.detectChanges();
 
     const toggleButton: HTMLButtonElement | null = fixture.nativeElement.querySelector(
-      '[data-testid="game-toggle-1"]'
+      '[data-profilegamelistid="game-toggle-1"]'
     );
     expect(toggleButton).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('[data-testid="game-details-1"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-profilegamelistid="game-details-1"]')).toBeNull();
 
     toggleButton!.click();
     fixture.detectChanges();
 
-    const details = fixture.nativeElement.querySelector('[data-testid="game-details-1"]');
+    const details = fixture.nativeElement.querySelector('[data-profilegamelistid="game-details-1"]');
     expect(details).toBeTruthy();
     expect(toggleButton!.getAttribute('aria-expanded')).toBe('true');
   });
