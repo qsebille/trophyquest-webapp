@@ -2,19 +2,21 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {UserGame} from '../../core/models/dto/user-game';
+import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
 
 @Component({
   selector: 'app-profile-game-list',
   imports: [
     MatCardModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    TrophyCountDisplayer
   ],
   templateUrl: './profile-game-list.html',
   styleUrl: './profile-game-list.scss',
 })
 export class ProfileGameList {
   @Input({required: true}) gameList: UserGame[] = [];
-  @Output() public readonly gameClicked = new EventEmitter<UserGame>();
+  @Output() public readonly gameClicked = new EventEmitter<{ gameId: string, collectionId: string }>();
 
   readonly gameIconSize: number = 64
   readonly trophyIconSize: number = 32
@@ -29,11 +31,18 @@ export class ProfileGameList {
    */
   handleClickOnGameCard(game: UserGame): void {
     console.info(`Clicked on game card: ${game.title}`);
-    if (game.trophyCollections.length > 1) {
-      this.toggle(game.id);
+    if (game.trophyCollections.length === 1) {
+      this.gameClicked.emit({gameId: game.id, collectionId: game.trophyCollections[0].id});
     } else {
-      this.gameClicked.emit(game);
+      this.toggle(game.id);
     }
+  }
+
+  clickOnCollection(
+    gameId: string,
+    collectionId: string
+  ): void {
+    this.gameClicked.emit({gameId, collectionId});
   }
 
   toggle(gameId: string): void {
@@ -55,4 +64,5 @@ export class ProfileGameList {
       userGame.earnedTrophies.silver === userGame.totalTrophies.silver &&
       userGame.earnedTrophies.bronze === userGame.totalTrophies.bronze;
   }
+
 }
