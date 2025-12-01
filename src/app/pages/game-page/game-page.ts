@@ -1,16 +1,19 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GameStore} from '../../core/store/game-store';
-import {Trophy} from '../../core/models/dto/trophy';
-import {TrophyCount} from '../../core/models/dto/trophy-count';
 import {MatCardModule} from '@angular/material/card';
 import {TrophyCard} from '../../components/trophy-card/trophy-card';
+import {GameSummary} from '../../components/game-summary/game-summary';
+import {TrophyFilters} from '../../components/trophy-filters/trophy-filters';
+import {Trophy} from '../../core/models/dto/trophy';
 
 @Component({
   selector: 'app-game-page',
   imports: [
     MatCardModule,
-    TrophyCard
+    TrophyCard,
+    GameSummary,
+    TrophyFilters,
   ],
   templateUrl: './game-page.html',
   styleUrl: './game-page.scss',
@@ -20,11 +23,29 @@ export class GamePage {
   collectionId!: string | null;
   userId!: string | null;
 
+  shouldShowHiddenTrophies: boolean = false;
+
+  private _trophyEarnedFilter: 'all' | 'earned' | 'unearned' = 'all';
 
   constructor(
     private readonly _route: ActivatedRoute,
     public readonly gameStore: GameStore
   ) {
+  }
+
+  getFilteredTrophies(trophies: Trophy[]): Trophy[] {
+    switch (this._trophyEarnedFilter) {
+      case 'all':
+        return trophies;
+      case 'earned':
+        return trophies.filter(t => t.earnedDate !== null);
+      case 'unearned':
+        return trophies.filter(t => t.earnedDate === null);
+    }
+  }
+
+  baseGameTrophies(): Trophy[] {
+    return this.getFilteredTrophies(this.gameStore.baseGameTrophies()?.trophies ?? []);
   }
 
   ngOnInit(): void {
@@ -34,12 +55,12 @@ export class GamePage {
     this.gameStore.fetchUserGame(this.userId, this.gameId, this.collectionId);
   }
 
-  protected countEarnedTrophies(trophies: Trophy[]): TrophyCount {
-    return {
-      platinum: trophies.filter(t => t.trophyType === 'platinum' && t.earnedDate !== null).length,
-      gold: trophies.filter(t => t.trophyType === 'gold' && t.earnedDate !== null).length,
-      silver: trophies.filter(t => t.trophyType === 'silver' && t.earnedDate !== null).length,
-      bronze: trophies.filter(t => t.trophyType === 'bronze' && t.earnedDate !== null).length,
-    }
+  showHiddenTrophies($event: boolean): void {
+    this.shouldShowHiddenTrophies = $event;
   }
+
+  changeTrophyEarnedType($event: 'all' | 'earned' | 'unearned'): void {
+    this._trophyEarnedFilter = $event;
+  }
+
 }

@@ -18,9 +18,9 @@ import {MatIconModule} from '@angular/material/icon';
 export class TrophyCard {
   @Input({required: true}) trophy: Trophy | undefined
   @Input({required: false}) imageSize: number = 50
-  @Input({required: false}) forceShow: boolean = false
+  @Input({required: false}) showHiddenTrophies: boolean = false
 
   get isTrophyHidden(): boolean {
-    return !this.forceShow && (this.trophy?.isHidden ?? false) && this.trophy?.earnedDate === null;
+    return !this.showHiddenTrophies && (this.trophy?.isHidden ?? false) && this.trophy?.earnedDate === null;
   }
 }
