@@ -5,7 +5,8 @@ import {User} from '../models/dto/user';
 import {SearchResult} from '../models/dto/search-result';
 import {TrophyCount} from '../models/dto/trophy-count';
 import {UserGame} from '../models/dto/user-game';
-import {EarnedTrophy} from '../models/dto/earned-trophy';
+import {Trophy} from '../models/dto/trophy';
+import {GameGroupTrophies} from '../models/dto/game-group-trophies';
 
 @Injectable({
   providedIn: 'root',
@@ -51,13 +52,17 @@ export class UserService {
    * @param {string} userId - The unique identifier of the user whose earned trophies are to be fetched.
    * @param {number} pageNumber - The page number to retrieve in the paginated results.
    * @param {number} pageSize - The number of results to retrieve per page.
-   * @return {Observable<SearchResult<EarnedTrophy>>} An observable containing the paginated result of the earned trophies.
+   * @return {Observable<SearchResult<Trophy>>} An observable containing the paginated result of the earned trophies.
    */
-  searchEarnedTrophies(userId: string, pageNumber: number, pageSize: number): Observable<SearchResult<EarnedTrophy>> {
+  searchEarnedTrophies(
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<SearchResult<Trophy>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
-    return this.http.get<SearchResult<EarnedTrophy>>(`${this.API_URL}/${userId}/trophies`, {params});
+    return this.http.get<SearchResult<Trophy>>(`${this.API_URL}/${userId}/trophies`, {params});
   }
 
   /**
@@ -68,11 +73,22 @@ export class UserService {
    * @param {number} pageSize - The number of games per page to retrieve in paginated results.
    * @return {Observable<SearchResult<UserGame>>} An Observable containing a SearchResult of UserGame objects.
    */
-  searchGames(userId: string, pageNumber: number, pageSize: number): Observable<SearchResult<UserGame>> {
+  searchGames(
+    userId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<SearchResult<UserGame>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
     return this.http.get<SearchResult<UserGame>>(`${this.API_URL}/${userId}/games`, {params});
+  }
+
+  fetchCollectionTrophies(
+    userId: string,
+    collectionId: string
+  ): Observable<GameGroupTrophies[]> {
+    return this.http.get<GameGroupTrophies[]>(`${this.API_URL}/${userId}/collection/${collectionId}/trophies`);
   }
 
 }

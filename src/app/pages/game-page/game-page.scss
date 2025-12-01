@@ -1,0 +1,21 @@
+.trophy-element-enter {
+  animation-name: trophy-element-enter;
+  animation-duration: 500ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes trophy-element-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.trophy-separator {
+  color: rgba(0, 0, 0, 0.54);
+}

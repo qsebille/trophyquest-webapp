@@ -7,7 +7,7 @@ import {ErrorService} from '../services/error.service';
 import {User} from '../models/dto/user';
 import {TrophyCount} from '../models/dto/trophy-count';
 import {UserGame} from '../models/dto/user-game';
-import {EarnedTrophy} from '../models/dto/earned-trophy';
+import {Trophy} from '../models/dto/trophy';
 
 describe('ProfileStore', () => {
   let store: ProfileStore;
@@ -56,7 +56,7 @@ describe('ProfileStore', () => {
         trophyCollections: []
       }
     ];
-    const trophies: EarnedTrophy[] = [
+    const trophies: Trophy[] = [
       {
         id: 'trophy-1',
         trophyTitle: 'Trophy 1',

@@ -1,6 +1,24 @@
-<h1>Game Page: bientôt disponible</h1>
-
-<pre>Game :</pre>
-<pre>{{ gameStore.game() | json }}</pre>
-
-<pre>Collection ID : {{ collectionId }}</pre>
+<div class="container container-fluid">
+  <div class="trophy-list">
+    @for (trophy of gameStore.baseGameTrophies()?.trophies; track trophy.id; let i = $index) {
+      @if (i !== 0) {
+        <hr class="trophy-separator"/>
+      }
+      <app-trophy-card [style.animationDelay.ms]="200 + i * 80"
+                       [trophy]="trophy" animate.enter="trophy-element-enter"
+                       class="game-page-trophy-card"></app-trophy-card>
+    }
+    @for (groupTrophy of gameStore.dlcTrophies(); track groupTrophy.groupName) {
+      <h2>{{ groupTrophy.groupName }}</h2>
+      @for (trophy of groupTrophy.trophies; track trophy.id; let i = $index) {
+        @if (i !== 0) {
+          <hr class="trophy-separator"/>
+        }
+        <app-trophy-card
+          [style.animationDelay.ms]="200 + i * 80"
+          [trophy]="trophy" animate.enter="trophy-element-enter"
+          class="game-page-trophy-card"></app-trophy-card>
+      }
+    }
+  </div>
+</div>

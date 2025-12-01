@@ -9,11 +9,12 @@ describe('GamePage', () => {
   let fixture: ComponentFixture<GamePage>;
   let gameStoreSpy: jasmine.SpyObj<GameStore>;
 
+  const userId = '000';
   const gameId = '123';
   const collectionId = '456';
 
   beforeEach(async () => {
-    gameStoreSpy = jasmine.createSpyObj('GameStore', ['fetch', 'game']);
+    gameStoreSpy = jasmine.createSpyObj('GameStore', ['fetchUserGame', 'game', 'trophies']);
     gameStoreSpy.game.and.returnValue({id: '123', title: 'Game 1', platforms: [], imageUrl: 'game.png'});
 
     await TestBed.configureTestingModule({
@@ -22,7 +23,12 @@ describe('GamePage', () => {
         {provide: GameStore, useValue: jasmine.createSpyObj('GameStore', ['fetch'])},
         {
           provide: ActivatedRoute,
-          useValue: {snapshot: {paramMap: {get: () => gameId}, queryParamMap: {get: () => collectionId}}}
+          useValue: {
+            snapshot: {
+              paramMap: {get: () => gameId},
+              queryParamMap: {get: (key: string) => key === 'collectionId' ? collectionId : userId}
+            }
+          }
         }
       ]
     })
@@ -39,13 +45,14 @@ describe('GamePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch game on init', () => {
+  it('should read params id from query parameters', () => {
+    expect(component.userId).toEqual(userId);
     expect(component.gameId).toEqual(gameId);
-    expect(gameStoreSpy.fetch).toHaveBeenCalledWith(gameId);
+    expect(component.collectionId).toEqual(collectionId);
   });
 
-  it('should read collection id from query parameters', () => {
-    expect(component.collectionId).toEqual(collectionId);
+  it('should fetch game on init', () => {
+    expect(gameStoreSpy.fetchUserGame).toHaveBeenCalledWith(userId, gameId, collectionId);
   });
 
 });
