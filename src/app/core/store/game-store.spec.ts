@@ -6,6 +6,8 @@ import {ErrorService} from '../services/error.service';
 import {Game} from '../models/dto/game';
 import {of} from 'rxjs';
 import {UserService} from '../services/user.service';
+import {GameGroupTrophies} from '../models/dto/game-group-trophies';
+import {Trophy} from '../models/dto/trophy';
 
 describe('GameStore', () => {
   let store: GameStore;
@@ -14,22 +16,54 @@ describe('GameStore', () => {
   let errorServiceSpy: jasmine.SpyObj<ErrorService>;
 
   const gameMock: Game = {id: '123', title: 'Game 1', platforms: [], imageUrl: 'img.png'};
-  const trophiesMock: any[] = [
+  const baseTrophy1Mock: Trophy = {
+    id: '001',
+    trophyTitle: 'Trophy 1',
+    trophyDescription: 'Description 1',
+    trophyType: 'platinum',
+    isHidden: false,
+    iconUrl: 'trophy-1.png',
+    gameTitle: gameMock.title,
+    earnedDate: null,
+  };
+  const baseTrophy2Mock: Trophy = {
+    id: '002',
+    trophyTitle: 'Trophy 2',
+    trophyDescription: 'Description 2',
+    trophyType: 'gold',
+    isHidden: true,
+    iconUrl: 'trophy-2.png',
+    gameTitle: gameMock.title,
+    earnedDate: '2025-01-01T00:00:00.000Z',
+  };
+  const dlcTrophy1Mock: Trophy = {
+    id: '003',
+    trophyTitle: 'Trophy 3',
+    trophyDescription: 'Description 3',
+    trophyType: 'silver',
+    isHidden: false,
+    iconUrl: 'trophy-3.png',
+    gameTitle: gameMock.title,
+    earnedDate: null,
+  };
+  const dlcTrophy2Mock: Trophy = {
+    id: '004',
+    trophyTitle: 'Trophy 4',
+    trophyDescription: 'Description 4',
+    trophyType: 'bronze',
+    isHidden: true,
+    iconUrl: 'trophy-4.png',
+    gameTitle: gameMock.title,
+    earnedDate: '2025-01-01T00:00:00.000Z',
+  };
+  const groupTrophiesMock: GameGroupTrophies[] = [
     {
-      id: '1',
-      gameId: '123',
-      trophyTitle: 'Trophy 1',
-      trophyDescription: 'desc',
-      trophyType: 'gold',
-      iconUrl: 'img.png'
+      groupName: 'default',
+      trophies: [baseTrophy1Mock, baseTrophy2Mock],
     },
     {
-      id: '2',
-      gameId: '123',
-      trophyTitle: 'Trophy 2',
-      trophyDescription: 'desc',
-      trophyType: 'silver',
-      iconUrl: 'img.png'
+      groupName: 'dlc-1',
+      trophies: [dlcTrophy1Mock, dlcTrophy2Mock],
     },
   ];
 
@@ -62,15 +96,52 @@ describe('GameStore', () => {
     expect(store.game()).toEqual(gameMock);
   }));
 
-  it('should update trophies when fetch successds', fakeAsync(() => {
+  it('should update trophies when fetch succeeds', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    userServiceSpy.fetchCollectionTrophies.and.returnValue(of(trophiesMock));
+    userServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
 
     store.fetchUserGame('000', '123', '456');
     flushMicrotasks();
 
     expect(userServiceSpy.fetchCollectionTrophies).toHaveBeenCalledOnceWith('000', '456');
-    expect(store.groupTrophies()).toEqual(trophiesMock);
+    expect(store.baseGameTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName === 'default')[0].trophies);
+    expect(store.dlcTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName !== 'default'));
+  }));
+
+  it('should update trophies when earned filter changes', fakeAsync(() => {
+    gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
+    userServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
+
+    store.fetchUserGame('000', '123', '456');
+    flushMicrotasks();
+
+    // Changed filter to "all"
+    store.changeEarnedFilter('all');
+    expect(store.earnedFilter()).toEqual('all');
+    expect(store.baseGameTrophies()).toEqual([baseTrophy1Mock, baseTrophy2Mock]);
+    expect(store.dlcTrophies()).toEqual([{
+      groupName: 'dlc-1',
+      trophies: [dlcTrophy1Mock, dlcTrophy2Mock],
+    }]);
+
+    // Changed filter to "earned"
+    store.changeEarnedFilter('earned');
+    expect(store.earnedFilter()).toEqual('earned');
+    expect(store.baseGameTrophies()).toEqual([baseTrophy2Mock]);
+    expect(store.dlcTrophies()).toEqual([{
+      groupName: 'dlc-1',
+      trophies: [dlcTrophy2Mock],
+    }]);
+
+    // Changed filter to "unearned"
+    store.changeEarnedFilter('unearned');
+    expect(store.earnedFilter()).toEqual('unearned');
+    expect(store.baseGameTrophies()).toEqual([baseTrophy1Mock]);
+    expect(store.dlcTrophies()).toEqual([{
+      groupName: 'dlc-1',
+      trophies: [dlcTrophy1Mock],
+    }]);
+
   }));
 
 });

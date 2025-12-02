@@ -41,9 +41,9 @@ export class GameStore {
       case 'all':
         return this._dlcTrophies();
       case 'earned':
-        return this._dlcTrophies().map(dlc => ({...dlc, trophies: dlc.trophies.filter(t => t.earnedDate !== null)}));
+        return this._dlcTrophies().map(dlc => ({...dlc, trophies: this._filterTrophies(dlc.trophies, 'earned')}));
       case 'unearned':
-        return this._dlcTrophies().map(dlc => ({...dlc, trophies: dlc.trophies.filter(t => t.earnedDate === null)}));
+        return this._dlcTrophies().map(dlc => ({...dlc, trophies: this._filterTrophies(dlc.trophies, 'unearned')}));
       default:
         return [];
     }

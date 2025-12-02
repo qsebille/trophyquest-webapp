@@ -63,6 +63,7 @@ describe('ProfileStore', () => {
         trophyDescription: 'desc',
         trophyType: 'gold',
         iconUrl: 'img.png',
+        isHidden: false,
         gameTitle: 'Game 1',
         earnedDate: new Date().toISOString()
       }
