@@ -1,12 +1,13 @@
 <div class="container container-fluid">
   <div [style.animationDelay.ms]="100" animate.enter="game-summary-enter" class="game-header">
     <app-game-summary [game]="gameStore.game()"></app-game-summary>
-    <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)" (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
+    <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)"
+                        (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
                         class="trophy-filters"></app-trophy-filters>
   </div>
 
   <div class="group-list">
-    @for (trophy of baseGameTrophies(); track trophy.id; let i = $index) {
+    @for (trophy of gameStore.baseGameTrophies(); track trophy.id; let i = $index) {
       <div class="trophy-list">
         @if (i !== 0) {
           <hr class="trophy-separator"/>
@@ -20,7 +21,7 @@
     @for (groupTrophy of gameStore.dlcTrophies(); track groupTrophy.groupName) {
       <div class="trophy-list">
         <h2>{{ groupTrophy.groupName }}</h2>
-        @for (trophy of getFilteredTrophies(groupTrophy.trophies); track trophy.id; let i = $index) {
+        @for (trophy of groupTrophy.trophies; track trophy.id; let i = $index) {
           @if (i !== 0) {
             <hr class="trophy-separator"/>
           }

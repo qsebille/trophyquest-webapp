@@ -1,10 +1,11 @@
-import {computed, Injectable, signal} from '@angular/core';
+import {computed, Injectable, Signal, signal} from '@angular/core';
 import {Game} from '../models/dto/game';
 import {GameService} from '../services/game.service';
 import {ErrorService} from '../services/error.service';
 import {UserService} from '../services/user.service';
 import {forkJoin} from 'rxjs';
 import {GameGroupTrophies} from '../models/dto/game-group-trophies';
+import {Trophy} from '../models/dto/trophy';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +18,46 @@ export class GameStore {
     imageUrl: ""
   });
   readonly game = computed(() => this._game());
+
   private readonly _baseGameTrophies = signal<GameGroupTrophies | undefined>(undefined);
-  readonly baseGameTrophies = computed(() => this._baseGameTrophies())
   private readonly _dlcTrophies = signal<GameGroupTrophies[]>([]);
-  readonly dlcTrophies = computed(() => this._dlcTrophies());
+  private _filters = signal<{ earned?: 'all' | 'earned' | 'unearned' }>({
+    earned: 'all',
+  });
+  readonly baseGameTrophies: Signal<Trophy[]> = computed(() => {
+    switch (this._filters().earned) {
+      case 'all':
+        return this._baseGameTrophies()?.trophies ?? [];
+      case 'earned':
+        return this._filterTrophies(this._baseGameTrophies()?.trophies ?? [], 'earned');
+      case 'unearned':
+        return this._filterTrophies(this._baseGameTrophies()?.trophies ?? [], 'unearned');
+      default:
+        return this._baseGameTrophies()?.trophies ?? [];
+    }
+  })
+  readonly dlcTrophies: Signal<GameGroupTrophies[]> = computed(() => {
+    switch (this._filters().earned) {
+      case 'all':
+        return this._dlcTrophies();
+      case 'earned':
+        return this._dlcTrophies().map(dlc => ({...dlc, trophies: dlc.trophies.filter(t => t.earnedDate !== null)}));
+      case 'unearned':
+        return this._dlcTrophies().map(dlc => ({...dlc, trophies: dlc.trophies.filter(t => t.earnedDate === null)}));
+      default:
+        return [];
+    }
+  });
 
   constructor(
     private readonly _gameService: GameService,
     private readonly _userService: UserService,
     private readonly _errorService: ErrorService,
   ) {
+  }
+
+  changeEarnedFilter(filter: 'all' | 'earned' | 'unearned') {
+    this._filters.update(f => ({...f, earned: filter}));
   }
 
   fetchUserGame(
@@ -59,6 +90,20 @@ export class GameStore {
       },
       error: () => this._errorService.logErrorAndRedirect('Failed loading game: ' + gameId + ' or collection: ' + collectionId),
     });
+  }
+
+  private _filterTrophies(
+    trophies: Trophy[],
+    filter: 'all' | 'earned' | 'unearned'
+  ): Trophy[] {
+    switch (filter) {
+      case 'all':
+        return trophies;
+      case 'earned':
+        return trophies.filter(t => t.earnedDate !== null);
+      case 'unearned':
+        return trophies.filter(t => t.earnedDate === null);
+    }
   }
 
 }
