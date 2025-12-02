@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {EarnedTrophy} from '../../core/models/dto/earned-trophy';
+import {Trophy} from '../../core/models/dto/trophy';
 import {MatCardModule} from '@angular/material/card';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
@@ -16,7 +16,7 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './profile-trophy-list.scss',
 })
 export class ProfileTrophyList {
-  @Input({required: true}) trophyList: EarnedTrophy[] = [];
+  @Input({required: true}) trophyList: Trophy[] = [];
   readonly iconSize: number = 50
   readonly trophyTypeSize: number = 50
 }

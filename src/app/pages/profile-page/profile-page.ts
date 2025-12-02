@@ -26,8 +26,13 @@ export class ProfilePage {
   }
 
   navigateToGamePage(event: { gameId: string, collectionId: string }) {
-    this._router.navigate(['/game', event.gameId], {queryParams: {collectionId: event.collectionId}})
-      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}`));
+    this._router.navigate(['/game', event.gameId], {
+      queryParams: {
+        collectionId: event.collectionId,
+        userId: this.userProfileId
+      }
+    })
+      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, user ${this.userProfileId}`));
   }
 
   ngOnInit(): void {

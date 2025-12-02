@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
 import {Component, Input} from '@angular/core';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
-import {EarnedTrophy} from '../../core/models/dto/earned-trophy';
+import {Trophy} from '../../core/models/dto/trophy';
 import {User} from '../../core/models/dto/user';
 import {ProfileGameList} from '../../components/profile-game-list/profile-game-list';
 import {UserGame} from '../../core/models/dto/user-game';
@@ -30,7 +30,7 @@ describe('ProfilePage', () => {
     template: ''
   })
   class MockProfileTrophyList {
-    @Input({required: true}) trophyList: EarnedTrophy[] = [];
+    @Input({required: true}) trophyList: Trophy[] = [];
   }
 
   const userProfileId = '1';
@@ -86,7 +86,7 @@ describe('ProfilePage', () => {
 
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(
       ['/game', game.id],
-      {queryParams: {collectionId: event.collectionId}}
+      {queryParams: {collectionId: event.collectionId, userId: userProfileId}}
     );
   });
 
