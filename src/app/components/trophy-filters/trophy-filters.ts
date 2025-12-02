@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
@@ -14,11 +14,17 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './trophy-filters.scss',
 })
 export class TrophyFilters {
+  @Input({required: false}) public initEarnedFilter: 'all' | 'earned' | 'unearned' = 'all';
   @Output() public readonly showHiddenTrophies = new EventEmitter<boolean>();
   @Output() public readonly trophyEarnedFilterChanged = new EventEmitter<'all' | 'earned' | 'unearned'>();
 
   wantedTrophyEarnedType: 'all' | 'earned' | 'unearned' = 'all';
+
   private _showHiddenTrophies = false;
+
+  ngOnInit(): void {
+    this.wantedTrophyEarnedType = this.initEarnedFilter;
+  }
 
   hiddenFilterChanges() {
     this._showHiddenTrophies = !this._showHiddenTrophies;

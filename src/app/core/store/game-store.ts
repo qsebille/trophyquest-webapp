@@ -35,7 +35,7 @@ export class GameStore {
       default:
         return this._baseGameTrophies()?.trophies ?? [];
     }
-  })
+  });
   readonly dlcTrophies: Signal<GameGroupTrophies[]> = computed(() => {
     switch (this._filters().earned) {
       case 'all':
@@ -48,6 +48,7 @@ export class GameStore {
         return [];
     }
   });
+  readonly earnedFilter = computed(() => this._filters().earned ?? 'all');
 
   constructor(
     private readonly _gameService: GameService,
