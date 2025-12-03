@@ -12,9 +12,9 @@ describe('UserListPage', () => {
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    userStoreSpy = jasmine.createSpyObj('UserStore', ['reset', 'search', 'list']);
+    userStoreSpy = jasmine.createSpyObj('UserStore', ['reset', 'search', 'results']);
 
-    userStoreSpy.list.and.returnValue([]);
+    userStoreSpy.results.and.returnValue([]);
     routerSpy.navigate.and.returnValue(Promise.resolve(true));
 
     await TestBed.configureTestingModule({
@@ -41,7 +41,7 @@ describe('UserListPage', () => {
   });
 
   it('should navigate to profile page', () => {
-    userStoreSpy.list.and.returnValue([{
+    userStoreSpy.results.and.returnValue([{
       id: '123',
       profileName: 'John Doe',
       avatarUrl: 'avatar.png',

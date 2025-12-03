@@ -1,0 +1,15 @@
+<div class="home-game-card">
+  <div class="title-image-wrapper">
+    <img [alt]="game?.title" [height]="50" [ngSrc]="game?.imageUrl ?? 'assets/icons/missing-game-image.svg'"
+         [width]="50"/>
+    <div class="game-title">{{ game?.title }}</div>
+  </div>
+  <div class="platforms">
+    @if (isPS4) {
+      <span class="platform-label platform-label--ps4">PS4</span>
+    }
+    @if (isPS5) {
+      <span class="platform-label platform-label--ps5">PS5</span>
+    }
+  </div>
+</div>

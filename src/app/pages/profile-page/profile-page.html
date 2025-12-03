@@ -1,22 +1,47 @@
-<div class="profile-page container">
+<div class="profile-page container container-fluid">
   <app-profile-summary
     [profile]="profileStore.user()"
     [style.animationDelay.ms]="100"
     [trophyCount]="profileStore.trophyCount()"
-    animate.enter="profile-block-enter"/>
+    animate.enter="block-enter"/>
 
-  <div class="profile-collection-wrapper row">
-    <app-profile-game-list
-      (gameClicked)="navigateToGamePage($event)"
-      [gameList]="profileStore.gameList()"
-      [style.animationDelay.ms]="200"
-      animate.enter="profile-block-enter"
-      class="profile-collection-games"/>
-    <app-profile-trophy-list
-      [style.animationDelay.ms]="300"
-      [trophyList]="profileStore.trophyList()"
-      animate.enter="profile-block-enter"
-      class="profile-collection-trophies"/>
+  <div class="profile-collection-wrapper">
+    <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-game-list">
+      <span class="collection-title">Last played games</span>
+      @for (game of profileStore.gameResults(); track game.id; let i = $index) {
+        @if (i !== 0) {
+          <hr class="game-separator"/>
+        }
+        <app-profile-game-card (gameClicked)="navigateToGamePage($event)"
+                               [game]="game"
+                               class="profile-game-card"></app-profile-game-card>
+      }
+      @if (profileStore.hasMoreGames() && !profileStore.isLoadingGames()) {
+        <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
+      }
+      @if (profileStore.isLoadingGames()) {
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+    </div>
+    <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-trophies-list">
+      <span class="collection-title">Last earned trophies</span>
+      @for (trophy of profileStore.trophyResults(); track trophy.id; let i = $index) {
+        @if (i !== 0) {
+          <hr class="trophy-separator"/>
+        }
+        <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"></app-profile-trophy-card>
+      }
+      @if (profileStore.hasMoreTrophies() && !profileStore.isLoadingTrophies()) {
+        <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
+      }
+      @if (profileStore.isLoadingTrophies()) {
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      }
+    </div>
   </div>
 
 </div>

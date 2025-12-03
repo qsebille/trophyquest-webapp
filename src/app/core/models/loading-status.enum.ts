@@ -1,6 +1,7 @@
 export enum LoadingStatus {
   NONE = 0,
   LOADING = 1,
-  SUCCESS = 2,
-  ERROR = 3,
+  PARTIALLY_LOADED = 2,
+  FULLY_LOADED = 3,
+  ERROR = 4,
 }

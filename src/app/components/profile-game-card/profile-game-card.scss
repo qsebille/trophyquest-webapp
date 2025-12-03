@@ -1,0 +1,73 @@
+@use 'styles/colors' as *;
+
+.profile-game-card {
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.03);
+
+  &.completed {
+    background-color: $green-light;
+  }
+
+  &.expanded {
+    border-color: $blue-medium;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.profile-game-header {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-game-infos {
+  display: flex;
+  align-items: center;
+}
+
+.profile-game-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-left: 10px;
+}
+
+.collection-title {
+  margin-left: 10px;
+}
+
+.profile-game-collection {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: $blue-light;
+  color: $blue-main;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+}
+
+.collection-title-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+
+.collection-platform {
+  font-family: 'Verdana', monospace;
+  font-size: 0.8rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0 4px;
+}

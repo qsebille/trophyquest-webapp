@@ -1,6 +1,6 @@
 <div class="container">
   <div class="user-cards row">
-    @for (user of userStore.list(); track user.id; let i = $index) {
+    @for (user of userStore.results(); track user.id; let i = $index) {
       <div class="col-12 col-md-2 user-card-wrapper">
         <mat-card
           [style.animationDelay.ms]="80 * i" animate.enter="user-card-enter" class="user-card">

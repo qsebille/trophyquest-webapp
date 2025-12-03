@@ -1,30 +1,53 @@
-.profile-block-enter {
-  animation-name: profile-block-enter;
-  animation-duration: 500ms;
-  animation-timing-function: ease-out;
-  animation-fill-mode: both;
-}
-
-@keyframes profile-block-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 
 .profile-collection-wrapper {
   padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
 
-  .profile-collection-games {
-    width: 60%;
-  }
+.profile-game-list {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .profile-collection-trophies {
-    width: 40%;
-  }
+.collection-title {
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.profile-game-card {
+  width: 100%;
+}
+
+.game-separator {
+  color: rgba(0, 0, 0, 0.54);
+  margin: 2px;
+  width: 95%;
+}
+
+.trophy-separator {
+  color: rgba(0, 0, 0, 0.54);
+  margin: 2px;
+  width: 95%;
+}
+
+.profile-trophies-list {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-trophy-card {
+  width: 100%;
+}
+
+.load-more-button {
+  padding: 20px;
+  cursor: pointer;
 }
