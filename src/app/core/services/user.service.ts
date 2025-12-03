@@ -84,6 +84,13 @@ export class UserService {
     return this.http.get<SearchResult<UserGame>>(`${this.API_URL}/${userId}/games`, {params});
   }
 
+  /**
+   * Fetches the list of trophies associated with a specific collection for a given user.
+   *
+   * @param {string} userId - The unique identifier of the user.
+   * @param {string} collectionId - The unique identifier of the collection.
+   * @return {Observable<GameGroupTrophies[]>} An observable that emits the array of trophies belonging to the specified collection.
+   */
   fetchCollectionTrophies(
     userId: string,
     collectionId: string

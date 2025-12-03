@@ -1,0 +1,32 @@
+.home-game-card {
+  padding: 5px;
+  margin: 1px;
+  background-color: rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-image-wrapper {
+  display: flex;
+  align-items: center;
+
+  .game-title {
+    padding-left: 5px;
+  }
+}
+
+.platform-label {
+  font-size: 0.8rem;
+  font-family: 'Verdana', monospace;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 1px;
+  margin: 1px;
+
+  &--ps4 {
+    background-color: rgba(0, 0, 0, 0.1)
+  }
+
+  &--ps5 {
+    background-color: white;
+  }
+}

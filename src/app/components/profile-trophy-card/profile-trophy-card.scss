@@ -1,0 +1,41 @@
+.profile-trophy-card {
+  border: 1px solid transparent;
+  border-radius: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.trophy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trophy-info {
+  display: flex;
+  align-items: center;
+}
+
+.trophy-title-and-game-title {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.trophy-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.trophy-game-title {
+  font-size: 0.9rem;
+  color: rgb(0, 0, 0, 0.54);
+}
+
+.trophy-earned-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

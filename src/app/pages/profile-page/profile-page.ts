@@ -2,15 +2,17 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
 import {ProfileSummary} from '../../components/profile-summary/profile-summary';
-import {ProfileGameList} from '../../components/profile-game-list/profile-game-list';
-import {ProfileTrophyList} from '../../components/profile-trophy-list/profile-trophy-list';
+import {ProfileGameCard} from '../../components/profile-game-card/profile-game-card';
+import {ProfileTrophyCard} from '../../components/profile-trophy-card/profile-trophy-card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-profile-page',
   imports: [
     ProfileSummary,
-    ProfileGameList,
-    ProfileTrophyList
+    ProfileGameCard,
+    ProfileTrophyCard,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
@@ -25,7 +27,15 @@ export class ProfilePage {
   ) {
   }
 
-  navigateToGamePage(event: { gameId: string, collectionId: string }) {
+  ngOnInit(): void {
+    this.userProfileId = this._route.snapshot.paramMap.get('userProfileId');
+    this.profileStore.reset();
+    this.profileStore.fetch(this.userProfileId);
+    this.profileStore.searchGames(this.userProfileId);
+    this.profileStore.searchTrophies(this.userProfileId);
+  }
+
+  navigateToGamePage(event: { gameId: string, collectionId: string }): void {
     this._router.navigate(['/game', event.gameId], {
       queryParams: {
         collectionId: event.collectionId,
@@ -35,8 +45,12 @@ export class ProfilePage {
       .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, user ${this.userProfileId}`));
   }
 
-  ngOnInit(): void {
-    this.userProfileId = this._route.snapshot.paramMap.get('userProfileId');
-    this.profileStore.fetch(this.userProfileId);
+  loadMoreGames(): void {
+    this.profileStore.loadMoreGames(this.userProfileId);
   }
+
+  loadMoreTrophies(): void {
+    this.profileStore.loadMoreTrophies(this.userProfileId);
+  }
+
 }
