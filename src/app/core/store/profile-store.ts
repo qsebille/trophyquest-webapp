@@ -85,7 +85,10 @@ export class ProfileStore {
           games: {...s.games, results: games, total: searchResult.total, loadingStatus: loadingStatus}
         }));
       },
-      error: () => this._errorService.logErrorAndRedirect('Failed loading games for profile: ' + userProfileId),
+      error: () => {
+        this._errorService.logErrorAndRedirect('Failed loading games for profile: ' + userProfileId)
+        this._state.update(s => ({...s, games: {...s.games, loadingStatus: LoadingStatus.ERROR}}));
+      },
     });
   }
 
@@ -112,7 +115,10 @@ export class ProfileStore {
         const loadingStatus: LoadingStatus = results.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
         this._state.update(s => ({...s, trophies: {...s.trophies, results, total: searchResult.total, loadingStatus}}));
       },
-      error: () => this._errorService.logErrorAndRedirect('Failed loading profile: ' + userProfileId),
+      error: () => {
+        this._errorService.logErrorAndRedirect('Failed loading trophies for profil: ' + userProfileId);
+        this._state.update(s => ({...s, trophies: {...s.trophies, loadingStatus: LoadingStatus.ERROR}}));
+      },
     });
   }
 
