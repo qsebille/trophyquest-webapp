@@ -31,13 +31,13 @@ describe('GamePage', () => {
     @Output() public readonly trophyEarnedFilterChanged = new EventEmitter<'all' | 'earned' | 'unearned'>();
   }
 
-  const userId = '000';
+  const playerId = '000';
   const gameId = '123';
   const collectionId = '456';
 
   beforeEach(async () => {
-    gameStoreSpy = jasmine.createSpyObj('GameStore', ['fetchUserGame', 'game', 'baseGameTrophies', 'earnedFilter', 'dlcTrophies']);
-    gameStoreSpy.game.and.returnValue({id: '123', title: 'Game 1', platforms: [], imageUrl: 'game.png'});
+    gameStoreSpy = jasmine.createSpyObj('GameStore', ['fetchPlayerGame', 'game', 'baseGameTrophies', 'earnedFilter', 'dlcTrophies']);
+    gameStoreSpy.game.and.returnValue({id: '123', title: 'Game 1', imageUrl: 'game.png'});
 
     await TestBed.configureTestingModule({
       imports: [GamePage, MockGameSummary, MockTrophyFilters, MockTrophyCard],
@@ -48,7 +48,7 @@ describe('GamePage', () => {
           useValue: {
             snapshot: {
               paramMap: {get: () => gameId},
-              queryParamMap: {get: (key: string) => key === 'collectionId' ? collectionId : userId}
+              queryParamMap: {get: (key: string) => key === 'collectionId' ? collectionId : playerId}
             }
           }
         }
@@ -73,13 +73,13 @@ describe('GamePage', () => {
   });
 
   it('should read params id from query parameters', () => {
-    expect(component.userId).toEqual(userId);
+    expect(component.playerId).toEqual(playerId);
     expect(component.gameId).toEqual(gameId);
     expect(component.collectionId).toEqual(collectionId);
   });
 
   it('should fetch game on init', () => {
-    expect(gameStoreSpy.fetchUserGame).toHaveBeenCalledWith(userId, gameId, collectionId);
+    expect(gameStoreSpy.fetchPlayerGame).toHaveBeenCalledWith(playerId, gameId, collectionId);
   });
 
 });

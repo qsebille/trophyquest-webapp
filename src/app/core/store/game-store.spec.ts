@@ -5,17 +5,17 @@ import {GameService} from '../services/game.service';
 import {ErrorService} from '../services/error.service';
 import {Game} from '../models/dto/game';
 import {of} from 'rxjs';
-import {UserService} from '../services/user.service';
+import {PlayerService} from '../services/player.service';
 import {GameGroupTrophies} from '../models/dto/game-group-trophies';
 import {Trophy} from '../models/dto/trophy';
 
 describe('GameStore', () => {
   let store: GameStore;
   let gameServiceSpy: jasmine.SpyObj<GameService>;
-  let userServiceSpy: jasmine.SpyObj<UserService>;
+  let playerServiceSpy: jasmine.SpyObj<PlayerService>;
   let errorServiceSpy: jasmine.SpyObj<ErrorService>;
 
-  const gameMock: Game = {id: '123', title: 'Game 1', platforms: [], imageUrl: 'img.png'};
+  const gameMock: Game = {id: '123', title: 'Game 1', imageUrl: 'img.png'};
   const baseTrophy1Mock: Trophy = {
     id: '001',
     trophyTitle: 'Trophy 1',
@@ -69,12 +69,12 @@ describe('GameStore', () => {
 
   beforeEach(() => {
     gameServiceSpy = jasmine.createSpyObj<GameService>('GameService', ['fetchGame']);
-    userServiceSpy = jasmine.createSpyObj<UserService>('UserService', ['fetchCollectionTrophies']);
+    playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['fetchCollectionTrophies']);
     errorServiceSpy = jasmine.createSpyObj<ErrorService>('ErrorService', ['logErrorAndRedirect']);
     TestBed.configureTestingModule({
       providers: [
         {provide: GameService, useValue: gameServiceSpy},
-        {provide: UserService, useValue: userServiceSpy},
+        {provide: PlayerService, useValue: playerServiceSpy},
         {provide: ErrorService, useValue: errorServiceSpy},
       ]
     });
@@ -87,9 +87,9 @@ describe('GameStore', () => {
 
   it('should update game when fetch succeeds', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    userServiceSpy.fetchCollectionTrophies.and.returnValue(of([]));
+    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of([]));
 
-    store.fetchUserGame('000', '123', '456');
+    store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();
 
     expect(gameServiceSpy.fetchGame).toHaveBeenCalledWith('123');
@@ -98,21 +98,21 @@ describe('GameStore', () => {
 
   it('should update trophies when fetch succeeds', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    userServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
+    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
 
-    store.fetchUserGame('000', '123', '456');
+    store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();
 
-    expect(userServiceSpy.fetchCollectionTrophies).toHaveBeenCalledOnceWith('000', '456');
+    expect(playerServiceSpy.fetchCollectionTrophies).toHaveBeenCalledOnceWith('000', '456');
     expect(store.baseGameTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName === 'default')[0].trophies);
     expect(store.dlcTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName !== 'default'));
   }));
 
   it('should update trophies when earned filter changes', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    userServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
+    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
 
-    store.fetchUserGame('000', '123', '456');
+    store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();
 
     // Changed filter to "all"

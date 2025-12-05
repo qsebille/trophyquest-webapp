@@ -20,7 +20,7 @@ import {TrophyFilters} from '../../components/trophy-filters/trophy-filters';
 export class GamePage {
   gameId!: string | null;
   collectionId!: string | null;
-  userId!: string | null;
+  playerId!: string | null;
 
   shouldShowHiddenTrophies: boolean = false;
 
@@ -33,8 +33,8 @@ export class GamePage {
   ngOnInit(): void {
     this.gameId = this._route.snapshot.paramMap.get('gameId');
     this.collectionId = this._route.snapshot.queryParamMap.get('collectionId');
-    this.userId = this._route.snapshot.queryParamMap.get('userId');
-    this.gameStore.fetchUserGame(this.userId, this.gameId, this.collectionId);
+    this.playerId = this._route.snapshot.queryParamMap.get('playerId');
+    this.gameStore.fetchPlayerGame(this.playerId, this.gameId, this.collectionId);
   }
 
   showHiddenTrophies($event: boolean): void {

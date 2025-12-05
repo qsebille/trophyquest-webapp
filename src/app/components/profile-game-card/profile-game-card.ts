@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserGame} from '../../core/models/dto/user-game';
+import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
 import {NgOptimizedImage} from '@angular/common';
 import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
 
@@ -13,7 +13,7 @@ import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displ
   styleUrl: './profile-game-card.scss',
 })
 export class ProfileGameCard {
-  @Input({required: true}) game!: UserGame;
+  @Input({required: true}) game!: PlayerGameAchievements;
   @Output() public readonly gameClicked = new EventEmitter<{ gameId: string, collectionId: string }>();
 
   isExpanded: boolean = false;

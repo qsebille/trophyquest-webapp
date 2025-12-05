@@ -8,12 +8,15 @@ import {Game} from '../models/dto/game';
   providedIn: 'root',
 })
 export class GameService {
-  private readonly API_URL = "http://localhost:8080/api/games";
+  private readonly API_URL = "http://localhost:8080/api/game";
 
   constructor(private http: HttpClient) {
   }
 
-  searchGames(pageNumber: number, pageSize: number): Observable<SearchResult<Game>> {
+  searchGames(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<SearchResult<Game>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);

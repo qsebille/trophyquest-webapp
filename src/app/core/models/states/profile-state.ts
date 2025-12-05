@@ -1,13 +1,13 @@
-import {User} from '../dto/user';
+import {Player} from '../dto/player';
 import {TrophyCount} from '../dto/trophy-count';
-import {UserGame} from '../dto/user-game';
+import {PlayerGameAchievements} from '../dto/player-game-achievements';
 import {Trophy} from '../dto/trophy';
 import {SearchState} from './search-state';
 
 export interface ProfileState {
-  userProfileId: string;
-  user?: User;
-  games: SearchState<UserGame>;
+  playerId: string;
+  player?: Player;
+  games: SearchState<PlayerGameAchievements>;
   trophies: SearchState<Trophy>;
   trophyCount: TrophyCount;
 }

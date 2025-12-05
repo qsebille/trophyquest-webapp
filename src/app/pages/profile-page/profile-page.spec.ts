@@ -5,8 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
-import {User} from '../../core/models/dto/user';
-import {UserGame} from '../../core/models/dto/user-game';
+import {Player} from '../../core/models/dto/player';
+import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
@@ -16,13 +16,13 @@ describe('ProfilePage', () => {
 
   @Component({selector: 'app-profile-summary', template: ''})
   class MockProfileSummary {
-    @Input({required: true}) profile: User = undefined!;
+    @Input({required: true}) profile: Player = undefined!;
     @Input({required: true}) trophyCount: TrophyCount = {platinum: 0, gold: 0, silver: 0, bronze: 0};
   }
 
   @Component({selector: 'app-profile-game-card', template: ''})
   class MockProfileGameCard {
-    @Input({required: true}) game!: UserGame;
+    @Input({required: true}) game!: PlayerGameAchievements;
     @Output() public readonly gameClicked = new EventEmitter<{ gameId: string, collectionId: string }>();
   }
 
@@ -30,7 +30,7 @@ describe('ProfilePage', () => {
   class MockProfileTrophyCard {
   }
 
-  const userProfileId = '1';
+  const playerId = '001';
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
@@ -41,7 +41,7 @@ describe('ProfilePage', () => {
       'loadMoreGames',
       'searchTrophies',
       'loadMoreTrophies',
-      'user',
+      'player',
       'trophyCount',
       'gameResults',
       'hasMoreGames',
@@ -56,7 +56,7 @@ describe('ProfilePage', () => {
       providers: [
         {provide: ProfileStore, useValue: profileStoreSpy},
         {provide: Router, useValue: routerSpy},
-        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => userProfileId}}}}
+        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => playerId}}}}
       ]
     }).compileComponents();
 
@@ -75,9 +75,9 @@ describe('ProfilePage', () => {
 
   it('should fetch profile on init', () => {
     expect(profileStoreSpy.reset).toHaveBeenCalled();
-    expect(profileStoreSpy.fetch).toHaveBeenCalledWith(userProfileId);
-    expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(userProfileId);
-    expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(userProfileId);
+    expect(profileStoreSpy.fetch).toHaveBeenCalledWith(playerId);
+    expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
+    expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
   });
 
   it('should navigate to game page when clicking on game card', () => {
@@ -86,7 +86,7 @@ describe('ProfilePage', () => {
       gameId: '123',
       collectionId: 'collection-456',
     };
-    const game: UserGame = {
+    const game: PlayerGameAchievements = {
       id: event.gameId,
       title: 'Game 1',
       imageUrl: 'game.png',
@@ -100,7 +100,7 @@ describe('ProfilePage', () => {
 
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(
       ['/game', game.id],
-      {queryParams: {collectionId: event.collectionId, userId: userProfileId}}
+      {queryParams: {collectionId: event.collectionId, playerId}}
     );
   });
 

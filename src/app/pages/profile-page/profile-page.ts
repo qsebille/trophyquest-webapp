@@ -18,7 +18,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   styleUrl: './profile-page.scss',
 })
 export class ProfilePage {
-  userProfileId!: string | null;
+  playerId!: string | null;
 
   constructor(
     private readonly _router: Router,
@@ -28,29 +28,29 @@ export class ProfilePage {
   }
 
   ngOnInit(): void {
-    this.userProfileId = this._route.snapshot.paramMap.get('userProfileId');
+    this.playerId = this._route.snapshot.paramMap.get('playerId');
     this.profileStore.reset();
-    this.profileStore.fetch(this.userProfileId);
-    this.profileStore.searchGames(this.userProfileId);
-    this.profileStore.searchTrophies(this.userProfileId);
+    this.profileStore.fetch(this.playerId);
+    this.profileStore.searchGames(this.playerId);
+    this.profileStore.searchTrophies(this.playerId);
   }
 
   navigateToGamePage(event: { gameId: string, collectionId: string }): void {
     this._router.navigate(['/game', event.gameId], {
       queryParams: {
         collectionId: event.collectionId,
-        userId: this.userProfileId
+        playerId: this.playerId
       }
     })
-      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, user ${this.userProfileId}`));
+      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, player ${this.playerId}`));
   }
 
   loadMoreGames(): void {
-    this.profileStore.loadMoreGames(this.userProfileId);
+    this.profileStore.loadMoreGames(this.playerId);
   }
 
   loadMoreTrophies(): void {
-    this.profileStore.loadMoreTrophies(this.userProfileId);
+    this.profileStore.loadMoreTrophies(this.playerId);
   }
 
 }
