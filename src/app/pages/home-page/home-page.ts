@@ -9,8 +9,8 @@ import {HomeObtainedTrophyCard} from '../../components/home-obtained-trophy-card
   selector: 'app-home-page',
   imports: [
     HomeGameCard,
-    MatProgressSpinnerModule,
     HomeObtainedTrophyCard,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',

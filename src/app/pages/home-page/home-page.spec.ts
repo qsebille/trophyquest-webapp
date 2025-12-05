@@ -16,7 +16,7 @@ describe('HomePage', () => {
   class MockHomeGameCard {
   }
 
-  @Component({selector: 'app-home-last-obtained-trophies', template: ''})
+  @Component({selector: 'app-home-obtained-trophy-card', template: ''})
   class MockHomeLastObtainedTrophies {
   }
 
