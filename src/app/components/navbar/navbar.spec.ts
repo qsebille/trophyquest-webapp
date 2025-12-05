@@ -9,8 +9,8 @@ describe('Navbar', () => {
   let component: Navbar;
   let fixture: ComponentFixture<Navbar>;
 
-  @Component({selector: 'app-dummy-users', template: ''})
-  class DummyUsersComponent {
+  @Component({selector: 'app-dummy-players', template: ''})
+  class DummyPlayersComponent {
   }
 
   beforeEach(async () => {
@@ -18,7 +18,7 @@ describe('Navbar', () => {
       imports: [Navbar],
       providers: [
         provideRouter([
-          {path: 'users', component: DummyUsersComponent},
+          {path: 'players', component: DummyPlayersComponent},
         ]),
       ],
     })
@@ -39,15 +39,15 @@ describe('Navbar', () => {
     expect(title?.textContent?.trim()).toBe('TrophyQuest');
   });
 
-  it('should link to the users page when clicking on link', fakeAsync(() => {
+  it('should link to the players page when clicking on link', fakeAsync(() => {
     const router = TestBed.inject(Router);
-    const usersLink = fixture.debugElement.query(By.css('#navbar-users-link'));
+    const playersLink = fixture.debugElement.query(By.css('#navbar-players-link'));
 
-    usersLink.triggerEventHandler('click', {button: 0});
+    playersLink.triggerEventHandler('click', {button: 0});
     tick();
 
-    expect(usersLink.nativeElement.textContent.trim()).toBe('Utilisateurs');
-    expect(router.url).toBe('/users');
+    expect(playersLink.nativeElement.textContent.trim()).toBe('Joueurs');
+    expect(router.url).toBe('/players');
   }));
 
 });

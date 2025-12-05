@@ -1,7 +1,7 @@
 import {TrophyCount} from './trophy-count';
 import {TrophyCollection} from './trophy-collection';
 
-export interface UserGame {
+export interface PlayerGameAchievements {
   id: string;
   title: string;
   imageUrl: string;

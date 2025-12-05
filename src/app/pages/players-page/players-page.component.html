@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="player-cards row">
+    @for (player of playerListStore.results(); track player.id; let i = $index) {
+      <div class="col-12 col-md-2 player-card-wrapper">
+        <mat-card
+          [style.animationDelay.ms]="80 * i" animate.enter="block-enter" class="player-card">
+          <mat-card-header>
+            <mat-card-title [title]="player.pseudo" class="player-name">{{ player.pseudo }}</mat-card-title>
+          </mat-card-header>
+          <img alt="{{player.pseudo}}" class="player-card-image" mat-card-image src="{{ player.avatarUrl }}">
+          <mat-card-actions>
+            <button (click)="goToProfile(player.id)"
+                    class="see-profile-button"
+                    mat-button matButton="filled">
+              Voir le profil
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    }
+  </div>
+</div>

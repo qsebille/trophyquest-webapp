@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {User} from '../../core/models/dto/user';
+import {Player} from '../../core/models/dto/player';
 import {MatCardModule} from '@angular/material/card';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
 import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
@@ -14,7 +14,7 @@ import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displ
   styleUrl: './profile-summary.scss',
 })
 export class ProfileSummary {
-  @Input({required: true}) profile: User | undefined;
+  @Input({required: true}) profile: Player | undefined;
   @Input({required: true}) trophyCount: TrophyCount = {
     platinum: 0,
     gold: 0,

@@ -2,7 +2,7 @@ import {computed, Injectable, Signal, signal} from '@angular/core';
 import {Game} from '../models/dto/game';
 import {GameService} from '../services/game.service';
 import {ErrorService} from '../services/error.service';
-import {UserService} from '../services/user.service';
+import {PlayerService} from '../services/player.service';
 import {forkJoin} from 'rxjs';
 import {GameGroupTrophies} from '../models/dto/game-group-trophies';
 import {Trophy} from '../models/dto/trophy';
@@ -14,7 +14,6 @@ export class GameStore {
   private readonly _game = signal<Game>({
     id: "",
     title: "",
-    platforms: [],
     imageUrl: ""
   });
   readonly game = computed(() => this._game());
@@ -52,7 +51,7 @@ export class GameStore {
 
   constructor(
     private readonly _gameService: GameService,
-    private readonly _userService: UserService,
+    private readonly _playerService: PlayerService,
     private readonly _errorService: ErrorService,
   ) {
   }
@@ -61,8 +60,8 @@ export class GameStore {
     this._filters.update(f => ({...f, earned: filter}));
   }
 
-  fetchUserGame(
-    userId: string | null,
+  fetchPlayerGame(
+    playerId: string | null,
     gameId: string | null,
     collectionId: string | null,
   ) {
@@ -74,15 +73,15 @@ export class GameStore {
       this._errorService.logErrorAndRedirect('Invalid collection id');
       return;
     }
-    if (null == userId) {
-      this._errorService.logErrorAndRedirect('Invalid user id');
+    if (null == playerId) {
+      this._errorService.logErrorAndRedirect('Invalid player id');
       return;
     }
 
-    console.info('Fetching game: ' + gameId + ' and trophies from collection ' + collectionId + ' for user ' + userId + '...');
+    console.info('Fetching game: ' + gameId + ' and trophies from collection ' + collectionId + ' for player ' + playerId + '...');
     forkJoin({
       game: this._gameService.fetchGame(gameId),
-      trophies: this._userService.fetchCollectionTrophies(userId, collectionId),
+      trophies: this._playerService.fetchCollectionTrophies(playerId, collectionId),
     }).subscribe({
       next: ({game, trophies}) => {
         this._game.set(game);

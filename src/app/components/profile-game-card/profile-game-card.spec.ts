@@ -1,12 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ProfileGameCard} from './profile-game-card';
-import {UserGame} from '../../core/models/dto/user-game';
+import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
 
 describe('ProfileGameCard', () => {
   let component: ProfileGameCard;
   let fixture: ComponentFixture<ProfileGameCard>;
 
-  const mockGame: UserGame = {
+  const mockAchievements: PlayerGameAchievements = {
     id: '001',
     title: 'Game 1',
     imageUrl: 'game.png',
@@ -22,7 +22,7 @@ describe('ProfileGameCard', () => {
 
     fixture = TestBed.createComponent(ProfileGameCard);
     component = fixture.componentInstance;
-    component.game = mockGame;
+    component.game = mockAchievements;
     fixture.detectChanges();
   });
 

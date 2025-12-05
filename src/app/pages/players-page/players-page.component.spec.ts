@@ -1,32 +1,32 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {UserListPage} from './user-list-page.component';
+import {PlayersPage} from './players-page.component';
 import {Router} from '@angular/router';
-import {UserStore} from '../../core/store/user-store';
+import {PlayerListStore} from '../../core/store/player-list-store';
 
-describe('UserListPage', () => {
-  let component: UserListPage;
-  let fixture: ComponentFixture<UserListPage>;
+describe('PlayersPage', () => {
+  let component: PlayersPage;
+  let fixture: ComponentFixture<PlayersPage>;
   let routerSpy: jasmine.SpyObj<Router>;
-  let userStoreSpy: jasmine.SpyObj<UserStore>;
+  let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    userStoreSpy = jasmine.createSpyObj('UserStore', ['reset', 'search', 'results']);
+    playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'results']);
 
-    userStoreSpy.results.and.returnValue([]);
+    playerListStoreSpy.results.and.returnValue([]);
     routerSpy.navigate.and.returnValue(Promise.resolve(true));
 
     await TestBed.configureTestingModule({
-      imports: [UserListPage],
+      imports: [PlayersPage],
       providers: [
         {provide: Router, useValue: routerSpy},
-        {provide: UserStore, useValue: userStoreSpy},
+        {provide: PlayerListStore, useValue: playerListStoreSpy},
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserListPage);
+    fixture = TestBed.createComponent(PlayersPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -36,20 +36,20 @@ describe('UserListPage', () => {
   });
 
   it('should reset search on init', () => {
-    expect(userStoreSpy.reset).toHaveBeenCalled();
-    expect(userStoreSpy.search).toHaveBeenCalled();
+    expect(playerListStoreSpy.reset).toHaveBeenCalled();
+    expect(playerListStoreSpy.search).toHaveBeenCalled();
   });
 
   it('should navigate to profile page', () => {
-    userStoreSpy.results.and.returnValue([{
+    playerListStoreSpy.results.and.returnValue([{
       id: '123',
-      profileName: 'John Doe',
+      pseudo: 'John Doe',
       avatarUrl: 'avatar.png',
     }]);
 
     fixture.detectChanges();
 
-    const goToProfileButton = fixture.nativeElement.querySelector('.user-see-profile-button') as HTMLButtonElement;
+    const goToProfileButton = fixture.nativeElement.querySelector('.see-profile-button') as HTMLButtonElement;
 
     goToProfileButton.click();
 
