@@ -29,6 +29,7 @@ export class LastObtainedTrophiesStore {
   }
 
   search(): void {
+    this._state.update(s => ({...s, loadingStatus: LoadingStatus.LOADING}));
     this._trophyService.searchLastObtained(this._state().pageNumber, this._state().pageSize).subscribe({
       next: searchResult => {
         const trophies = [...this._state().results, ...searchResult.content] as ObtainedTrophy[];
