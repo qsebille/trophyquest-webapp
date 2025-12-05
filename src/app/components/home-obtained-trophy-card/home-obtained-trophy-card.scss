@@ -1,0 +1,60 @@
+@use 'styles/colors' as *;
+
+.home-obtained-trophy-card {
+  padding: 5px;
+  margin: 2px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+.trophy-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trophy-main-info-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.trophy-title-and-game-title {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.trophy-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.game-title {
+  font-size: 0.9rem;
+  color: rgb(0, 0, 0, 0.54);
+}
+
+.earned-info-wrapper {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trophy-earned-by {
+  font-size: 1.1rem;
+  color: $blue-main;
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+.trophy-earned-date {
+  font-size: 0.6rem;
+  color: rgb(0, 0, 0, 0.54);
+}
