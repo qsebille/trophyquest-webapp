@@ -1,0 +1,20 @@
+<div class="home-obtained-trophy-card">
+  <div class="trophy-card-header">
+    <div class="trophy-main-info-wrapper">
+      <img [height]="50" [width]="50" alt="Trophy" class="trophy-image" ngSrc="{{trophy.trophyIconUrl}}"/>
+      <div class="trophy-title-and-game-title">
+        <div class="trophy-title">{{ trophy.trophyTitle }}</div>
+        <div class="game-title">{{ trophy.gameTitle }}</div>
+      </div>
+    </div>
+    <img [height]="50" [width]="50" alt="Trophy" class="trophy-type-image"
+         ngSrc="assets/icons/trophy-{{trophy.trophyType}}.png"/>
+  </div>
+  <div class="earned-info-wrapper">
+    <div class="trophy-earned-by">
+      <img [height]="28" [width]="28" alt="User" class="user-icon" ngSrc="assets/icons/user.svg"/>
+      <span class="user-name">{{ trophy.obtainedBy }}</span>
+    </div>
+    <div class="trophy-earned-date">{{ trophy.obtainedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
+  </div>
+</div>

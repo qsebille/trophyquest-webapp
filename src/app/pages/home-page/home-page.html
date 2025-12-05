@@ -19,5 +19,19 @@
         </div>
       }
     </div>
+
+    <div class="last-obtained-trophies">
+      <h2>Last obtained trophies</h2>
+      @for (trophy of lastObtainedTrophyStore.results(); track trophy.id) {
+        <app-home-obtained-trophy-card [trophy]="trophy" class="home-trophy-card"></app-home-obtained-trophy-card>
+      }
+      @if (lastObtainedTrophyStore.hasMoreTrophies() && !lastObtainedTrophyStore.isLoading()) {
+        <a (click)="loadMoreTrophies()" class="button trophy-list-load-more">Load more trophies...</a>
+      }
+      @if (lastObtainedTrophyStore.isLoading()) {
+        <div class="spinner-container"></div>
+      }
+    </div>
+
   </div>
 </div>

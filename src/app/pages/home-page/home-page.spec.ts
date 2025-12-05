@@ -3,27 +3,37 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomePage} from './home-page';
 import {Component} from '@angular/core';
 import {GameListStore} from '../../core/store/game-list-store';
+import {LastObtainedTrophiesStore} from '../../core/store/last-obtained-trophies-store';
 
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 
   let gameListStoreSpy: jasmine.SpyObj<GameListStore>;
+  let lastObtainedTrophyStoreSpy: jasmine.SpyObj<LastObtainedTrophiesStore>;
 
   @Component({selector: 'app-home-game-card', template: ''})
   class MockHomeGameCard {
   }
 
+  @Component({selector: 'app-home-last-obtained-trophies', template: ''})
+  class MockHomeLastObtainedTrophies {
+  }
+
   beforeEach(async () => {
     gameListStoreSpy = jasmine.createSpyObj('GameListStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreGames', 'isLoading']);
+    lastObtainedTrophyStoreSpy = jasmine.createSpyObj('LastObtainedTrophiesStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreTrophies', 'isLoading']);
     await TestBed.configureTestingModule({
-      imports: [HomePage, MockHomeGameCard],
+      imports: [HomePage, MockHomeGameCard, MockHomeLastObtainedTrophies],
     }).compileComponents();
 
     TestBed.overrideComponent(HomePage, {
       set: {
-        imports: [MockHomeGameCard],
-        providers: [{provide: GameListStore, useValue: gameListStoreSpy}],
+        imports: [MockHomeGameCard, MockHomeLastObtainedTrophies],
+        providers: [
+          {provide: GameListStore, useValue: gameListStoreSpy},
+          {provide: LastObtainedTrophiesStore, useValue: lastObtainedTrophyStoreSpy},
+        ],
       }
     });
 
@@ -41,5 +51,7 @@ describe('HomePage', () => {
 
     expect(gameListStoreSpy.resetState).toHaveBeenCalled();
     expect(gameListStoreSpy.search).toHaveBeenCalled();
+    expect(lastObtainedTrophyStoreSpy.resetState).toHaveBeenCalled();
+    expect(lastObtainedTrophyStoreSpy.search).toHaveBeenCalled();
   });
 });
