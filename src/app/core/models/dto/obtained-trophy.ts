@@ -5,6 +5,8 @@ export interface ObtainedTrophy {
   trophyDescription: string;
   trophyIconUrl: string;
   gameTitle: string;
+  playerId: string;
+  playerPseudo: string;
+  playerAvatarUrl: string;
   obtainedDate: string;
-  obtainedBy: string;
 }

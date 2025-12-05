@@ -11,7 +11,7 @@
         <app-home-game-card [game]="game" class="home-game-card"></app-home-game-card>
       }
       @if (gameListStore.hasMoreGames() && !gameListStore.isLoading()) {
-        <a (click)="loadMoreGames()" class="button game-list-load-more">Load more games...</a>
+        <a (click)="loadMoreGames()" class="button load-more">Load more games...</a>
       }
       @if (gameListStore.isLoading()) {
         <div class="spinner-container">
@@ -23,10 +23,11 @@
     <div class="last-obtained-trophies">
       <h2>Last obtained trophies</h2>
       @for (trophy of lastObtainedTrophyStore.results(); track trophy.id) {
-        <app-home-obtained-trophy-card [trophy]="trophy" class="home-trophy-card"></app-home-obtained-trophy-card>
+        <app-home-obtained-trophy-card (clickOnPlayer)="goToProfilePage(trophy.playerId)" [trophy]="trophy"
+                                       class="home-trophy-card"></app-home-obtained-trophy-card>
       }
       @if (lastObtainedTrophyStore.hasMoreTrophies() && !lastObtainedTrophyStore.isLoading()) {
-        <a (click)="loadMoreTrophies()" class="button trophy-list-load-more">Load more trophies...</a>
+        <a (click)="loadMoreTrophies()" class="button load-more">Load more trophies...</a>
       }
       @if (lastObtainedTrophyStore.isLoading()) {
         <div class="spinner-container"></div>

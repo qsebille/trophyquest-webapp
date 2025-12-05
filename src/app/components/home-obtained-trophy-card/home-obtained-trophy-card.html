@@ -11,10 +11,10 @@
          ngSrc="assets/icons/trophy-{{trophy.trophyType}}.png"/>
   </div>
   <div class="earned-info-wrapper">
-    <div class="trophy-earned-by">
+    <a (click)="clickOnPlayer.emit()" class="trophy-earned-by">
       <img [height]="28" [width]="28" alt="" class="player-icon" ngSrc="assets/icons/user.svg"/>
-      <span class="player-name">{{ trophy.obtainedBy }}</span>
-    </div>
+      <span class="player-pseudo">{{ trophy.playerPseudo }}</span>
+    </a>
     <div class="trophy-earned-date">{{ trophy.obtainedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
   </div>
 </div>

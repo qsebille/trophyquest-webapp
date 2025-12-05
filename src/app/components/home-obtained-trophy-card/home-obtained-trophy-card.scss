@@ -43,13 +43,14 @@
 }
 
 .trophy-earned-by {
+  cursor: pointer;
   font-size: 1.1rem;
   color: $blue-main;
   display: flex;
   align-items: center;
 }
 
-.player-name {
+.player-pseudo {
   margin-left: 5px;
   font-weight: 600;
 }
