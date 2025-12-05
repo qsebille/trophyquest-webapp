@@ -5,7 +5,7 @@
         <mat-card
           [style.animationDelay.ms]="80 * i" animate.enter="block-enter" class="player-card">
           <mat-card-header>
-            <mat-card-title [title]="player.pseudo" class="player-name">{{ player.pseudo }}</mat-card-title>
+            <mat-card-title [title]="player.pseudo" class="player-pseudo">{{ player.pseudo }}</mat-card-title>
           </mat-card-header>
           <img alt="{{player.pseudo}}" class="player-card-image" mat-card-image src="{{ player.avatarUrl }}">
           <mat-card-actions>

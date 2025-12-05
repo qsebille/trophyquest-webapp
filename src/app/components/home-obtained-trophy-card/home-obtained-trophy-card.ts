@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ObtainedTrophy} from '../../core/models/dto/obtained-trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 
@@ -13,4 +13,5 @@ import {DatePipe, NgOptimizedImage} from '@angular/common';
 })
 export class HomeObtainedTrophyCard {
   @Input({required: true}) trophy!: ObtainedTrophy;
+  @Output() clickOnPlayer = new EventEmitter();
 }
