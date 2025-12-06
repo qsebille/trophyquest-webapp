@@ -20,6 +20,7 @@ export class GameListStore {
   readonly results: Signal<Game[]> = computed(() => this._state().results);
   readonly isLoading: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.LOADING);
   readonly hasMoreGames: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.PARTIALLY_LOADED);
+  readonly total: Signal<number> = computed(() => this._state().total);
 
   constructor(private readonly _gameService: GameService) {
   }

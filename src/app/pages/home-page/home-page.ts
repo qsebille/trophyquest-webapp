@@ -5,6 +5,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LastObtainedTrophiesStore} from '../../core/store/last-obtained-trophies-store';
 import {HomeObtainedTrophyCard} from '../../components/home-obtained-trophy-card/home-obtained-trophy-card';
 import {Router} from '@angular/router';
+import {HomeSummary} from '../../components/home-summary/home-summary';
+import {PlayerListStore} from '../../core/store/player-list-store';
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +14,7 @@ import {Router} from '@angular/router';
     HomeGameCard,
     HomeObtainedTrophyCard,
     MatProgressSpinnerModule,
+    HomeSummary,
   ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
@@ -21,6 +24,7 @@ export class HomePage {
     private readonly _router: Router,
     public readonly gameListStore: GameListStore,
     public readonly lastObtainedTrophyStore: LastObtainedTrophiesStore,
+    public readonly playerListStore: PlayerListStore,
   ) {
   }
 
@@ -29,6 +33,8 @@ export class HomePage {
     this.gameListStore.search();
     this.lastObtainedTrophyStore.resetState();
     this.lastObtainedTrophyStore.search();
+    this.playerListStore.reset();
+    this.playerListStore.count();
   }
 
   loadMoreGames(): void {

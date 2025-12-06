@@ -21,6 +21,7 @@ export class PlayerListStore {
   readonly isLoading: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.LOADING);
   readonly hasMorePlayers: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.PARTIALLY_LOADED);
   readonly isError: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.ERROR);
+  readonly total: Signal<number> = computed(() => this._state().total);
 
   constructor(private readonly _playerService: PlayerService) {
   }
@@ -49,4 +50,10 @@ export class PlayerListStore {
     this.search();
   }
 
+  count(): void {
+    this._playerService.count().subscribe({
+      next: count => this._state.update(s => ({...s, total: count})),
+      error: error => console.error(error)
+    });
+  }
 }
