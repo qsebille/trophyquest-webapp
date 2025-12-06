@@ -1,21 +1,28 @@
-<div class="container">
-  <div class="player-cards row">
-    @for (player of playerListStore.results(); track player.id; let i = $index) {
-      <div class="col-12 col-md-2 player-card-wrapper">
-        <mat-card
-          [style.animationDelay.ms]="80 * i" animate.enter="block-enter" class="player-card">
-          <mat-card-header>
-            <mat-card-title [title]="player.pseudo" class="player-pseudo">{{ player.pseudo }}</mat-card-title>
-          </mat-card-header>
-          <img alt="{{player.pseudo}}" class="player-card-image" mat-card-image src="{{ player.avatarUrl }}">
-          <mat-card-actions>
-            <button (click)="goToProfile(player.id)"
-                    class="see-profile-button"
-                    mat-button matButton="filled">
-              Voir le profil
-            </button>
-          </mat-card-actions>
-        </mat-card>
+<div class="players-page container">
+  <div class="players-header">
+    Content coming soon... Total users, total earned trophies, etc.
+  </div>
+  <div class="players-content">
+    @for (playerSummary of playerListStore.playerSummaries(); track playerSummary.player.id) {
+      <app-player-card (clickOnGame)="goToGamePage(playerSummary)" (clickOnPseudo)="goToProfile(playerSummary)"
+                       [playerSummary]="playerSummary"
+                       class="player-card"></app-player-card>
+    }
+
+    @if (playerListStore.hasMorePlayers() && !playerListStore.isLoading()) {
+      <div (click)="playerListStore.loadMore()" class="load-more-button">
+        Load more players...
+      </div>
+    }
+    @if (playerListStore.isLoading()) {
+      <div class="spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    }
+
+    @if (playerListStore.isError()) {
+      <div class="error-message-wrapper">
+        <span class="error-message">Error loading players!</span>
       </div>
     }
   </div>

@@ -1,0 +1,85 @@
+@use 'styles/colors' as *;
+
+.player-card {
+  padding: 10px;
+  background-color: rgba($blue-main, 0.3);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .player-image-pseudo-wrapper {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .player-image {
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .player-pseudo {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 15px;
+  }
+
+  .player-games-infos {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .separator {
+      color: rgba(0, 0, 0, 0.54);
+      margin: 20px;
+      width: 95%;
+    }
+  }
+
+  .total-played-games {
+    font-size: 20px;
+  }
+
+  .last-played-game-wrapper {
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .last-game-played-label {
+    font-style: italic;
+  }
+
+  .last-game-played {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .last-game-played-title {
+    color: $blue-main;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .last-game-played-image {
+    margin-left: 10px;
+    border-radius: 50%;
+  }
+
+  .trophy-count {
+    justify-self: flex-end;
+  }
+}
+
+

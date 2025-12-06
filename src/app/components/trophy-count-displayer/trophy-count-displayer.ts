@@ -21,4 +21,8 @@ export class TrophyCountDisplayer {
   get flexDirection(): string {
     return this.labelOrientation === 'horizontal' ? 'row' : 'column';
   }
+
+  get isLabelHorizonal(): boolean {
+    return this.labelOrientation === 'horizontal';
+  }
 }

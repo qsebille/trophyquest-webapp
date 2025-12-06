@@ -1,36 +1,53 @@
 @use 'styles/colors' as *;
 
-.player-card-wrapper {
-  padding-top: 20px;
+.players-page {
+  padding-bottom: 50px;
+}
+
+.players-header {
+  background-color: rgba($blue-main, 0.03);
+  height: 500px;
+  border-radius: 2px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.players-content {
+  margin-top: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .player-card {
-  background-color: $blue-light;
+  width: 100%;
+  margin: 10px;
+}
+
+.load-more-button {
+  margin-top: 20px;
+  font-size: 15px;
+  color: $blue-main;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.15s ease;
+}
 
-  .player-pseudo {
-    font-size: 18px;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
+.error-message-wrapper {
+  margin-top: 20px;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  height: 100px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 2px;
+  background-color: rgba(red, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  .player-card-image {
-    width: 100%;
-    max-height: 350px;
-    object-fit: cover;
-    display: block;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px $blue-medium;
-  }
-
-  .see-profile-button {
-    background-color: $blue-main;
-  }
+.error-message {
+  color: rgba(red, 0.8);
 }

@@ -14,7 +14,7 @@ describe('PlayersPage', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'results']);
 
-    playerListStoreSpy.results.and.returnValue([]);
+    playerListStoreSpy.playerSummaries.and.returnValue([]);
     routerSpy.navigate.and.returnValue(Promise.resolve(true));
 
     await TestBed.configureTestingModule({
@@ -41,7 +41,7 @@ describe('PlayersPage', () => {
   });
 
   it('should navigate to profile page', () => {
-    playerListStoreSpy.results.and.returnValue([{
+    playerListStoreSpy.playerSummaries.and.returnValue([{
       id: '123',
       pseudo: 'John Doe',
       avatarUrl: 'avatar.png',
