@@ -1,7 +1,10 @@
 <div class="home-page container container-fluid">
   <div class="home-page-header">
-    <h1>Welcome on TrophyQuest</h1>
-    <p>Content coming soon...</p>
+    <span class="welcome-message">Welcome on TrophyQuest</span>
+    <app-home-summary [nbGames]="gameListStore.total()"
+                      [nbPlayers]="playerListStore.total()"
+                      [nbTrophies]="lastObtainedTrophyStore.total()"
+                      class="home-summary"/>
   </div>
 
   <div class="home-page-content">

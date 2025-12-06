@@ -99,4 +99,8 @@ export class PlayerService {
     return this.http.get<GameGroupTrophies[]>(`${this.API_URL}/${playerId}/collection/${collectionId}/trophies`);
   }
 
+  count(): Observable<number> {
+    return this.http.get<number>(`${this.API_URL}/count`);
+  }
+
 }
