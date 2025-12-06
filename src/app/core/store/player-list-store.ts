@@ -1,14 +1,14 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
-import {Player} from '../models/dto/player';
 import {PlayerService} from '../services/player.service';
 import {LoadingStatus} from '../models/loading-status.enum';
 import {SearchState} from '../models/states/search-state';
+import {PlayerSummary} from '../models/dto/player-summary';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayerListStore {
-  private readonly INITIAL_STATE: SearchState<Player> = {
+  private readonly INITIAL_STATE: SearchState<PlayerSummary> = {
     results: [],
     total: 0,
     pageNumber: 0,
@@ -16,8 +16,11 @@ export class PlayerListStore {
     loadingStatus: LoadingStatus.NONE,
   }
 
-  private readonly _state = signal<SearchState<Player>>(this.INITIAL_STATE);
-  readonly results: Signal<Player[]> = computed(() => this._state().results);
+  private readonly _state = signal<SearchState<PlayerSummary>>(this.INITIAL_STATE);
+  readonly playerSummaries: Signal<PlayerSummary[]> = computed(() => this._state().results);
+  readonly isLoading: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.LOADING);
+  readonly hasMorePlayers: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.PARTIALLY_LOADED);
+  readonly isError: Signal<boolean> = computed(() => this._state().loadingStatus === LoadingStatus.ERROR);
 
   constructor(private readonly _playerService: PlayerService) {
   }
@@ -27,14 +30,23 @@ export class PlayerListStore {
   }
 
   search(): void {
-    this._playerService.search().subscribe({
+    this._state.update(s => ({...s, loadingStatus: LoadingStatus.LOADING}));
+    this._playerService.search(this._state().pageNumber, this._state().pageSize).subscribe({
       next: searchResult => {
-        const players = [...this._state().results, ...searchResult.content] as Player[];
+        const players = [...this._state().results, ...searchResult.content] as PlayerSummary[];
         const loadingStatus: LoadingStatus = players.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
         this._state.update(s => ({...s, results: players, total: searchResult.total, loadingStatus: loadingStatus}));
       },
-      error: error => console.error(error),
+      error: error => {
+        this._state.update(s => ({...s, loadingStatus: LoadingStatus.ERROR}));
+        console.error(error)
+      },
     });
+  }
+
+  loadMore(): void {
+    this._state.update(s => ({...s, pageNumber: s.pageNumber + 1}));
+    this.search();
   }
 
 }

@@ -1,15 +1,14 @@
 import {Component} from '@angular/core';
 import {PlayerListStore} from '../../core/store/player-list-store';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-import {MatButton} from '@angular/material/button';
 import {Router} from '@angular/router';
+import {PlayerCard} from '../../components/player-card/player-card';
+import {PlayerSummary} from '../../core/models/dto/player-summary';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   imports: [
-    MatIconModule,
-    MatCardModule,
-    MatButton,
+    PlayerCard,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './players-page.component.html',
   styleUrl: './players-page.component.scss',
@@ -27,8 +26,17 @@ export class PlayersPage {
     this.playerListStore.search();
   }
 
-  goToProfile(playerId: string) {
+  goToProfile(playerSummary: PlayerSummary): void {
+    const playerId: string = playerSummary.player.id;
     this._router.navigate(['/profile', playerId]).then(() => console.info(`Navigated to profile page: ${playerId}`));
+  }
+
+  goToGamePage(playerSummary: PlayerSummary): void {
+    const playerId: string = playerSummary.player.id;
+    const gameId: string = playerSummary.lastPlayedGameId;
+    const collectionId: string = playerSummary.lastPlayedCollectionId;
+    this._router.navigate(['/game', gameId], {queryParams: {collectionId, playerId}})
+      .then(() => console.info(`Navigated to game page: ${gameId}, collection ${collectionId}, player ${playerId}`));
   }
 
 }

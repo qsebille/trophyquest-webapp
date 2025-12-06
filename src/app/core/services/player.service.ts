@@ -17,13 +17,14 @@ export class PlayerService {
   constructor(private http: HttpClient) {
   }
 
-  /**
-   * Fetches a list of players based on the search criteria.
-   *
-   * @return {Observable<SearchResult<Player>>} An observable emitting the search result containing players.
-   */
-  search(): Observable<SearchResult<Player>> {
-    return this.http.get<SearchResult<Player>>(`${this.API_URL}/search`);
+  search(
+    pageNumber: number,
+    pageSize: number
+  ): Observable<SearchResult<Player>> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
+    return this.http.get<SearchResult<Player>>(`${this.API_URL}/search`, {params});
   }
 
   /**

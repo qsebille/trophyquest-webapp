@@ -39,7 +39,7 @@ describe('PlayerListStore', () => {
     flushMicrotasks();
 
     expect(playerServiceSpy.search).toHaveBeenCalled();
-    expect(store.results()).toEqual(searchResultMock.content);
+    expect(store.playerSummaries()).toEqual(searchResultMock.content);
   }));
 
   it('should reset state when reset is called', fakeAsync(() => {
@@ -49,7 +49,7 @@ describe('PlayerListStore', () => {
     flushMicrotasks();
     store.reset();
 
-    expect(store.results()).toEqual([]);
+    expect(store.playerSummaries()).toEqual([]);
   }));
 
 });
