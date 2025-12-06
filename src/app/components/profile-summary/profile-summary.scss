@@ -7,6 +7,9 @@
   border-radius: 1.5rem;
   background: $blue-light;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-header {
@@ -16,17 +19,12 @@
   margin-bottom: 1.5rem;
 }
 
-.avatar-wrapper {
+.avatar-image {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   background: #ffffff;
   border: 3px solid rgba(255, 255, 255, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  flex-shrink: 0;
 }
 
 .avatar-wrapper img {
@@ -42,16 +40,22 @@
   font-weight: 600;
 }
 
-.trophy-summary {
+.game-trophies-summary {
   margin-top: 0.5rem;
   padding: 1rem 1.25rem;
   border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
-.trophy-summary-title {
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0.75rem;
+.total-played-games {
+  font-size: 20px;
+}
+
+.trophy-count {
+  justify-self: flex-end;
 }
 
 

@@ -1,19 +1,14 @@
 <mat-card class="profile-card">
   <div class="profile-header">
-    <div class="avatar-wrapper">
-      <img [src]="profile?.avatarUrl" alt="Avatar"/>
-    </div>
-
+    <img [height]="100" [width]="100" alt="" class="avatar-image" ngSrc="{{player.avatarUrl}}"/>
     <div class="profile-name">
-      {{ profile?.pseudo || 'Nom du Profil' }}
+      {{ player.pseudo }}
     </div>
   </div>
 
-  <div class="trophy-summary">
-    <div class="trophy-summary-title">
-      Résumé des trophées
-    </div>
+  <div class="game-trophies-summary">
+    <div class="total-played-games">{{ totalPlayedGames }} played games</div>
     <app-trophy-count-displayer [iconSize]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
-                                [trophyCount]="trophyCount"/>
+                                [trophyCount]="trophyCount" class="trophy-count"/>
   </div>
 </mat-card>

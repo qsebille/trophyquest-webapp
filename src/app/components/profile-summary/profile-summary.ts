@@ -1,24 +1,22 @@
 import {Component, Input} from '@angular/core';
-import {Player} from '../../core/models/dto/player';
 import {MatCardModule} from '@angular/material/card';
-import {TrophyCount} from '../../core/models/dto/trophy-count';
 import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
+import {NgOptimizedImage} from '@angular/common';
+import {Player} from '../../core/models/dto/player';
+import {TrophyCount} from '../../core/models/dto/trophy-count';
 
 @Component({
   selector: 'app-profile-summary',
   imports: [
     MatCardModule,
     TrophyCountDisplayer,
+    NgOptimizedImage,
   ],
   templateUrl: './profile-summary.html',
   styleUrl: './profile-summary.scss',
 })
 export class ProfileSummary {
-  @Input({required: true}) profile: Player | undefined;
-  @Input({required: true}) trophyCount: TrophyCount = {
-    platinum: 0,
-    gold: 0,
-    silver: 0,
-    bronze: 0,
-  };
+  @Input({required: true}) player!: Player;
+  @Input({required: true}) trophyCount!: TrophyCount;
+  @Input({required: true}) totalPlayedGames!: number;
 }
