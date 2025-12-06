@@ -27,8 +27,11 @@ export class ProfileStore {
     loadingStatus: LoadingStatus.NONE,
   }
   private readonly INITIAL_STATE: ProfileState = {
-    playerId: "",
-    player: undefined,
+    player: {
+      id: "",
+      pseudo: "",
+      avatarUrl: "",
+    },
     games: this.INITIAL_GAME_STATE,
     trophies: this.INITIAL_TROPHY_STATE,
     trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0},
@@ -43,6 +46,8 @@ export class ProfileStore {
   readonly trophyCount = computed(() => this._state().trophyCount);
   readonly hasMoreTrophies = computed(() => this._state().trophies.loadingStatus === LoadingStatus.PARTIALLY_LOADED);
   readonly isLoadingTrophies = computed(() => this._state().trophies.loadingStatus === LoadingStatus.LOADING);
+  readonly totalPlayedGames = computed(() => this._state().games.total);
+  readonly totalEarnedTrophies = computed(() => this._state().trophyCount.platinum + this._state().trophyCount.gold + this._state().trophyCount.silver + this._state().trophyCount.bronze);
 
   constructor(
     private readonly _playerService: PlayerService,
@@ -64,7 +69,7 @@ export class ProfileStore {
       player: this._playerService.fetch(playerId),
       trophyCount: this._playerService.getTrophyCount(playerId),
     }).subscribe({
-      next: ({player, trophyCount}) => this._state.update(s => ({...s, playerId: playerId, player, trophyCount})),
+      next: ({player, trophyCount}) => this._state.update(s => ({...s, player, trophyCount})),
       error: () => this._errorService.logErrorAndRedirect('Failed loading profile: ' + playerId),
     });
   }

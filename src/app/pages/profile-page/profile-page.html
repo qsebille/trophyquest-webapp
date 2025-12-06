@@ -1,9 +1,8 @@
 <div class="profile-page container container-fluid">
-  <app-profile-summary
-    [profile]="profileStore.player()"
-    [style.animationDelay.ms]="100"
-    [trophyCount]="profileStore.trophyCount()"
-    animate.enter="block-enter"/>
+  <app-profile-summary [player]="profileStore.player()" [style.animationDelay.ms]="100"
+                       [totalPlayedGames]="profileStore.totalPlayedGames()"
+                       [trophyCount]="profileStore.trophyCount()"
+                       animate.enter="block-enter"/>
 
   <div class="profile-collection-wrapper">
     <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-game-list">
