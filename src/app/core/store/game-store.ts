@@ -81,7 +81,7 @@ export class GameStore {
     console.info('Fetching game: ' + gameId + ' and trophies from collection ' + collectionId + ' for player ' + playerId + '...');
     forkJoin({
       game: this._gameService.fetchGame(gameId),
-      trophies: this._playerService.fetchCollectionTrophies(playerId, collectionId),
+      trophies: this._playerService.retrieveCollectionTrophies(playerId, collectionId),
     }).subscribe({
       next: ({game, trophies}) => {
         this._game.set(game);

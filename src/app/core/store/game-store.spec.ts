@@ -69,7 +69,7 @@ describe('GameStore', () => {
 
   beforeEach(() => {
     gameServiceSpy = jasmine.createSpyObj<GameService>('GameService', ['fetchGame']);
-    playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['fetchCollectionTrophies']);
+    playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['retrieveCollectionTrophies']);
     errorServiceSpy = jasmine.createSpyObj<ErrorService>('ErrorService', ['logErrorAndRedirect']);
     TestBed.configureTestingModule({
       providers: [
@@ -87,7 +87,7 @@ describe('GameStore', () => {
 
   it('should update game when fetch succeeds', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of([]));
+    playerServiceSpy.retrieveCollectionTrophies.and.returnValue(of([]));
 
     store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();
@@ -98,19 +98,19 @@ describe('GameStore', () => {
 
   it('should update trophies when fetch succeeds', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
+    playerServiceSpy.retrieveCollectionTrophies.and.returnValue(of(groupTrophiesMock));
 
     store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();
 
-    expect(playerServiceSpy.fetchCollectionTrophies).toHaveBeenCalledOnceWith('000', '456');
+    expect(playerServiceSpy.retrieveCollectionTrophies).toHaveBeenCalledOnceWith('000', '456');
     expect(store.baseGameTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName === 'default')[0].trophies);
     expect(store.dlcTrophies()).toEqual(groupTrophiesMock.filter(g => g.groupName !== 'default'));
   }));
 
   it('should update trophies when earned filter changes', fakeAsync(() => {
     gameServiceSpy.fetchGame.and.returnValue(of(gameMock));
-    playerServiceSpy.fetchCollectionTrophies.and.returnValue(of(groupTrophiesMock));
+    playerServiceSpy.retrieveCollectionTrophies.and.returnValue(of(groupTrophiesMock));
 
     store.fetchPlayerGame('000', '123', '456');
     flushMicrotasks();

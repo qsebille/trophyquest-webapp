@@ -75,8 +75,8 @@ describe('ProfilePage', () => {
 
   it('should fetch profile on init', () => {
     expect(profileStoreSpy.reset).toHaveBeenCalled();
-    expect(profileStoreSpy.fetch).toHaveBeenCalledWith(playerId);
-    expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
+    expect(profileStoreSpy.retrieve).toHaveBeenCalledWith(playerId);
+    expect(profileStoreSpy.searchCollections).toHaveBeenCalledWith(playerId);
     expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
   });
 

@@ -22,7 +22,7 @@ describe('ProfileGameCard', () => {
 
     fixture = TestBed.createComponent(ProfileGameCard);
     component = fixture.componentInstance;
-    component.game = mockAchievements;
+    component.collection = mockAchievements;
     fixture.detectChanges();
   });
 

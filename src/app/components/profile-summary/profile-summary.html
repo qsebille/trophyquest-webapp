@@ -7,7 +7,8 @@
   </div>
 
   <div class="game-trophies-summary">
-    <div class="total-played-games">{{ totalPlayedGames }} played games</div>
+    <div class="total-played-games"><b>{{ totalPlayedGames | number }}</b> played games</div>
+    <div class="total-earned-trophies"><b>{{ totalEarnedTrophies | number }}</b> earned trophies</div>
     <app-trophy-count-displayer [iconSize]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
                                 [trophyCount]="trophyCount" class="trophy-count"/>
   </div>

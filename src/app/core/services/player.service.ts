@@ -4,9 +4,9 @@ import {Observable} from 'rxjs';
 import {Player} from '../models/dto/player';
 import {SearchResult} from '../models/dto/search-result';
 import {TrophyCount} from '../models/dto/trophy-count';
-import {PlayerGameAchievements} from '../models/dto/player-game-achievements';
 import {Trophy} from '../models/dto/trophy';
 import {GameGroupTrophies} from '../models/dto/game-group-trophies';
+import {PlayerCollection} from '../models/dto/player-collection';
 
 @Injectable({
   providedIn: 'root',
@@ -33,18 +33,8 @@ export class PlayerService {
    * @param {string} playerId - The unique identifier of the player to be fetched.
    * @return {Observable<Player>} An Observable that emits the Player object containing the player's data.
    */
-  fetch(playerId: string): Observable<Player> {
+  retrieve(playerId: string): Observable<Player> {
     return this.http.get<Player>(`${this.API_URL}/${playerId}`);
-  }
-
-  /**
-   * Retrieves the trophy count for a specific player.
-   *
-   * @param {string} playerId - The unique identifier of the player whose trophy count is to be fetched.
-   * @return {Observable<TrophyCount>} An observable containing the trophy count for the specified player.
-   */
-  getTrophyCount(playerId: string): Observable<TrophyCount> {
-    return this.http.get<TrophyCount>(`${this.API_URL}/${playerId}/trophy-count`);
   }
 
   /**
@@ -67,40 +57,65 @@ export class PlayerService {
   }
 
   /**
-   * Searches for games associated with a specific player.
+   * Searches player collections with pagination support.
    *
-   * @param {string} playerId - The unique identifier of the player whose games are to be retrieved.
-   * @param {number} pageNumber - The number of the page to retrieve in paginated results.
-   * @param {number} pageSize - The number of games per page to retrieve in paginated results.
-   * @return {Observable<SearchResult<PlayerGameAchievements>>} An Observable containing a SearchResult of PlayerGameAchievements objects.
+   * @param {string} playerId - The unique identifier of the player whose collections are being searched.
+   * @param {number} pageNumber - The page number to retrieve.
+   * @param {number} pageSize - The number of items per page.
+   * @return {Observable<SearchResult<PlayerCollection>>} An observable that emits the search result containing player collections.
    */
-  searchGames(
+  searchCollections(
     playerId: string,
     pageNumber: number,
     pageSize: number
-  ): Observable<SearchResult<PlayerGameAchievements>> {
+  ): Observable<SearchResult<PlayerCollection>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
-    return this.http.get<SearchResult<PlayerGameAchievements>>(`${this.API_URL}/${playerId}/games`, {params});
+    return this.http.get<SearchResult<PlayerCollection>>(`${this.API_URL}/${playerId}/collection/search`, {params});
   }
 
   /**
-   * Fetches the list of trophies associated with a specific collection for a given player.
+   * Retrieves trophies associated with a specific player and collection.
    *
-   * @param {string} playerId - The unique identifier of the player.
-   * @param {string} collectionId - The unique identifier of the collection.
-   * @return {Observable<GameGroupTrophies[]>} An observable that emits the array of trophies belonging to the specified collection.
+   * @param {string} playerId - The unique identifier of the player whose collection trophies are to be retrieved.
+   * @param {string} collectionId - The unique identifier of the collection for which trophies need to be retrieved.
+   * @return {Observable<GameGroupTrophies[]>} - An observable that emits an array of trophies related to the specified player and collection.
    */
-  fetchCollectionTrophies(
+  retrieveCollectionTrophies(
     playerId: string,
     collectionId: string
   ): Observable<GameGroupTrophies[]> {
     return this.http.get<GameGroupTrophies[]>(`${this.API_URL}/${playerId}/collection/${collectionId}/trophies`);
   }
 
+  /**
+   * Retrieves the number of players registered in the system.
+   *
+   * @return {Observable<number>} An observable that emits the count of players registered in the system.
+   */
   count(): Observable<number> {
     return this.http.get<number>(`${this.API_URL}/count`);
+  }
+
+  /**
+   * Counts the total number of games played by a specific player.
+   *
+   * @param {string} playerId - The unique identifier of the player whose played games are to be counted.
+   * @return {Observable<number>} An observable that emits the total number of games played by the specified player.
+   */
+  countPlayedGames(playerId: string): Observable<number> {
+    return this.http.get<number>(`${this.API_URL}/${playerId}/game/count`);
+  }
+
+  /**
+   * Retrieves the count of trophies earned by a specific player.
+   *
+   * @param {string} playerId - The unique identifier of the player.
+   * @return {Observable<TrophyCount>} An observable that emits the trophy count for the specified player.
+   */
+  countEarnedTrophies(playerId: string): Observable<TrophyCount> {
+    return this.http.get<TrophyCount>(`${this.API_URL}/${playerId}/trophy/count`);
   }
 
 }

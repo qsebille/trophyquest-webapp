@@ -43,7 +43,7 @@ describe('ProfileStore', () => {
   const mockTrophySearchResult: SearchResult<Trophy> = {content: mockTrophies, total: 10}
 
   beforeEach(() => {
-    playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['fetch', 'searchGames', 'getTrophyCount', 'searchEarnedTrophies']);
+    playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['retrieve', 'searchGames', 'countEarnedTrophies', 'searchEarnedTrophies']);
     errorServiceSpy = jasmine.createSpyObj<ErrorService>('ErrorService', ['logErrorAndRedirect']);
 
     TestBed.configureTestingModule({
@@ -63,46 +63,46 @@ describe('ProfileStore', () => {
     store.reset();
 
     expect(store.player()).toBeUndefined();
-    expect(store.gameResults()).toEqual([]);
-    expect(store.trophyResults()).toEqual([]);
+    expect(store.collections()).toEqual([]);
+    expect(store.trophies()).toEqual([]);
   });
 
   it('should fetch player and trophy count when fetch is called', fakeAsync(() => {
-    playerServiceSpy.fetch.and.returnValue(of(mockPlayer));
-    playerServiceSpy.getTrophyCount.and.returnValue(of(mockTrophyCount));
+    playerServiceSpy.retrieve.and.returnValue(of(mockPlayer));
+    playerServiceSpy.countEarnedTrophies.and.returnValue(of(mockTrophyCount));
 
-    store.fetch('123');
+    store.retrieve('123');
     flushMicrotasks();
 
-    expect(playerServiceSpy.fetch).toHaveBeenCalledWith('123');
-    expect(playerServiceSpy.getTrophyCount).toHaveBeenCalledWith('123');
+    expect(playerServiceSpy.retrieve).toHaveBeenCalledWith('123');
+    expect(playerServiceSpy.countEarnedTrophies).toHaveBeenCalledWith('123');
     expect(store.player()).toEqual(mockPlayer);
     expect(store.trophyCount()).toEqual(mockTrophyCount);
   }))
 
   it('should log an error when fetching player with an invalid id', () => {
-    store.fetch(null);
+    store.retrieve(null);
 
     expect(errorServiceSpy.logErrorAndRedirect).toHaveBeenCalledWith('Invalid player id');
-    expect(playerServiceSpy.fetch).not.toHaveBeenCalled();
+    expect(playerServiceSpy.retrieve).not.toHaveBeenCalled();
   });
 
   it('should fetch games when searchGames is called', fakeAsync(() => {
     playerServiceSpy.searchGames.and.returnValue(of(mockGameSearchResult));
 
-    store.searchGames('123');
+    store.searchCollections('123');
     flushMicrotasks();
 
     expect(playerServiceSpy.searchGames).toHaveBeenCalledWith('123', 0, 20);
-    expect(store.gameResults()).toEqual(mockGameSearchResult.content);
-    expect(store.isLoadingGames()).toBeFalse();
-    expect(store.hasMoreGames()).toBeTrue();
+    expect(store.collections()).toEqual(mockGameSearchResult.content);
+    expect(store.isLoadingCollections()).toBeFalse();
+    expect(store.hasMoreCollections()).toBeTrue();
   }));
 
   it('should search for games when loadMoreGames is called', fakeAsync(() => {
     playerServiceSpy.searchGames.and.returnValue(of(mockGameSearchResult));
 
-    store.loadMoreGames('123');
+    store.loadMoreCollections('123');
     flushMicrotasks();
 
     expect(playerServiceSpy.searchGames).toHaveBeenCalledWith('123', 1, 20);
@@ -115,7 +115,7 @@ describe('ProfileStore', () => {
     flushMicrotasks();
 
     expect(playerServiceSpy.searchEarnedTrophies).toHaveBeenCalledWith('123', 0, 20);
-    expect(store.trophyResults()).toEqual(mockTrophySearchResult.content);
+    expect(store.trophies()).toEqual(mockTrophySearchResult.content);
     expect(store.isLoadingTrophies()).toBeFalse();
     expect(store.hasMoreTrophies()).toBeTrue();
   }));
