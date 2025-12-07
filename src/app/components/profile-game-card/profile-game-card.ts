@@ -1,40 +1,38 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
-import {NgOptimizedImage} from '@angular/common';
 import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
+import {PlayerCollection} from '../../core/models/dto/player-collection';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-profile-game-card',
   imports: [
-    NgOptimizedImage,
-    TrophyCountDisplayer
+    TrophyCountDisplayer,
+    MatProgressBarModule,
+    DecimalPipe,
   ],
   templateUrl: './profile-game-card.html',
   styleUrl: './profile-game-card.scss',
 })
 export class ProfileGameCard {
-  @Input({required: true}) game!: PlayerGameAchievements;
-  @Output() public readonly gameClicked = new EventEmitter<{ gameId: string, collectionId: string }>();
+  @Input({required: true}) collection!: PlayerCollection;
+  @Output() public readonly clickOnTitle = new EventEmitter();
 
-  isExpanded: boolean = false;
+  get completionScore(): number {
+    const earnedTrophies: number = this.collection.earnedTrophies.platinum +
+      this.collection.earnedTrophies.gold +
+      this.collection.earnedTrophies.silver +
+      this.collection.earnedTrophies.bronze;
+    const totalTrophies: number = this.collection.collectionTrophies.platinum +
+      this.collection.collectionTrophies.gold +
+      this.collection.collectionTrophies.silver +
+      this.collection.collectionTrophies.bronze;
+
+    return earnedTrophies / totalTrophies * 100;
+  }
 
   get isCompleted(): boolean {
-    return this.game.earnedTrophies.platinum === this.game.totalTrophies.platinum &&
-      this.game.earnedTrophies.gold === this.game.totalTrophies.gold &&
-      this.game.earnedTrophies.silver === this.game.totalTrophies.silver &&
-      this.game.earnedTrophies.bronze === this.game.totalTrophies.bronze;
-  }
-
-  clickOnGameCard(): void {
-    if (this.game.trophyCollections.length === 1) {
-      this.gameClicked.emit({gameId: this.game.id, collectionId: this.game.trophyCollections[0].id});
-    } else {
-      this.isExpanded = !this.isExpanded;
-    }
-  }
-
-  clickOnCollection(collectionId: string): void {
-    this.gameClicked.emit({gameId: this.game.id, collectionId});
+    return this.completionScore === 100;
   }
 
 }

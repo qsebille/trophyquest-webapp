@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {LastObtainedTrophiesStore} from './last-obtained-trophies-store';
+import {ObtainedTrophiesStore} from './obtained-trophies-store.service';
 import {TrophyService} from '../services/trophy.service';
 import {SearchResult} from '../models/dto/search-result';
 import {ObtainedTrophy} from '../models/dto/obtained-trophy';
 import {of} from 'rxjs';
 
-describe('LastObtainedTrophiesStore', () => {
-  let service: LastObtainedTrophiesStore;
+describe('ObtainedTrophiesStore', () => {
+  let service: ObtainedTrophiesStore;
   let trophyServiceSpy: jasmine.SpyObj<TrophyService>;
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('LastObtainedTrophiesStore', () => {
         {provide: TrophyService, useValue: trophyServiceSpy},
       ]
     });
-    service = TestBed.inject(LastObtainedTrophiesStore);
+    service = TestBed.inject(ObtainedTrophiesStore);
   });
 
   const mockSearchResults: SearchResult<ObtainedTrophy> = {

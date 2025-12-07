@@ -7,7 +7,7 @@ import {TrophyService} from '../services/trophy.service';
 @Injectable({
   providedIn: 'root',
 })
-export class LastObtainedTrophiesStore {
+export class ObtainedTrophiesStore {
   private readonly INITIAL_STATE: SearchState<ObtainedTrophy> = {
     results: [],
     total: 0,

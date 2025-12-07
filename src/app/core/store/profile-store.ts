@@ -3,50 +3,52 @@ import {PlayerService} from '../services/player.service';
 import {forkJoin} from 'rxjs';
 import {ProfileState} from '../models/states/profile-state';
 import {ErrorService} from '../services/error.service';
-import {SearchState} from '../models/states/search-state';
 import {LoadingStatus} from '../models/loading-status.enum';
-import {PlayerGameAchievements} from '../models/dto/player-game-achievements';
 import {Trophy} from '../models/dto/trophy';
+import {PlayerCollection} from '../models/dto/player-collection';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileStore {
-  private readonly INITIAL_GAME_STATE: SearchState<PlayerGameAchievements> = {
-    results: [],
-    total: 0,
-    pageNumber: 0,
-    pageSize: 20,
-    loadingStatus: LoadingStatus.NONE,
-  }
-  private readonly INITIAL_TROPHY_STATE: SearchState<Trophy> = {
-    results: [],
-    total: 0,
-    pageNumber: 0,
-    pageSize: 20,
-    loadingStatus: LoadingStatus.NONE,
-  }
   private readonly INITIAL_STATE: ProfileState = {
     player: {
       id: "",
       pseudo: "",
       avatarUrl: "",
     },
-    games: this.INITIAL_GAME_STATE,
-    trophies: this.INITIAL_TROPHY_STATE,
+    collections: {
+      results: [],
+      total: 0,
+      pageNumber: 0,
+      pageSize: 20,
+      loadingStatus: LoadingStatus.NONE,
+    },
+    trophies: {
+      results: [],
+      total: 0,
+      pageNumber: 0,
+      pageSize: 20,
+      loadingStatus: LoadingStatus.NONE,
+    },
+    gameCount: 0,
     trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0},
   }
 
   private readonly _state = signal<ProfileState>(this.INITIAL_STATE);
   readonly player = computed(() => this._state().player);
-  readonly gameResults = computed(() => this._state().games.results);
-  readonly hasMoreGames = computed(() => this._state().games.loadingStatus === LoadingStatus.PARTIALLY_LOADED);
-  readonly isLoadingGames = computed(() => this._state().games.loadingStatus === LoadingStatus.LOADING);
-  readonly trophyResults = computed(() => this._state().trophies.results);
-  readonly trophyCount = computed(() => this._state().trophyCount);
+  readonly collections = computed(() => this._state().collections.results);
+  readonly hasMoreCollections = computed(() => this._state().collections.loadingStatus === LoadingStatus.PARTIALLY_LOADED);
+  readonly isLoadingCollections = computed(() => this._state().collections.loadingStatus === LoadingStatus.LOADING);
+  readonly hasNoCollections = computed(() => this._state().collections.results.length === 0 && this._state().collections.loadingStatus === LoadingStatus.FULLY_LOADED);
+  readonly hasErrorLoadingCollections = computed(() => this._state().collections.loadingStatus === LoadingStatus.ERROR);
+  readonly trophies = computed(() => this._state().trophies.results);
   readonly hasMoreTrophies = computed(() => this._state().trophies.loadingStatus === LoadingStatus.PARTIALLY_LOADED);
   readonly isLoadingTrophies = computed(() => this._state().trophies.loadingStatus === LoadingStatus.LOADING);
-  readonly totalPlayedGames = computed(() => this._state().games.total);
+  readonly hasNoTrophies = computed(() => this._state().trophies.results.length === 0 && this._state().trophies.loadingStatus === LoadingStatus.FULLY_LOADED);
+  readonly hasErrorLoadingTrophies = computed(() => this._state().trophies.loadingStatus === LoadingStatus.ERROR);
+  readonly trophyCount = computed(() => this._state().trophyCount);
+  readonly totalPlayedGames = computed(() => this._state().gameCount);
   readonly totalEarnedTrophies = computed(() => this._state().trophyCount.platinum + this._state().trophyCount.gold + this._state().trophyCount.silver + this._state().trophyCount.bronze);
 
   constructor(
@@ -59,52 +61,48 @@ export class ProfileStore {
     this._state.set(this.INITIAL_STATE);
   }
 
-  fetch(playerId: string | null): void {
+  retrieve(playerId: string | null): void {
     if (null == playerId) {
       this._errorService.logErrorAndRedirect('Invalid player id');
       return;
     }
 
     forkJoin({
-      player: this._playerService.fetch(playerId),
-      trophyCount: this._playerService.getTrophyCount(playerId),
+      player: this._playerService.retrieve(playerId),
+      gameCount: this._playerService.countPlayedGames(playerId),
+      trophyCount: this._playerService.countEarnedTrophies(playerId),
     }).subscribe({
-      next: ({player, trophyCount}) => this._state.update(s => ({...s, player, trophyCount})),
+      next: ({player, trophyCount, gameCount}) => this._state.update(s => ({...s, player, gameCount, trophyCount})),
       error: () => this._errorService.logErrorAndRedirect('Failed loading profile: ' + playerId),
     });
   }
 
-  searchGames(playerId: string | null): void {
+  searchCollections(playerId: string | null): void {
     if (null == playerId) {
       this._errorService.logErrorAndRedirect('Invalid player id');
       return;
     }
 
-    this._state.update(s => ({...s, games: {...s.games, loadingStatus: LoadingStatus.LOADING}}));
-    this._playerService.searchGames(playerId, this._state().games.pageNumber, this._state().games.pageSize).subscribe({
+    this._state.update(s => ({...s, collections: {...s.collections, loadingStatus: LoadingStatus.LOADING}}));
+    this._playerService.searchCollections(playerId, this._state().collections.pageNumber, this._state().collections.pageSize).subscribe({
       next: searchResult => {
-        const games = [...this._state().games.results, ...searchResult.content] as PlayerGameAchievements[];
-        const loadingStatus: LoadingStatus = games.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
+        const collections = [...this._state().collections.results, ...searchResult.content] as PlayerCollection[];
+        const loadingStatus: LoadingStatus = collections.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
         this._state.update(s => ({
           ...s,
-          games: {...s.games, results: games, total: searchResult.total, loadingStatus: loadingStatus}
+          collections: {...s.collections, results: collections, total: searchResult.total, loadingStatus}
         }));
       },
       error: () => {
-        this._errorService.logErrorAndRedirect('Failed loading games for profile: ' + playerId)
-        this._state.update(s => ({...s, games: {...s.games, loadingStatus: LoadingStatus.ERROR}}));
+        console.error(`Failed loading games for player ${playerId}`);
+        this._state.update(s => ({...s, collections: {...s.collections, loadingStatus: LoadingStatus.ERROR}}));
       },
     });
   }
 
-  loadMoreGames(playerId: string | null): void {
-    if (null == playerId) {
-      this._errorService.logErrorAndRedirect('Invalid player id');
-      return;
-    }
-
-    this._state.update(s => ({...s, games: {...s.games, pageNumber: s.games.pageNumber + 1}}));
-    this.searchGames(playerId);
+  loadMoreCollections(playerId: string | null): void {
+    this._state.update(s => ({...s, collections: {...s.collections, pageNumber: s.collections.pageNumber + 1}}));
+    this.searchCollections(playerId);
   }
 
   searchTrophies(playerId: string | null): void {
@@ -121,17 +119,13 @@ export class ProfileStore {
         this._state.update(s => ({...s, trophies: {...s.trophies, results, total: searchResult.total, loadingStatus}}));
       },
       error: () => {
-        this._errorService.logErrorAndRedirect('Failed loading trophies for player: ' + playerId);
+        console.error(`Failed loading trophies for player ${playerId}`);
         this._state.update(s => ({...s, trophies: {...s.trophies, loadingStatus: LoadingStatus.ERROR}}));
       },
     });
   }
 
   loadMoreTrophies(playerId: string | null): void {
-    if (null == playerId) {
-      this._errorService.logErrorAndRedirect('Invalid player id');
-      return;
-    }
     this._state.update(s => ({...s, trophies: {...s.trophies, pageNumber: s.trophies.pageNumber + 1}}));
     this.searchTrophies(playerId);
   }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {GameListStore} from '../../core/store/game-list-store';
 import {HomeGameCard} from '../../components/home-game-card/home-game-card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {LastObtainedTrophiesStore} from '../../core/store/last-obtained-trophies-store';
+import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store.service';
 import {HomeObtainedTrophyCard} from '../../components/home-obtained-trophy-card/home-obtained-trophy-card';
 import {Router} from '@angular/router';
 import {HomeSummary} from '../../components/home-summary/home-summary';
@@ -23,7 +23,7 @@ export class HomePage {
   constructor(
     private readonly _router: Router,
     public readonly gameListStore: GameListStore,
-    public readonly lastObtainedTrophyStore: LastObtainedTrophiesStore,
+    public readonly obtainedTrophiesStore: ObtainedTrophiesStore,
     public readonly playerListStore: PlayerListStore,
   ) {
   }
@@ -31,8 +31,8 @@ export class HomePage {
   ngOnInit(): void {
     this.gameListStore.resetState();
     this.gameListStore.search();
-    this.lastObtainedTrophyStore.resetState();
-    this.lastObtainedTrophyStore.search();
+    this.obtainedTrophiesStore.resetState();
+    this.obtainedTrophiesStore.search();
     this.playerListStore.reset();
     this.playerListStore.count();
   }
@@ -42,7 +42,7 @@ export class HomePage {
   }
 
   loadMoreTrophies(): void {
-    this.lastObtainedTrophyStore.loadMore();
+    this.obtainedTrophiesStore.loadMore();
   }
 
   goToProfilePage(playerId: string): void {

@@ -6,7 +6,8 @@ import {ProfileStore} from '../../core/store/profile-store';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
 import {Player} from '../../core/models/dto/player';
-import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
+import {PlayerCollection} from '../../core/models/dto/player-collection';
+import {Trophy} from '../../core/models/dto/trophy';
 
 describe('ProfilePage', () => {
   let component: ProfilePage;
@@ -16,39 +17,32 @@ describe('ProfilePage', () => {
 
   @Component({selector: 'app-profile-summary', template: ''})
   class MockProfileSummary {
-    @Input({required: true}) profile: Player = undefined!;
-    @Input({required: true}) trophyCount: TrophyCount = {platinum: 0, gold: 0, silver: 0, bronze: 0};
+    @Input({required: true}) player!: Player;
+    @Input({required: true}) trophyCount!: TrophyCount;
+    @Input({required: true}) totalGamesPlayed!: number;
+    @Input({required: true}) totalEarnedTrophies!: number;
   }
 
   @Component({selector: 'app-profile-game-card', template: ''})
   class MockProfileGameCard {
-    @Input({required: true}) game!: PlayerGameAchievements;
-    @Output() public readonly gameClicked = new EventEmitter<{ gameId: string, collectionId: string }>();
+    @Input({required: true}) collection!: PlayerCollection;
+    @Output() public readonly clickOnTitle = new EventEmitter();
   }
 
   @Component({selector: 'app-profile-trophy-card', template: ''})
   class MockProfileTrophyCard {
+    @Input({required: true}) trophy!: Trophy;
   }
 
-  const playerId = '001';
+  const mockPlayerId = '000';
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     profileStoreSpy = jasmine.createSpyObj('ProfileStore', [
-      'reset',
-      'fetch',
-      'searchGames',
-      'loadMoreGames',
-      'searchTrophies',
-      'loadMoreTrophies',
-      'player',
-      'trophyCount',
-      'gameResults',
-      'hasMoreGames',
-      'isLoadingGames',
-      'trophyResults',
-      'hasMoreTrophies',
-      'isLoadingTrophies',
+      'reset', 'retrieve',
+      'player', 'trophyCount', 'totalPlayedGames', 'totalEarnedTrophies',
+      'collections', 'searchCollections', 'loadMoreCollections', 'hasMoreCollections', 'hasNoCollections', 'isLoadingCollections', 'hasErrorLoadingCollections',
+      'trophies', 'searchTrophies', 'loadMoreTrophies', 'hasMoreTrophies', 'hasNoTrophies', 'isLoadingTrophies', 'hasErrorLoadingTrophies',
     ]);
 
     await TestBed.configureTestingModule({
@@ -56,7 +50,7 @@ describe('ProfilePage', () => {
       providers: [
         {provide: ProfileStore, useValue: profileStoreSpy},
         {provide: Router, useValue: routerSpy},
-        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => playerId}}}}
+        {provide: ActivatedRoute, useValue: {snapshot: {paramMap: {get: () => mockPlayerId}}}}
       ]
     }).compileComponents();
 
@@ -73,34 +67,33 @@ describe('ProfilePage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch profile on init', () => {
+  it('should fetch profile informations on init', () => {
     expect(profileStoreSpy.reset).toHaveBeenCalled();
-    expect(profileStoreSpy.fetch).toHaveBeenCalledWith(playerId);
-    expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
-    expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
+    expect(profileStoreSpy.retrieve).toHaveBeenCalledWith(mockPlayerId);
+    expect(profileStoreSpy.searchCollections).toHaveBeenCalledWith(mockPlayerId);
+    expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(mockPlayerId);
   });
 
   it('should navigate to game page when clicking on game card', () => {
-    const mockedTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
-    const event: { gameId: string, collectionId: string } = {
-      gameId: '123',
-      collectionId: 'collection-456',
-    };
-    const game: PlayerGameAchievements = {
-      id: event.gameId,
-      title: 'Game 1',
-      imageUrl: 'game.png',
-      earnedTrophies: mockedTrophyCount,
-      totalTrophies: mockedTrophyCount,
-      trophyCollections: []
-    };
+    const mockTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
+    const mockPlayerCollection: PlayerCollection = {
+      collectionId: 'collection-123',
+      collectionTitle: '',
+      collectionPlatform: '',
+      collectionImageUrl: '',
+      gameId: 'game-456',
+      gameTitle: '',
+      gameImageUrl: '',
+      collectionTrophies: mockTrophyCount,
+      earnedTrophies: mockTrophyCount,
+    }
     routerSpy.navigate.and.returnValue(Promise.resolve(true));
 
-    component.navigateToGamePage(event);
+    component.navigateToGamePage(mockPlayerCollection);
 
     expect(routerSpy.navigate).toHaveBeenCalledOnceWith(
-      ['/game', game.id],
-      {queryParams: {collectionId: event.collectionId, playerId}}
+      ['/game', mockPlayerCollection.gameId],
+      {queryParams: {collectionId: mockPlayerCollection.collectionId, playerId: mockPlayerId}}
     );
   });
 

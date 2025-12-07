@@ -41,7 +41,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Comic Sans MS, "Helvetica Neue", sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
 
@@ -87,5 +87,25 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/**
+ * PLATFORM LABEL
+ */
+.platform-label {
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  padding: 1px;
+  font-family: Roboto, sans-serif;
+
+  &--PS4 {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+  }
+
+  &--PS5 {
+    background-color: white;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
-import {NgOptimizedImage} from '@angular/common';
+import {DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {Player} from '../../core/models/dto/player';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
 
@@ -11,6 +11,7 @@ import {TrophyCount} from '../../core/models/dto/trophy-count';
     MatCardModule,
     TrophyCountDisplayer,
     NgOptimizedImage,
+    DecimalPipe,
   ],
   templateUrl: './profile-summary.html',
   styleUrl: './profile-summary.scss',
@@ -18,5 +19,6 @@ import {TrophyCount} from '../../core/models/dto/trophy-count';
 export class ProfileSummary {
   @Input({required: true}) player!: Player;
   @Input({required: true}) trophyCount!: TrophyCount;
-  @Input({required: true}) totalPlayedGames!: number;
+  @Input({required: true}) totalGamesPlayed!: number;
+  @Input({required: true}) totalEarnedTrophies!: number;
 }

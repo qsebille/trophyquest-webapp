@@ -1,33 +1,22 @@
-<div [class.completed]="isCompleted" [class.expanded]="isExpanded" class="profile-game-card" role="listitem">
-  <div (click)="clickOnGameCard()"
-       [attr.aria-expanded]="isExpanded"
-       [attr.data-profilegamelistid]="'game-toggle-' + game.id"
-       class="profile-game-header">
-    <div class="profile-game-infos">
-      <img [alt]="game.title" [height]="64" [ngSrc]="game.imageUrl" [width]="64"
-           class="profile-game-image"/>
-      <div class="profile-game-title">{{ game.title }}</div>
+<div [class.completed]="isCompleted" class="profile-game-card">
+  <div class="game-infos">
+    <img alt="" class="collection-image" src="{{collection.collectionImageUrl}}"/>
+    <div class="platform-and-title">
+      <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ collection.collectionTitle }}</a>
+      <div class="platform">
+        <span class="platform-label platform-label--{{collection.collectionPlatform}}">
+          {{ collection.collectionPlatform }}
+        </span>
+      </div>
     </div>
-    <app-trophy-count-displayer [iconSize]="32" [labelOrientation]="'horizontal'"
-                                [textSizePx]="14" [trophyCount]="game.earnedTrophies"
-                                class="profile-game-trophies"/>
   </div>
-
-  @if (isExpanded) {
-    <div [attr.data-profilegamelistid]="'game-details-' + game.id"
-         [class.open]="isExpanded"
-         class="profile-game-details">
-      @for (collection of game.trophyCollections; track collection.id) {
-        <div [attr.data-profilegamelistid]="'game-'+ game.id + '-collection-' + collection.id"
-             class="profile-game-collection">
-          <img [alt]="collection.title" [height]="32" [width]="32" class="collection-image"
-               ngSrc="{{collection.imageUrl}}"/>
-          <div (click)="clickOnCollection(collection.id)" class="collection-title-wrapper">
-            <span class="collection-title">{{ collection.title }}</span>
-            <span class="collection-platform">{{ collection.platform }}</span>
-          </div>
-        </div>
-      }
+  <div class="game-progression">
+    <app-trophy-count-displayer [iconSize]="32" [labelOrientation]="'vertical'"
+                                [textSizePx]="14" [trophyCount]="collection.earnedTrophies"
+                                class="trophy-count"/>
+    <div [class.completed]="isCompleted" class="progress-bar-wrapper">
+      <mat-progress-bar [mode]="'buffer'" [value]="completionScore"/>
+      {{ completionScore | number:'1.0-0':'en-US' }}%
     </div>
-  }
+  </div>
 </div>

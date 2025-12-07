@@ -5,6 +5,7 @@ import {ProfileSummary} from '../../components/profile-summary/profile-summary';
 import {ProfileGameCard} from '../../components/profile-game-card/profile-game-card';
 import {ProfileTrophyCard} from '../../components/profile-trophy-card/profile-trophy-card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {PlayerCollection} from '../../core/models/dto/player-collection';
 
 @Component({
   selector: 'app-profile-page',
@@ -30,23 +31,23 @@ export class ProfilePage {
   ngOnInit(): void {
     this.playerId = this._route.snapshot.paramMap.get('playerId');
     this.profileStore.reset();
-    this.profileStore.fetch(this.playerId);
-    this.profileStore.searchGames(this.playerId);
+    this.profileStore.retrieve(this.playerId);
+    this.profileStore.searchCollections(this.playerId);
     this.profileStore.searchTrophies(this.playerId);
   }
 
-  navigateToGamePage(event: { gameId: string, collectionId: string }): void {
-    this._router.navigate(['/game', event.gameId], {
+  navigateToGamePage(playerCollection: PlayerCollection): void {
+    this._router.navigate(['/game', playerCollection.gameId], {
       queryParams: {
-        collectionId: event.collectionId,
+        collectionId: playerCollection.collectionId,
         playerId: this.playerId
       }
     })
-      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, player ${this.playerId}`));
+      .then(() => console.info(`Navigated to game page: ${playerCollection.gameId}, collection ${playerCollection.collectionId}, player ${this.playerId}`));
   }
 
   loadMoreGames(): void {
-    this.profileStore.loadMoreGames(this.playerId);
+    this.profileStore.loadMoreCollections(this.playerId);
   }
 
   loadMoreTrophies(): void {
