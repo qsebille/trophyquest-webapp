@@ -1,76 +1,40 @@
 .game-page {
   padding-top: 20px;
   padding-bottom: 50px;
-}
 
-.game-header {
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.trophy-filters {
-  width: 100%;
-}
-
-.game-summary-enter {
-  animation-name: game-summary-enter;
-  animation-duration: 1s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: both;
-}
-
-@keyframes game-summary-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .game-header {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .trophy-filters {
+    width: 100%;
   }
-}
 
-
-.trophy-element-enter {
-  animation-name: trophy-element-enter;
-  animation-duration: 500ms;
-  animation-timing-function: ease-out;
-  animation-fill-mode: both;
-}
-
-@keyframes trophy-element-enter {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .game-group-name {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .trophy-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-}
 
-.game-group-name {
-  margin-top: 30px;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
+  .game-page-trophy-card {
+    width: 100%;
+  }
 
-.trophy-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .trophy-separator {
+    color: rgba(0, 0, 0, 0.54);
+    margin: 5px;
+    width: 95%;
+  }
 
-.game-page-trophy-card {
-  width: 100%;
-}
-
-.trophy-separator {
-  color: rgba(0, 0, 0, 0.54);
-  margin: 5px;
-  width: 95%;
 }
