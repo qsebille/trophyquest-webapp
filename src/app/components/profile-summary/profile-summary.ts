@@ -19,6 +19,6 @@ import {TrophyCount} from '../../core/models/dto/trophy-count';
 export class ProfileSummary {
   @Input({required: true}) player!: Player;
   @Input({required: true}) trophyCount!: TrophyCount;
-  @Input({required: true}) totalPlayedGames!: number;
+  @Input({required: true}) totalGamesPlayed!: number;
   @Input({required: true}) totalEarnedTrophies!: number;
 }

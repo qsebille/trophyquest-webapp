@@ -36,14 +36,14 @@ export class ProfilePage {
     this.profileStore.searchTrophies(this.playerId);
   }
 
-  navigateToGamePage(event: PlayerCollection): void {
-    this._router.navigate(['/game', event.gameId], {
+  navigateToGamePage(playerCollection: PlayerCollection): void {
+    this._router.navigate(['/game', playerCollection.gameId], {
       queryParams: {
-        collectionId: event.collectionId,
+        collectionId: playerCollection.collectionId,
         playerId: this.playerId
       }
     })
-      .then(() => console.info(`Navigated to game page: ${event.gameId}, collection ${event.collectionId}, player ${this.playerId}`));
+      .then(() => console.info(`Navigated to game page: ${playerCollection.gameId}, collection ${playerCollection.collectionId}, player ${this.playerId}`));
   }
 
   loadMoreGames(): void {

@@ -46,7 +46,7 @@ describe('Navbar', () => {
     playersLink.triggerEventHandler('click', {button: 0});
     tick();
 
-    expect(playersLink.nativeElement.textContent.trim()).toBe('Joueurs');
+    expect(playersLink.nativeElement.textContent.trim()).toBe('Players');
     expect(router.url).toBe('/players');
   }));
 

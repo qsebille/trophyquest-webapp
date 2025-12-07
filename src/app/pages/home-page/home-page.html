@@ -3,7 +3,7 @@
     <span class="welcome-message">Welcome on TrophyQuest</span>
     <app-home-summary [nbGames]="gameListStore.total()"
                       [nbPlayers]="playerListStore.total()"
-                      [nbTrophies]="lastObtainedTrophyStore.total()"
+                      [nbTrophies]="obtainedTrophiesStore.total()"
                       class="home-summary"/>
   </div>
 
@@ -25,14 +25,14 @@
 
     <div class="last-obtained-trophies">
       <h2>Last obtained trophies</h2>
-      @for (trophy of lastObtainedTrophyStore.results(); track trophy.id) {
+      @for (trophy of obtainedTrophiesStore.results(); track trophy.id) {
         <app-home-obtained-trophy-card (clickOnPlayer)="goToProfilePage(trophy.playerId)" [trophy]="trophy"
                                        class="home-trophy-card"></app-home-obtained-trophy-card>
       }
-      @if (lastObtainedTrophyStore.hasMoreTrophies() && !lastObtainedTrophyStore.isLoading()) {
+      @if (obtainedTrophiesStore.hasMoreTrophies() && !obtainedTrophiesStore.isLoading()) {
         <a (click)="loadMoreTrophies()" class="button load-more">Load more trophies...</a>
       }
-      @if (lastObtainedTrophyStore.isLoading()) {
+      @if (obtainedTrophiesStore.isLoading()) {
         <div class="spinner-container"></div>
       }
     </div>

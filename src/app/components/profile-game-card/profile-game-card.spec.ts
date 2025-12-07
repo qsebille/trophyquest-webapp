@@ -1,19 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ProfileGameCard} from './profile-game-card';
-import {PlayerGameAchievements} from '../../core/models/dto/player-game-achievements';
+import {PlayerCollection} from '../../core/models/dto/player-collection';
 
 describe('ProfileGameCard', () => {
   let component: ProfileGameCard;
   let fixture: ComponentFixture<ProfileGameCard>;
 
-  const mockAchievements: PlayerGameAchievements = {
-    id: '001',
-    title: 'Game 1',
-    imageUrl: 'game.png',
-    earnedTrophies: {bronze: 1, silver: 1, gold: 1, platinum: 1},
-    totalTrophies: {bronze: 1, silver: 1, gold: 1, platinum: 1},
-    trophyCollections: [],
-  }
+  const mockCollection: PlayerCollection = {
+    collectionId: '001',
+    collectionTitle: 'Collection 1',
+    collectionPlatform: 'PS5',
+    collectionImageUrl: 'collection.png',
+    gameId: 'game-001',
+    gameTitle: 'Game 1',
+    gameImageUrl: 'game.png',
+    collectionTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4},
+    earnedTrophies: {platinum: 1, gold: 2, silver: 3, bronze: 4}
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,7 +25,7 @@ describe('ProfileGameCard', () => {
 
     fixture = TestBed.createComponent(ProfileGameCard);
     component = fixture.componentInstance;
-    component.collection = mockAchievements;
+    component.collection = mockCollection;
     fixture.detectChanges();
   });
 

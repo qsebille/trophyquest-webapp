@@ -7,6 +7,7 @@ import {TrophyCount} from '../models/dto/trophy-count';
 import {Trophy} from '../models/dto/trophy';
 import {GameGroupTrophies} from '../models/dto/game-group-trophies';
 import {PlayerCollection} from '../models/dto/player-collection';
+import {PlayerSummary} from '../models/dto/player-summary';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +21,11 @@ export class PlayerService {
   search(
     pageNumber: number,
     pageSize: number
-  ): Observable<SearchResult<Player>> {
+  ): Observable<SearchResult<PlayerSummary>> {
     const params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
-    return this.http.get<SearchResult<Player>>(`${this.API_URL}/search`, {params});
+    return this.http.get<SearchResult<PlayerSummary>>(`${this.API_URL}/search`, {params});
   }
 
   /**

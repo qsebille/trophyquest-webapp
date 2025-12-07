@@ -1,19 +1,35 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayerCard } from './player-card';
+import {PlayerCard} from './player-card';
+import {PlayerSummary} from '../../core/models/dto/player-summary';
+import {Player} from '../../core/models/dto/player';
+import {TrophyCount} from '../../core/models/dto/trophy-count';
 
 describe('PlayerCard', () => {
   let component: PlayerCard;
   let fixture: ComponentFixture<PlayerCard>;
 
+  const mockPlayer: Player = {id: '001', pseudo: 'Pseudo', avatarUrl: 'avatar.png'}
+  const mockTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
+  const mockPlayerSummary: PlayerSummary = {
+    player: mockPlayer,
+    trophyCount: mockTrophyCount,
+    totalGamesPlayed: 100,
+    lastPlayedCollectionId: 'collection-001',
+    lastPlayedGameId: 'game-001',
+    lastPlayedGameTitle: 'Horizon: Forbidden West',
+    lastPlayedGameImageUrl: 'horizon.png'
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PlayerCard]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PlayerCard);
     component = fixture.componentInstance;
+    component.playerSummary = mockPlayerSummary;
     fixture.detectChanges();
   });
 
