@@ -3,82 +3,80 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomePage} from './home-page';
 import {Component, Input} from '@angular/core';
 import {GameListStore} from '../../core/store/game-list-store';
-import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store.service';
+import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store';
 import {PlayerListStore} from '../../core/store/player-list-store';
-import {Router} from '@angular/router';
+import {NavigatorService} from "../../core/services/utils/navigator.service";
 
 describe('HomePage', () => {
-  let component: HomePage;
-  let fixture: ComponentFixture<HomePage>;
+    let component: HomePage;
+    let fixture: ComponentFixture<HomePage>;
 
-  let routerSpy: jasmine.SpyObj<Router>;
-  let gameListStoreSpy: jasmine.SpyObj<GameListStore>;
-  let obtainedTrophyStoreSpy: jasmine.SpyObj<ObtainedTrophiesStore>;
-  let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
+    let navigatorSpy: jasmine.SpyObj<NavigatorService>;
+    let gameListStoreSpy: jasmine.SpyObj<GameListStore>;
+    let obtainedTrophyStoreSpy: jasmine.SpyObj<ObtainedTrophiesStore>;
+    let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
 
-  @Component({selector: 'app-home-summary', template: ''})
-  class MockHomeSummary {
-    @Input({required: true}) nbGames: number = 0;
-    @Input({required: true}) nbPlayers: number = 0;
-    @Input({required: true}) nbTrophies: number = 0;
-  }
+    @Component({selector: 'app-home-summary', template: ''})
+    class MockHomeSummary {
+        @Input({required: true}) nbGames: number = 0;
+        @Input({required: true}) nbPlayers: number = 0;
+        @Input({required: true}) nbTrophies: number = 0;
+    }
 
-  @Component({selector: 'app-home-game-card', template: ''})
-  class MockHomeGameCard {
-  }
+    @Component({selector: 'app-home-game-card', template: ''})
+    class MockHomeGameCard {
+    }
 
-  @Component({selector: 'app-home-obtained-trophy-card', template: ''})
-  class MockHomeLastObtainedTrophies {
-  }
+    @Component({selector: 'app-home-obtained-trophy-card', template: ''})
+    class MockHomeLastObtainedTrophies {
+    }
 
-  beforeEach(async () => {
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    gameListStoreSpy = jasmine.createSpyObj('GameListStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreGames', 'isLoading', 'total']);
-    obtainedTrophyStoreSpy = jasmine.createSpyObj('ObtainedTrophiesStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreTrophies', 'isLoading', 'total']);
-    playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'count', 'total']);
+    const playerId: string = 'player-123';
 
-    await TestBed.configureTestingModule({
-      imports: [HomePage, MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
-    }).compileComponents();
+    beforeEach(async () => {
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage']);
+        gameListStoreSpy = jasmine.createSpyObj('GameListStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreGames', 'isLoading', 'total']);
+        obtainedTrophyStoreSpy = jasmine.createSpyObj('ObtainedTrophiesStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreTrophies', 'isLoading', 'total']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'count', 'total']);
 
-    TestBed.overrideComponent(HomePage, {
-      set: {
-        imports: [MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
-        providers: [
-          {provide: Router, useValue: routerSpy},
-          {provide: GameListStore, useValue: gameListStoreSpy},
-          {provide: ObtainedTrophiesStore, useValue: obtainedTrophyStoreSpy},
-          {provide: PlayerListStore, useValue: playerListStoreSpy},
-        ],
-      }
+        await TestBed.configureTestingModule({
+            imports: [HomePage, MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
+        }).compileComponents();
+
+        TestBed.overrideComponent(HomePage, {
+            set: {
+                imports: [MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
+                providers: [
+                    {provide: NavigatorService, useValue: navigatorSpy},
+                    {provide: GameListStore, useValue: gameListStoreSpy},
+                    {provide: ObtainedTrophiesStore, useValue: obtainedTrophyStoreSpy},
+                    {provide: PlayerListStore, useValue: playerListStoreSpy},
+                ],
+            }
+        });
+
+        fixture = TestBed.createComponent(HomePage);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
-    fixture = TestBed.createComponent(HomePage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should reset state on init', () => {
+        expect(gameListStoreSpy.resetState).toHaveBeenCalled();
+        expect(gameListStoreSpy.search).toHaveBeenCalled();
+        expect(obtainedTrophyStoreSpy.resetState).toHaveBeenCalled();
+        expect(obtainedTrophyStoreSpy.search).toHaveBeenCalled();
+        expect(playerListStoreSpy.reset).toHaveBeenCalled();
+        expect(playerListStoreSpy.count).toHaveBeenCalled();
+    });
 
-  it('should reset state on init', () => {
-    component.ngOnInit();
+    it('should navigate to profile page', () => {
+        component.navigateToProfilePage(playerId);
 
-    expect(gameListStoreSpy.resetState).toHaveBeenCalled();
-    expect(gameListStoreSpy.search).toHaveBeenCalled();
-    expect(obtainedTrophyStoreSpy.resetState).toHaveBeenCalled();
-    expect(obtainedTrophyStoreSpy.search).toHaveBeenCalled();
-    expect(playerListStoreSpy.reset).toHaveBeenCalled();
-    expect(playerListStoreSpy.count).toHaveBeenCalled();
-  });
-
-  it('should navigate to profile page', () => {
-    routerSpy.navigate.and.returnValue(Promise.resolve(true));
-
-    component.goToProfilePage('001');
-
-    expect(routerSpy.navigate).toHaveBeenCalledOnceWith(['/profile', '001']);
-  });
+        expect(navigatorSpy.goToProfilePage).toHaveBeenCalledOnceWith(playerId);
+    });
 
 });

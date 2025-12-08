@@ -1,0 +1,60 @@
+<div class="collection-page container container-fluid">
+    <div [style.animationDelay.ms]="100" animate.enter="block-enter" class="collection-header">
+        @if (collectionStore.isLoaded()) {
+            <app-collection-summary [collection]="collectionStore.collection()" class="collection-summary"/>
+        }
+        @if (collectionStore.isLoading()) {
+            <mat-spinner></mat-spinner>
+        }
+        @if (collectionStore.isError()) {
+            <div class="error-message-wrapper">
+                <span class="error-message">Error loading collection!</span>
+                <button class="btn" (click)="retrieveCollection()">Try again</button>
+            </div>
+        }
+    </div>
+
+    @if (collectionTrophiesStore.isLoaded()) {
+        <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)"
+                            (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
+                            [initEarnedFilter]="collectionTrophiesStore.earnedFilter()"
+                            class="trophy-filters"/>
+    }
+
+    <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="trophy-list-wrapper">
+        @if (collectionTrophiesStore.isLoaded()) {
+
+            @for (trophy of collectionTrophiesStore.baseGameTrophies(); track trophy.id; let i = $index) {
+                <div class="group-trophy-list">
+                    @if (i !== 0) {
+                        <hr class="trophy-separator"/>
+                    }
+                    <app-trophy-card [showHiddenTrophies]="shouldShowHiddenTrophies" [trophy]="trophy"
+                                     class="game-page-trophy-card"/>
+                </div>
+            }
+            @for (dlc of collectionTrophiesStore.dlcs(); track dlc.groupName) {
+                @if (dlc.trophies.length > 0) {
+                    <div class="group-trophy-list">
+                        <h2 class="game-group-name">DLC Trophy Pack {{ dlc.groupName }}</h2>
+                        @for (trophy of dlc.trophies; track trophy.id; let i = $index) {
+                            @if (i !== 0) {
+                                <hr class="trophy-separator"/>
+                            }
+                            <app-trophy-card [trophy]="trophy" class="game-page-trophy-card"/>
+                        }
+                    </div>
+                }
+            }
+        }
+        @if (collectionTrophiesStore.isLoading()) {
+            <mat-spinner></mat-spinner>
+        }
+        @if (collectionTrophiesStore.isError()) {
+            <div class="error-message-wrapper">
+                <span class="error-message">Error loading trophies!</span>
+                <button class="btn" (click)="retrieveTrophies()">Try again</button>
+            </div>
+        }
+    </div>
+</div>

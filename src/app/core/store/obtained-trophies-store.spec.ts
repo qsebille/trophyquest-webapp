@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
-import {ObtainedTrophiesStore} from './obtained-trophies-store.service';
+import {ObtainedTrophiesStore} from './obtained-trophies-store';
 import {TrophyService} from '../services/trophy.service';
 import {SearchResult} from '../models/dto/search-result';
 import {ObtainedTrophy} from '../models/dto/obtained-trophy';
