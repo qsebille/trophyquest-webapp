@@ -1,6 +1,9 @@
-@if (game) {
-  <div class="game-summary">
-    <h1 class="game-title">{{ game.title }}</h1>
-    <span>Game summary coming soon</span>
+<div class="game-summary">
+  <div class="game-infos-wrapper">
+    <img [height]="400" [width]="400" alt="" class="game-image" ngSrc="{{game.imageUrl}}"/>
+    <div class="game-title">
+      <h1>{{ game.title }}</h1>
+      <span>Collection summary coming soon : progress, obtained trophies, cumulative timeline ?</span>
+    </div>
   </div>
-}
+</div>

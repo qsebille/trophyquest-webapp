@@ -1,6 +1,6 @@
 <div class="game-page container container-fluid">
   <div [style.animationDelay.ms]="100" animate.enter="block-enter" class="game-header">
-    <app-game-summary [game]="gameStore.game()"/>
+    <app-game-summary [game]="gameStore.game()" class="game-summary"/>
     <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)"
                         (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
                         [initEarnedFilter]="gameStore.earnedFilter()"

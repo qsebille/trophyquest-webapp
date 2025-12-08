@@ -3,12 +3,16 @@
   padding-bottom: 50px;
 
   .game-header {
-    height: 500px;
+    min-height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+  }
+
+  .game-summary {
+    width: 100%;
   }
 
   .trophy-filters {
