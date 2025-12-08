@@ -40,6 +40,14 @@ export class CollectionPageComponent {
         this.collectionTrophiesStore.retrieve(this.collectionId, this.playerId);
     }
 
+    retrieveCollection(): void {
+        this.collectionStore.retrieve(this.collectionId);
+    }
+
+    retrieveTrophies(): void {
+        this.collectionTrophiesStore.retrieve(this.collectionId, this.playerId);
+    }
+
     showHiddenTrophies($event: boolean): void {
         this.shouldShowHiddenTrophies = $event;
     }

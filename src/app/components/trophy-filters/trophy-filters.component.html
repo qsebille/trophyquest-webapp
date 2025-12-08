@@ -1,15 +1,15 @@
 <div class="trophy-filters">
-  <div class="trophy-filter">
-    <mat-slide-toggle (toggleChange)="hiddenFilterChanges()" class="hidden-trophy-toggler"></mat-slide-toggle>
-    <span class="trophy-filter-label">Show hidden trophies</span>
-  </div>
+    <div class="trophy-filter">
+        <mat-slide-toggle (toggleChange)="hiddenFilterChanges()" class="hidden-trophy-toggler"></mat-slide-toggle>
+        <span class="trophy-filter-label">Show hidden trophies</span>
+    </div>
 
-  <div class="trophy-filter">
-    <mat-radio-group (change)="earnedFilterChanges()" [(ngModel)]="wantedTrophyEarnedType">
-      <mat-radio-button value="all">All</mat-radio-button>
-      <mat-radio-button value="earned">Earned</mat-radio-button>
-      <mat-radio-button value="notEarned">Not earned</mat-radio-button>
-    </mat-radio-group>
-    <span class="trophy-filter-label">Select trophy earned type</span>
-  </div>
+    <div class="trophy-filter">
+        <span class="trophy-filter-label">Select trophy earned type</span>
+        <mat-radio-group (change)="earnedFilterChanges()" [(ngModel)]="wantedTrophyEarnedType">
+            <mat-radio-button value="all">All</mat-radio-button>
+            <mat-radio-button value="earned">Earned</mat-radio-button>
+            <mat-radio-button value="notEarned">Not earned</mat-radio-button>
+        </mat-radio-group>
+    </div>
 </div>
