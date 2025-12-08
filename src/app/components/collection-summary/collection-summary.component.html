@@ -1,10 +1,17 @@
 <div class="collection-summary">
-    <div class="game-infos-wrapper">
-        <img [height]="400" [width]="400" alt="" class="game-image"
-             ngSrc="{{collection?.gameImageUrl ?? 'assets/icons/missing-game-image.svg'}}"/>
-        <div class="game-title">
-            <h1>{{ collection?.gameTitle }}</h1>
-            <span>Collection summary coming soon : progress, obtained trophies, cumulative timeline ?</span>
+    <div class="image-wrapper">
+        <img alt="" class="game-image" src="{{collection?.imageUrl ?? 'assets/icons/missing-game-image.svg'}}"/>
+    </div>
+    <div class="summary-content">
+        <div class="title-and-platform">
+            <span class="game-title">{{ collection?.title }}</span>
+            <div class="game-platform">
+                <span class="platform-label platform-label--{{collection?.platform}}">{{ collection?.platform }}</span>
+            </div>
+        </div>
+        <div class="trophy-count-wrapper">
+            <app-trophy-count-displayer [iconSize]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
+                                        [trophyCount]="trophyCount"/>
         </div>
     </div>
 </div>

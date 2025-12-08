@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
 import {ProfileSummary} from '../../components/profile-summary/profile-summary';
-import {ProfileGameCard} from '../../components/profile-game-card/profile-game-card';
+import {ProfileCollectionCardComponent} from '../../components/profile-game-card/profile-collection-card.component';
 import {ProfileTrophyCard} from '../../components/profile-trophy-card/profile-trophy-card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
@@ -11,7 +11,7 @@ import {NavigatorService} from "../../core/services/utils/navigator.service";
     selector: 'app-profile-page',
     imports: [
         ProfileSummary,
-        ProfileGameCard,
+        ProfileCollectionCardComponent,
         ProfileTrophyCard,
         MatProgressSpinnerModule,
     ],

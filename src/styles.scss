@@ -7,12 +7,12 @@
 
 html {
   @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Comic Sans MS,
-    density: 0,
+          color: (
+                  primary: mat.$azure-palette,
+                  tertiary: mat.$blue-palette,
+          ),
+          typography: Helvetica,
+          density: 0,
   ));
 }
 

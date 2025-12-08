@@ -12,9 +12,9 @@
                 @if (i !== 0) {
                     <hr class="game-separator"/>
                 }
-                <app-profile-game-card (clickOnTitle)="navigateToPlayerCollectionPage(collection.collectionId)"
-                                       [collection]="collection"
-                                       class="profile-game-card"></app-profile-game-card>
+                <app-profile-collection-card (clickOnTitle)="navigateToPlayerCollectionPage(collection.collectionId)"
+                                             [collection]="collection"
+                                             class="profile-game-card"/>
             }
             @if (profileStore.hasMoreCollections() && !profileStore.isLoadingCollections()) {
                 <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
@@ -37,14 +37,14 @@
                 @if (i !== 0) {
                     <hr class="trophy-separator"/>
                 }
-                <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"></app-profile-trophy-card>
+                <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
             }
             @if (profileStore.hasMoreTrophies() && !profileStore.isLoadingTrophies()) {
                 <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
             }
             @if (profileStore.isLoadingTrophies()) {
                 <div class="spinner-container">
-                    <mat-spinner></mat-spinner>
+                    <mat-spinner/>
                 </div>
             }
             @if (profileStore.hasNoTrophies()) {
