@@ -1,0 +1,47 @@
+<div class="collection-page container container-fluid">
+  <div [style.animationDelay.ms]="100" animate.enter="block-enter" class="collection-header">
+    @if (collectionStore.isLoaded()) {
+      <app-collection-summary [collection]="collectionStore.collection()" class="collection-summary"/>
+      <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)"
+                          (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
+                          [initEarnedFilter]="collectionTrophiesStore.earnedFilter()"
+                          class="trophy-filters"/>
+    }
+    @if (collectionStore.isLoading()) {
+      <mat-spinner></mat-spinner>
+    }
+    @if (collectionStore.isError()) {
+    }
+  </div>
+
+  @if (collectionTrophiesStore.isLoaded()) {
+    <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="group-list">
+      @for (trophy of collectionTrophiesStore.baseGameTrophies(); track trophy.id; let i = $index) {
+        <div class="trophy-list">
+          @if (i !== 0) {
+            <hr class="trophy-separator"/>
+          }
+          <app-trophy-card [showHiddenTrophies]="shouldShowHiddenTrophies" [trophy]="trophy"
+                           class="game-page-trophy-card"/>
+        </div>
+      }
+      @for (dlc of collectionTrophiesStore.dlcs(); track dlc.groupName; let j = $index) {
+        @if (dlc.trophies.length > 0) {
+          <div class="trophy-list">
+            <h2 class="game-group-name">DLC Trophy Pack {{ j + 1 }}</h2>
+            @for (trophy of dlc.trophies; track trophy.id; let i = $index) {
+              @if (i !== 0) {
+                <hr class="trophy-separator"/>
+              }
+              <app-trophy-card [trophy]="trophy" class="game-page-trophy-card"/>
+            }
+          </div>
+        }
+      }
+    </div>
+  }
+  @if (collectionTrophiesStore.isLoading()) {
+  }
+  @if (collectionTrophiesStore.isError()) {
+  }
+</div>

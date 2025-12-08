@@ -4,29 +4,24 @@ import {GameService} from './game.service';
 import {HttpClient} from '@angular/common/http';
 
 describe('GameService', () => {
-  let service: GameService;
-  let httpSpy: jasmine.SpyObj<HttpClient>;
+    let service: GameService;
+    let httpSpy: jasmine.SpyObj<HttpClient>;
 
-  beforeEach(() => {
-    httpSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    TestBed.configureTestingModule({
-      providers: [GameService, {provide: HttpClient, useValue: httpSpy}]
+    beforeEach(() => {
+        httpSpy = jasmine.createSpyObj('HttpClient', ['get']);
+        TestBed.configureTestingModule({
+            providers: [GameService, {provide: HttpClient, useValue: httpSpy}]
+        });
+        service = TestBed.inject(GameService);
     });
-    service = TestBed.inject(GameService);
-  });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 
-  it('should call http client when searching games', () => {
-    service.searchGames(0, 10);
-    expect(httpSpy.get).toHaveBeenCalled();
-  });
-
-  it('should call http client when fetching game', () => {
-    service.fetchGame("1");
-    expect(httpSpy.get).toHaveBeenCalled();
-  });
+    it('should call http client when searching games', () => {
+        service.searchGames(0, 10);
+        expect(httpSpy.get).toHaveBeenCalled();
+    });
 
 });

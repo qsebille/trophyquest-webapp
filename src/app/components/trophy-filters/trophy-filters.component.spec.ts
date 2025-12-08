@@ -1,13 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {TrophyFilters} from './trophy-filters';
+import {TrophyFiltersComponent} from './trophy-filters.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 
-describe('TrophyFilters', () => {
-  let component: TrophyFilters;
-  let fixture: ComponentFixture<TrophyFilters>;
+describe('TrophyFilterComponent', () => {
+  let component: TrophyFiltersComponent;
+  let fixture: ComponentFixture<TrophyFiltersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +19,7 @@ describe('TrophyFilters', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TrophyFilters);
+    fixture = TestBed.createComponent(TrophyFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

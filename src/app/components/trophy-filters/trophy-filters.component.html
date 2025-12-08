@@ -6,9 +6,9 @@
 
   <div class="trophy-filter">
     <mat-radio-group (change)="earnedFilterChanges()" [(ngModel)]="wantedTrophyEarnedType">
-      <mat-radio-button class="all-trophy-button" value="all">All</mat-radio-button>
-      <mat-radio-button class="earned-trophy-button" value="earned">Earned</mat-radio-button>
-      <mat-radio-button class="unearned-trophy-button" value="unearned">Not earned</mat-radio-button>
+      <mat-radio-button value="all">All</mat-radio-button>
+      <mat-radio-button value="earned">Earned</mat-radio-button>
+      <mat-radio-button value="notEarned">Not earned</mat-radio-button>
     </mat-radio-group>
     <span class="trophy-filter-label">Select trophy earned type</span>
   </div>

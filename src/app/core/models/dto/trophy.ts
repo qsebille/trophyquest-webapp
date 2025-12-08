@@ -6,5 +6,6 @@ export interface Trophy {
   isHidden: boolean;
   iconUrl: string;
   gameTitle: string;
+  gameGroup: string;
   earnedDate: string | null;
 }

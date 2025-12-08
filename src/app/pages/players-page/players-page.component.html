@@ -1,29 +1,31 @@
 <div class="players-page container">
-  <div class="players-header">
-    Content coming soon... Total users, total earned trophies, etc.
-  </div>
-  <div class="players-content">
-    @for (playerSummary of playerListStore.playerSummaries(); track playerSummary.player.id) {
-      <app-player-card (clickOnGame)="goToGamePage(playerSummary)" (clickOnPseudo)="goToProfile(playerSummary)"
-                       [playerSummary]="playerSummary"
-                       class="player-card"></app-player-card>
-    }
+    <div class="players-header">
+        Content coming soon... Total users, total earned trophies, etc.
+    </div>
+    <div class="players-content">
+        @for (playerSummary of playerListStore.playerSummaries(); track playerSummary.player.id) {
+            <app-player-card
+                    (clickOnGame)="navigateToPlayerCollectionPage(playerSummary.lastPlayedCollectionId, playerSummary.player.id)"
+                    (clickOnPseudo)="navigateToProfilePage(playerSummary.player.id)"
+                    [playerSummary]="playerSummary"
+                    class="player-card"></app-player-card>
+        }
 
-    @if (playerListStore.hasMorePlayers() && !playerListStore.isLoading()) {
-      <div (click)="playerListStore.loadMore()" class="load-more-button">
-        Load more players...
-      </div>
-    }
-    @if (playerListStore.isLoading()) {
-      <div class="spinner-container">
-        <mat-spinner></mat-spinner>
-      </div>
-    }
+        @if (playerListStore.hasMorePlayers() && !playerListStore.isLoading()) {
+            <div (click)="playerListStore.loadMore()" class="load-more-button">
+                Load more players...
+            </div>
+        }
+        @if (playerListStore.isLoading()) {
+            <div class="spinner-container">
+                <mat-spinner></mat-spinner>
+            </div>
+        }
 
-    @if (playerListStore.isError()) {
-      <div class="error-message-wrapper">
-        <span class="error-message">Error loading players!</span>
-      </div>
-    }
-  </div>
+        @if (playerListStore.isError()) {
+            <div class="error-message-wrapper">
+                <span class="error-message">Error loading players!</span>
+            </div>
+        }
+    </div>
 </div>

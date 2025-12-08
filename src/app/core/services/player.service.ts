@@ -5,7 +5,6 @@ import {Player} from '../models/dto/player';
 import {SearchResult} from '../models/dto/search-result';
 import {TrophyCount} from '../models/dto/trophy-count';
 import {Trophy} from '../models/dto/trophy';
-import {GameGroupTrophies} from '../models/dto/game-group-trophies';
 import {PlayerCollection} from '../models/dto/player-collection';
 import {PlayerSummary} from '../models/dto/player-summary';
 
@@ -77,17 +76,17 @@ export class PlayerService {
   }
 
   /**
-   * Retrieves trophies associated with a specific player and collection.
+   * Retrieves the list of trophies for a specific player's collection.
    *
-   * @param {string} playerId - The unique identifier of the player whose collection trophies are to be retrieved.
-   * @param {string} collectionId - The unique identifier of the collection for which trophies need to be retrieved.
-   * @return {Observable<GameGroupTrophies[]>} - An observable that emits an array of trophies related to the specified player and collection.
+   * @param {string} playerId - The unique identifier of the player.
+   * @param {string} collectionId - The unique identifier of the collection.
+   * @return {Observable<Trophy[]>} An observable that emits an array of trophies belonging to the specified collection.
    */
   retrieveCollectionTrophies(
     playerId: string,
     collectionId: string
-  ): Observable<GameGroupTrophies[]> {
-    return this.http.get<GameGroupTrophies[]>(`${this.API_URL}/${playerId}/collection/${collectionId}/trophies`);
+  ): Observable<Trophy[]> {
+    return this.http.get<Trophy[]>(`${this.API_URL}/${playerId}/collection/${collectionId}/trophies`);
   }
 
   /**
