@@ -1,7 +1,7 @@
 @use 'styles/colors' as *;
 
 .trophy-card {
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: $tq-blue-lighter;
 
   &.completed {
     background-color: $green-light;
@@ -28,7 +28,7 @@
 
 .hidden-trophy-image-wrapper {
   cursor: default;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: $tq-blue-lighter;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -36,7 +36,7 @@
 }
 
 .hidden-trophy-image {
-  color: rgba(0, 0, 0, 0.8);
+  color: $tq-blue-darker;
   font-size: 2rem;
   font-family: 'Arial', serif;
 }

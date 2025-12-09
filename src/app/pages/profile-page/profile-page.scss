@@ -1,3 +1,4 @@
+@use "styles/colors" as *;
 
 .profile-collection-wrapper {
   padding-top: 10px;
@@ -25,13 +26,13 @@
 }
 
 .game-separator {
-  color: rgba(0, 0, 0, 0.54);
+  color: $tq-blue-medium;
   margin: 2px;
   width: 95%;
 }
 
 .trophy-separator {
-  color: rgba(0, 0, 0, 0.54);
+  color: $tq-blue-medium;
   margin: 2px;
   width: 95%;
 }
@@ -57,6 +58,6 @@
 }
 
 .error-message {
-  color: rgba(red, 0.8);
+  color: $tq-red-dark;
   font-size: 25px;
 }

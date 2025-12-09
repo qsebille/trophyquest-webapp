@@ -2,7 +2,7 @@
 
 .player-card {
   padding: 10px;
-  background-color: rgba($blue-main, 0.3);
+  background-color: $tq-blue-lighter;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   width: 100%;
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px $tq-shadow;
   }
 
   .player-image-pseudo-wrapper {
@@ -39,7 +39,7 @@
     flex-direction: column;
 
     .separator {
-      color: rgba(0, 0, 0, 0.54);
+      color: $tq-blue-medium;
       margin: 20px;
       width: 95%;
     }
@@ -67,7 +67,7 @@
   }
 
   .last-game-played-title {
-    color: $blue-main;
+    color: $tq-blue-medium;
     font-size: 15px;
     font-weight: bold;
   }

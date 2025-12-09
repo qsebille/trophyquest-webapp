@@ -3,7 +3,7 @@
 .profile-game-card {
   border: 1px solid transparent;
   border-radius: 10px;
-  background-color: rgba($blue-main, 0.05);
+  background-color: $tq-blue-lighter;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -15,7 +15,7 @@
   }
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px $tq-shadow;
   }
 
   .game-infos {
