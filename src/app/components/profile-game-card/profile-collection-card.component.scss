@@ -11,7 +11,7 @@
   width: 100%;
 
   &.completed {
-    background-color: $green-light;
+    background-color: $tq-green-lighter;
   }
 
   &:hover {
@@ -55,7 +55,7 @@
     align-items: flex-end;
 
     &.completed {
-      color: $green-main;
+      color: $tq-green-medium;
     }
   }
 }

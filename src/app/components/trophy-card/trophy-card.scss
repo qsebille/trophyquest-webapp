@@ -4,7 +4,7 @@
   background-color: $tq-blue-lighter;
 
   &.completed {
-    background-color: $green-light;
+    background-color: $tq-green-lighter;
   }
 
   padding: 10px;
@@ -70,7 +70,7 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  color: $green-main;
+  color: $tq-green-medium;
   display: flex;
   align-items: center;
   justify-content: center;
