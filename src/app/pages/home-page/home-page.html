@@ -26,9 +26,9 @@
         <div class="last-obtained-trophies">
             <h2>Last obtained trophies</h2>
             @for (trophy of obtainedTrophiesStore.results(); track trophy.id) {
-                <app-home-obtained-trophy-card (clickOnPlayer)="navigateToProfilePage(trophy.playerId)"
-                                               [trophy]="trophy"
-                                               class="home-trophy-card"></app-home-obtained-trophy-card>
+                <app-home-trophy-card (clickOnPlayer)="navigateToProfilePage(trophy.playerId)"
+                                      [trophy]="trophy"
+                                      class="home-trophy-card"/>
             }
             @if (obtainedTrophiesStore.hasMoreTrophies() && !obtainedTrophiesStore.isLoading()) {
                 <a (click)="loadMoreTrophies()" class="button load-more">Load more trophies...</a>

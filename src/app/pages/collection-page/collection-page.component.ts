@@ -3,15 +3,15 @@ import {ActivatedRoute} from '@angular/router';
 import {CollectionSummaryComponent} from '../../components/collection-summary/collection-summary.component';
 import {CollectionStore} from '../../core/store/collection/collection.store';
 import {CollectionTrophiesStore} from '../../core/store/collection/collection-trophies.store';
-import {TrophyCard} from '../../components/trophy-card/trophy-card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {TrophyFiltersComponent} from '../../components/trophy-filters/trophy-filters.component';
+import {CollectionTrophyCardComponent} from "../../components/collection-trophy-card/collection-trophy-card.component";
 
 @Component({
     selector: 'app-game-page',
     imports: [
         CollectionSummaryComponent,
-        TrophyCard,
+        CollectionTrophyCardComponent,
         MatProgressSpinnerModule,
         TrophyFiltersComponent,
     ],

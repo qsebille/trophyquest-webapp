@@ -29,8 +29,8 @@
                     @if (i !== 0) {
                         <hr class="trophy-separator"/>
                     }
-                    <app-trophy-card [showHiddenTrophies]="shouldShowHiddenTrophies" [trophy]="trophy"
-                                     class="game-page-trophy-card"/>
+                    <app-collection-trophy-card [showHiddenTrophies]="shouldShowHiddenTrophies" [trophy]="trophy"
+                                                class="game-page-trophy-card"/>
                 </div>
             }
             @for (dlc of collectionTrophiesStore.dlcs(); track dlc.groupName) {
@@ -41,7 +41,7 @@
                             @if (i !== 0) {
                                 <hr class="trophy-separator"/>
                             }
-                            <app-trophy-card [trophy]="trophy" class="game-page-trophy-card"/>
+                            <app-collection-trophy-card [trophy]="trophy" class="game-page-trophy-card"/>
                         }
                     </div>
                 }
