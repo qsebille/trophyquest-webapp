@@ -5,7 +5,7 @@
 }
 
 .players-header {
-  background-color: rgba($blue-main, 0.03);
+  background-color: $tq-blue-lighter;
   height: 500px;
   border-radius: 2px;
   padding: 10px;
@@ -29,7 +29,7 @@
 .load-more-button {
   margin-top: 20px;
   font-size: 15px;
-  color: $blue-main;
+  color: $tq-blue-medium;
   cursor: pointer;
 }
 
@@ -42,12 +42,12 @@
   font-size: 30px;
   text-align: center;
   border-radius: 2px;
-  background-color: rgba(red, 0.1);
+  background-color: $tq-red-lighter;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .error-message {
-  color: rgba(red, 0.8);
+  color: $tq-red-dark;
 }

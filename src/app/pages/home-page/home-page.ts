@@ -3,7 +3,7 @@ import {GameListStore} from '../../core/store/game-list-store';
 import {HomeGameCard} from '../../components/home-game-card/home-game-card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store';
-import {HomeObtainedTrophyCard} from '../../components/home-obtained-trophy-card/home-obtained-trophy-card';
+import {HomeTrophyCardComponent} from '../../components/home-trophy-card/home-trophy-card.component';
 import {HomeSummary} from '../../components/home-summary/home-summary';
 import {PlayerListStore} from '../../core/store/player-list-store';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
@@ -12,7 +12,7 @@ import {NavigatorService} from "../../core/services/utils/navigator.service";
     selector: 'app-home-page',
     imports: [
         HomeGameCard,
-        HomeObtainedTrophyCard,
+        HomeTrophyCardComponent,
         MatProgressSpinnerModule,
         HomeSummary,
     ],

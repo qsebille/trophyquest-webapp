@@ -2,7 +2,7 @@
 
 .collection-summary {
   display: flex;
-  background-color: rgba($blue-main, 0.2);
+  background-color: $tq-blue-lighter;
   border-radius: 10px;
   padding: 30px;
 
@@ -10,7 +10,7 @@
     max-width: 400px;
     justify-self: flex-start;
     border-radius: 10px;
-    border: 3px solid $blue-main;
+    border: 3px solid $tq-blue-dark;
   }
 
   .summary-content {
@@ -33,7 +33,7 @@
   }
 
   .game-title {
-    color: $blue-main;
+    color: $tq-blue-medium;
     font-size: 25px;
   }
 
