@@ -1,15 +1,15 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HomePage} from './home-page';
-import {Component, Input} from '@angular/core';
+import {HomePageComponent} from './home-page.component';
+import {Component, input} from '@angular/core';
 import {GameListStore} from '../../core/store/game-list-store';
 import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store';
 import {PlayerListStore} from '../../core/store/player-list-store';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 
-describe('HomePage', () => {
-    let component: HomePage;
-    let fixture: ComponentFixture<HomePage>;
+describe('HomePageComponent', () => {
+    let component: HomePageComponent;
+    let fixture: ComponentFixture<HomePageComponent>;
 
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
     let gameListStoreSpy: jasmine.SpyObj<GameListStore>;
@@ -18,9 +18,9 @@ describe('HomePage', () => {
 
     @Component({selector: 'app-home-summary', template: ''})
     class MockHomeSummary {
-        @Input({required: true}) nbGames: number = 0;
-        @Input({required: true}) nbPlayers: number = 0;
-        @Input({required: true}) nbTrophies: number = 0;
+        readonly nbGames = input<number>(0);
+        readonly nbPlayers = input<number>(0);
+        readonly nbTrophies = input<number>(0);
     }
 
     @Component({selector: 'app-home-game-card', template: ''})
@@ -40,10 +40,10 @@ describe('HomePage', () => {
         playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'count', 'total']);
 
         await TestBed.configureTestingModule({
-            imports: [HomePage, MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
+            imports: [HomePageComponent, MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
         }).compileComponents();
 
-        TestBed.overrideComponent(HomePage, {
+        TestBed.overrideComponent(HomePageComponent, {
             set: {
                 imports: [MockHomeSummary, MockHomeGameCard, MockHomeLastObtainedTrophies],
                 providers: [
@@ -55,7 +55,7 @@ describe('HomePage', () => {
             }
         });
 
-        fixture = TestBed.createComponent(HomePage);
+        fixture = TestBed.createComponent(HomePageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

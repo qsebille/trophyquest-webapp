@@ -1,0 +1,19 @@
+<div class="player-card">
+    <div class="player-image-pseudo-wrapper">
+        <img [height]="100" [width]="100" alt="" class="player-image" ngSrc="{{ player().avatarUrl }}"/>
+        <a (click)="clickOnPseudo.emit()" class="player-pseudo">{{ player().pseudo }}</a>
+    </div>
+    <div class="player-games-infos">
+        <span class="total-played-games"><b>{{ totalPlayedGames() }}</b> games played !</span>
+        <hr class="separator"/>
+        <span class="last-game-played-label">Last game played :</span>
+        <div (click)="clickOnGame.emit()" class="last-played-game-wrapper">
+            <span class="last-game-played-title">{{ lastGamePlayedTitle() }}</span>
+            <img [height]="40" [width]="40" alt="" class="last-game-played-image"
+                 ngSrc="{{ lastGamePlayedImageUrl() }}"/>
+        </div>
+    </div>
+    <app-trophy-count-displayer [labelOrientation]="'vertical'" [textSizePx]="16"
+                                [trophyCount]="trophyCount()"
+                                class="trophy-count"/>
+</div>

@@ -4,7 +4,7 @@
             <app-collection-summary [collection]="collectionStore.collection()" class="collection-summary"/>
         }
         @if (collectionStore.isLoading()) {
-            <mat-spinner></mat-spinner>
+            <mat-spinner/>
         }
         @if (collectionStore.isError()) {
             <div class="error-message-wrapper">
@@ -15,9 +15,9 @@
     </div>
 
     @if (collectionTrophiesStore.isLoaded()) {
-        <app-trophy-filters (showHiddenTrophies)="showHiddenTrophies($event)"
-                            (trophyEarnedFilterChanged)="changeTrophyEarnedType($event)"
-                            [initEarnedFilter]="collectionTrophiesStore.earnedFilter()"
+        <app-trophy-filters [filter]="collectionTrophiesStore.earnedFilter()"
+                            (filterChange)="changeTrophyEarnedType($event)"
+                            (showHiddenTrophyChange)="showHiddenTrophies($event)"
                             class="trophy-filters"/>
     }
 
@@ -48,7 +48,7 @@
             }
         }
         @if (collectionTrophiesStore.isLoading()) {
-            <mat-spinner></mat-spinner>
+            <mat-spinner/>
         }
         @if (collectionTrophiesStore.isError()) {
             <div class="error-message-wrapper">

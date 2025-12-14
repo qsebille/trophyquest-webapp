@@ -1,0 +1,23 @@
+import {Component, computed, input} from '@angular/core';
+import {TrophyCount} from '../../core/models/dto/trophy-count';
+import {MatIconModule} from '@angular/material/icon';
+import {NgOptimizedImage} from '@angular/common';
+
+@Component({
+    selector: 'app-trophy-count-displayer',
+    imports: [
+        MatIconModule,
+        NgOptimizedImage,
+    ],
+    templateUrl: './trophy-count-displayer.component.html',
+    styleUrl: './trophy-count-displayer.component.scss',
+})
+export class TrophyCountDisplayerComponent {
+    readonly trophyCount = input.required<TrophyCount>();
+    readonly labelOrientation = input.required<'horizontal' | 'vertical'>();
+    readonly iconSizePx = input<number>(32);
+    readonly textSizePx = input<number>(20);
+
+    readonly flexDirection = computed(() => this.labelOrientation() === 'horizontal' ? 'row' : 'column');
+    readonly isLabelHorizontal = computed(() => this.labelOrientation() === 'horizontal');
+}

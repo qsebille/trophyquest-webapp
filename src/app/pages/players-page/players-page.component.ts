@@ -1,18 +1,18 @@
 import {Component} from '@angular/core';
 import {PlayerListStore} from '../../core/store/player-list-store';
-import {PlayerCard} from '../../components/player-card/player-card';
+import {PlayerCardComponent} from '../../components/player-card/player-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 
 @Component({
     imports: [
-        PlayerCard,
+        PlayerCardComponent,
         MatProgressSpinnerModule,
     ],
     templateUrl: './players-page.component.html',
     styleUrl: './players-page.component.scss',
 })
-export class PlayersPage {
+export class PlayersPageComponent {
 
     constructor(
         private readonly _navigator: NavigatorService,

@@ -1,22 +1,22 @@
-<div [class.completed]="isCompleted" class="profile-game-card">
-  <div class="game-infos">
-    <img alt="" class="collection-image" src="{{collection.collectionImageUrl}}"/>
-    <div class="platform-and-title">
-      <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ collection.collectionTitle }}</a>
-      <div class="platform">
-        <span class="platform-label platform-label--{{collection.collectionPlatform}}">
-          {{ collection.collectionPlatform }}
+<div [class.completed]="isCompleted()" class="profile-game-card">
+    <div class="game-infos">
+        <img alt="" class="collection-image" src="{{collection().collectionImageUrl}}"/>
+        <div class="platform-and-title">
+            <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ collection().collectionTitle }}</a>
+            <div class="platform">
+        <span class="platform-label platform-label--{{collection().collectionPlatform}}">
+          {{ collection().collectionPlatform }}
         </span>
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="game-progression">
-    <app-trophy-count-displayer [iconSize]="32" [labelOrientation]="'vertical'"
-                                [textSizePx]="14" [trophyCount]="collection.earnedTrophies"
-                                class="trophy-count"/>
-    <div [class.completed]="isCompleted" class="progress-bar-wrapper">
-      <mat-progress-bar [mode]="'buffer'" [value]="completionScore"/>
-      {{ completionScore | number:'1.0-0':'en-US' }}%
+    <div class="game-progression">
+        <app-trophy-count-displayer [labelOrientation]="'vertical'"
+                                    [textSizePx]="14" [trophyCount]="collection().earnedTrophies"
+                                    class="trophy-count"/>
+        <div [class.completed]="isCompleted()" class="progress-bar-wrapper">
+            <mat-progress-bar [mode]="'buffer'" [value]="completionScore"/>
+            {{ completionScore() | number:'1.0-0':'en-US' }}%
+        </div>
     </div>
-  </div>
 </div>

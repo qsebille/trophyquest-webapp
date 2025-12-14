@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeTrophyCardComponent} from './home-trophy-card.component';
 import {ObtainedTrophy} from '../../core/models/dto/obtained-trophy';
 
-describe('HomeObtainedTrophyCard', () => {
+describe('HomeTrophyCardComponent', () => {
     let component: HomeTrophyCardComponent;
     let fixture: ComponentFixture<HomeTrophyCardComponent>;
 
@@ -28,7 +28,9 @@ describe('HomeObtainedTrophyCard', () => {
 
         fixture = TestBed.createComponent(HomeTrophyCardComponent);
         component = fixture.componentInstance;
-        component.trophy = mockObtainedTrophy;
+
+        fixture.componentRef.setInput('trophy', mockObtainedTrophy);
+
         fixture.detectChanges();
     });
 
