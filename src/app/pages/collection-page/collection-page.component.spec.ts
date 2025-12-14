@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CollectionPageComponent} from './collection-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {Trophy} from '../../core/models/dto/trophy';
 import {CollectionStore} from "../../core/store/collection/collection.store";
 import {CollectionTrophiesStore} from "../../core/store/collection/collection-trophies.store";
@@ -18,21 +18,21 @@ describe('CollectionPageComponent', () => {
 
     @Component({selector: 'app-collection-summary', template: ''})
     class MockCollectionSummaryComponent {
-        @Input({required: true}) collection: Collection | undefined;
+        readonly collection = input.required<Collection>();
     }
 
     @Component({selector: 'app-trophy-card', template: ''})
     class MockTrophyCardComponent {
-        @Input({required: true}) trophy: Trophy | undefined
-        @Input({required: false}) imageSize: number = 50
-        @Input({required: false}) showHiddenTrophies: boolean = false
+        readonly trophy = input.required<Trophy>();
+        readonly imageSize = input<number>(50);
+        readonly showHiddenTrophies = input<boolean>(false);
     }
 
     @Component({selector: 'app-trophy-filters', template: ''})
     class MockTrophyFiltersComponent {
-        @Input({required: false}) public initEarnedFilter: 'all' | 'earned' | 'notEarned' = 'all';
-        @Output() public readonly showHiddenTrophies = new EventEmitter<boolean>();
-        @Output() public readonly trophyEarnedFilterChanged = new EventEmitter<'all' | 'earned' | 'unearned'>();
+        readonly filter = input<'all' | 'earned' | 'notEarned'>('all');
+        readonly filterChange = output<'all' | 'earned' | 'notEarned'>();
+        readonly showHiddenTrophyChange = output<boolean>();
     }
 
     const collectionId = 'collection-000';

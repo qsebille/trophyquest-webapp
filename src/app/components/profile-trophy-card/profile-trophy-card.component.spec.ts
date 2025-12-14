@@ -1,10 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {ProfileTrophyCard} from './profile-trophy-card';
+import {ProfileTrophyCardComponent} from './profile-trophy-card.component';
 import {Trophy} from '../../core/models/dto/trophy';
 
-describe('ProfileTrophyCard', () => {
-    let component: ProfileTrophyCard;
-    let fixture: ComponentFixture<ProfileTrophyCard>;
+describe('ProfileTrophyCardComponent', () => {
+    let component: ProfileTrophyCardComponent;
+    let fixture: ComponentFixture<ProfileTrophyCardComponent>;
 
     const trophyMock: Trophy = {
         id: '001',
@@ -20,12 +20,12 @@ describe('ProfileTrophyCard', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ProfileTrophyCard]
+            imports: [ProfileTrophyCardComponent]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(ProfileTrophyCard);
+        fixture = TestBed.createComponent(ProfileTrophyCardComponent);
         component = fixture.componentInstance;
-        component.trophy = trophyMock;
+        fixture.componentRef.setInput('trophy', trophyMock);
         fixture.detectChanges();
     });
 

@@ -1,16 +1,16 @@
 <div class="collection-summary">
     <div class="image-wrapper">
-        <img alt="" class="game-image" src="{{collection?.imageUrl ?? 'assets/icons/missing-game-image.svg'}}"/>
+        <img alt="" class="game-image" src="{{collection()?.imageUrl ?? 'assets/icons/missing-game-image.svg'}}"/>
     </div>
     <div class="summary-content">
         <div class="title-and-platform">
-            <span class="game-title">{{ collection?.title }}</span>
+            <span class="game-title">{{ collection()?.title }}</span>
             <div class="game-platform">
-                <span class="platform-label platform-label--{{collection?.platform}}">{{ collection?.platform }}</span>
+                <span class="platform-label platform-label--{{collection()?.platform}}">{{ collection()?.platform }}</span>
             </div>
         </div>
         <div class="trophy-count-wrapper">
-            <app-trophy-count-displayer [iconSize]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
+            <app-trophy-count-displayer [iconSizePx]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
                                         [trophyCount]="trophyCount"/>
         </div>
     </div>

@@ -1,19 +1,19 @@
 <div class="home-trophy-card">
     <div class="trophy-infos">
         <div class="image-title-game">
-            <img [height]="50" [width]="50" alt="Trophy" class="trophy-image" ngSrc="{{trophy.trophyIconUrl}}"/>
+            <img [height]="50" [width]="50" alt="Trophy" class="trophy-image" ngSrc="{{trophy().trophyIconUrl}}"/>
             <div class="title-game">
-                <div class="trophy-title">{{ trophy.trophyTitle }}</div>
-                <div class="game-title">{{ trophy.gameTitle }}</div>
+                <div class="trophy-title">{{ trophy().trophyTitle }}</div>
+                <div class="game-title">{{ trophy().gameTitle }}</div>
             </div>
         </div>
         <div class="icon-and-earned-date">
-            <img [height]="40" [width]="40" alt="" ngSrc="assets/icons/trophy-{{trophy.trophyType}}.png"/>
-            <div class="trophy-earned-date">{{ trophy.obtainedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
+            <img [height]="40" [width]="40" alt="" ngSrc="assets/icons/trophy-{{trophy().trophyType}}.png"/>
+            <div class="trophy-earned-date">{{ trophy().obtainedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
         </div>
     </div>
     <div class="user-infos">
-        <img [height]="28" [width]="28" alt="" class="player-avatar" ngSrc="{{trophy.playerAvatarUrl}}"/>
-        <a (click)="clickOnPlayer.emit()" class="player-pseudo">{{ trophy.playerPseudo }}</a>
+        <img [height]="28" [width]="28" alt="" class="player-avatar" ngSrc="{{trophy().playerAvatarUrl}}"/>
+        <a (click)="clickOnPlayer.emit()" class="player-pseudo">{{ trophy().playerPseudo }}</a>
     </div>
 </div>

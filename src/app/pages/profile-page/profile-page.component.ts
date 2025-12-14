@@ -1,24 +1,24 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
-import {ProfileSummary} from '../../components/profile-summary/profile-summary';
+import {ProfileSummaryComponent} from '../../components/profile-summary/profile-summary.component';
 import {ProfileCollectionCardComponent} from '../../components/profile-game-card/profile-collection-card.component';
-import {ProfileTrophyCard} from '../../components/profile-trophy-card/profile-trophy-card';
+import {ProfileTrophyCardComponent} from '../../components/profile-trophy-card/profile-trophy-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 
 @Component({
     selector: 'app-profile-page',
     imports: [
-        ProfileSummary,
+        ProfileSummaryComponent,
         ProfileCollectionCardComponent,
-        ProfileTrophyCard,
+        ProfileTrophyCardComponent,
         MatProgressSpinnerModule,
     ],
-    templateUrl: './profile-page.html',
-    styleUrl: './profile-page.scss',
+    templateUrl: './profile-page.component.html',
+    styleUrl: './profile-page.component.scss',
 })
-export class ProfilePage {
+export class ProfilePageComponent {
     playerId!: string | null;
 
     constructor(

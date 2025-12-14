@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {PlayersPage} from './players-page.component';
+import {PlayersPageComponent} from './players-page.component';
 import {PlayerListStore} from '../../core/store/player-list-store';
 import {PlayerSummary} from '../../core/models/dto/player-summary';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 
-describe('PlayersPage', () => {
-    let component: PlayersPage;
-    let fixture: ComponentFixture<PlayersPage>;
+describe('PlayersPageComponent', () => {
+    let component: PlayersPageComponent;
+    let fixture: ComponentFixture<PlayersPageComponent>;
 
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
     let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
 
     @Component({selector: 'app-player-card', template: ''})
     class MockPlayerCard {
-        @Input({required: true}) playerSummary!: PlayerSummary;
-        @Output() clickOnPseudo: EventEmitter<any> = new EventEmitter();
-        @Output() clickOnGame: EventEmitter<any> = new EventEmitter();
+        readonly playerSummary = input.required<PlayerSummary>();
+        readonly clickOnPseudo = output();
+        readonly clickOnGame = output();
     }
 
     const collectionId: string = 'collection-123';
@@ -29,15 +29,15 @@ describe('PlayersPage', () => {
         playerListStoreSpy.playerSummaries.and.returnValue([]);
 
         await TestBed.configureTestingModule({
-            imports: [PlayersPage, MockPlayerCard],
+            imports: [PlayersPageComponent, MockPlayerCard],
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
                 {provide: PlayerListStore, useValue: playerListStoreSpy},
             ]
         }).compileComponents();
-        TestBed.overrideComponent(PlayersPage, {set: {imports: [MockPlayerCard]}});
+        TestBed.overrideComponent(PlayersPageComponent, {set: {imports: [MockPlayerCard]}});
 
-        fixture = TestBed.createComponent(PlayersPage);
+        fixture = TestBed.createComponent(PlayersPageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

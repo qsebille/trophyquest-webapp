@@ -1,20 +1,20 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {Collection} from '../../core/models/dto/collection';
-import {TrophyCountDisplayer} from "../trophy-count-displayer/trophy-count-displayer";
+import {TrophyCountDisplayerComponent} from "../trophy-count-displayer/trophy-count-displayer.component";
 import {TrophyCount} from "../../core/models/dto/trophy-count";
 
 @Component({
     selector: 'app-collection-summary',
     imports: [
-        TrophyCountDisplayer
+        TrophyCountDisplayerComponent
     ],
     templateUrl: './collection-summary.component.html',
     styleUrl: './collection-summary.component.scss',
 })
 export class CollectionSummaryComponent {
-    @Input({required: true}) collection: Collection | null = null;
+    readonly collection = input<Collection | null>(null);
 
     get trophyCount(): TrophyCount {
-        return this.collection?.trophyCount ?? {platinum: 0, gold: 0, silver: 0, bronze: 0};
+        return this.collection()?.trophyCount ?? {platinum: 0, gold: 0, silver: 0, bronze: 0};
     }
 }

@@ -1,38 +1,31 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ProfilePage} from './profile-page';
+import {ProfilePageComponent} from './profile-page.component';
 import {ActivatedRoute} from '@angular/router';
 import {ProfileStore} from '../../core/store/profile-store';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {TrophyCount} from '../../core/models/dto/trophy-count';
 import {Player} from '../../core/models/dto/player';
-import {PlayerCollection} from '../../core/models/dto/player-collection';
 import {Trophy} from '../../core/models/dto/trophy';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 
-describe('ProfilePage', () => {
-    let component: ProfilePage;
-    let fixture: ComponentFixture<ProfilePage>;
+describe('ProfilePageComponent', () => {
+    let component: ProfilePageComponent;
+    let fixture: ComponentFixture<ProfilePageComponent>;
     let profileStoreSpy: jasmine.SpyObj<ProfileStore>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
 
     @Component({selector: 'app-profile-summary', template: ''})
     class MockProfileSummary {
-        @Input({required: true}) player!: Player;
-        @Input({required: true}) trophyCount!: TrophyCount;
-        @Input({required: true}) totalGamesPlayed!: number;
-        @Input({required: true}) totalEarnedTrophies!: number;
-    }
-
-    @Component({selector: 'app-profile-game-card', template: ''})
-    class MockProfileGameCard {
-        @Input({required: true}) collection!: PlayerCollection;
-        @Output() public readonly clickOnTitle = new EventEmitter();
+        readonly player = input.required<Player>();
+        readonly trophyCount = input.required<TrophyCount>();
+        readonly totalGamesPlayed = input.required<number>();
+        readonly totalEarnedTrophies = input.required<number>();
     }
 
     @Component({selector: 'app-profile-trophy-card', template: ''})
     class MockProfileTrophyCard {
-        @Input({required: true}) trophy!: Trophy;
+        readonly trophy = input.required<Trophy>();
     }
 
     const playerId: string = 'player-123';
@@ -51,7 +44,7 @@ describe('ProfilePage', () => {
         routeParamMap.set('playerId', playerId);
 
         await TestBed.configureTestingModule({
-            imports: [ProfilePage, MockProfileSummary, MockProfileGameCard, MockProfileTrophyCard],
+            imports: [ProfilePageComponent, MockProfileSummary, MockProfileTrophyCard],
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
                 {provide: ProfileStore, useValue: profileStoreSpy},
@@ -59,11 +52,11 @@ describe('ProfilePage', () => {
             ]
         }).compileComponents();
 
-        TestBed.overrideComponent(ProfilePage, {
-            set: {imports: [MockProfileSummary, MockProfileSummary, MockProfileGameCard, MockProfileTrophyCard]}
+        TestBed.overrideComponent(ProfilePageComponent, {
+            set: {imports: [MockProfileSummary, MockProfileSummary, MockProfileTrophyCard]}
         });
 
-        fixture = TestBed.createComponent(ProfilePage);
+        fixture = TestBed.createComponent(ProfilePageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TrophyCountDisplayer} from '../trophy-count-displayer/trophy-count-displayer';
+import {Component, computed, input, output} from '@angular/core';
+import {TrophyCountDisplayerComponent} from '../trophy-count-displayer/trophy-count-displayer.component';
 import {PlayerCollection} from '../../core/models/dto/player-collection';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DecimalPipe} from '@angular/common';
@@ -7,7 +7,7 @@ import {DecimalPipe} from '@angular/common';
 @Component({
     selector: 'app-profile-collection-card',
     imports: [
-        TrophyCountDisplayer,
+        TrophyCountDisplayerComponent,
         MatProgressBarModule,
         DecimalPipe,
     ],
@@ -15,24 +15,22 @@ import {DecimalPipe} from '@angular/common';
     styleUrl: './profile-collection-card.component.scss',
 })
 export class ProfileCollectionCardComponent {
-    @Input({required: true}) collection!: PlayerCollection;
-    @Output() public readonly clickOnTitle = new EventEmitter();
+    readonly collection = input.required<PlayerCollection>();
+    readonly clickOnTitle = output();
 
-    get completionScore(): number {
-        const earnedTrophies: number = this.collection.earnedTrophies.platinum +
-            this.collection.earnedTrophies.gold +
-            this.collection.earnedTrophies.silver +
-            this.collection.earnedTrophies.bronze;
-        const totalTrophies: number = this.collection.collectionTrophies.platinum +
-            this.collection.collectionTrophies.gold +
-            this.collection.collectionTrophies.silver +
-            this.collection.collectionTrophies.bronze;
+    readonly earnedTrophies = computed(() => this.collection().earnedTrophies);
+    readonly collectionTrophies = computed(() => this.collection().collectionTrophies);
+    readonly completionScore = computed(() => {
+        const earnedTrophies: number = this.earnedTrophies().platinum +
+            this.earnedTrophies().gold +
+            this.earnedTrophies().silver +
+            this.earnedTrophies().bronze;
+        const totalTrophies: number = this.collectionTrophies().platinum +
+            this.collectionTrophies().gold +
+            this.collectionTrophies().silver +
+            this.collectionTrophies().bronze;
 
         return earnedTrophies / totalTrophies * 100;
-    }
-
-    get isCompleted(): boolean {
-        return this.completionScore === 100;
-    }
-
+    });
+    readonly isCompleted = computed(() => this.completionScore() === 100);
 }
