@@ -35,7 +35,7 @@ describe('HomePageComponent', () => {
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage']);
-        gameListStoreSpy = jasmine.createSpyObj('GameListStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreGames', 'isLoading', 'total']);
+        gameListStoreSpy = jasmine.createSpyObj('GameListStore', ['results', 'resetState', 'searchRecentlyPlayedGames', 'loadMore', 'hasMoreGames', 'isLoading', 'total']);
         obtainedTrophyStoreSpy = jasmine.createSpyObj('ObtainedTrophiesStore', ['results', 'resetState', 'search', 'loadMore', 'hasMoreTrophies', 'isLoading', 'total']);
         playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'count', 'total']);
 
@@ -66,7 +66,7 @@ describe('HomePageComponent', () => {
 
     it('should reset state on init', () => {
         expect(gameListStoreSpy.resetState).toHaveBeenCalled();
-        expect(gameListStoreSpy.search).toHaveBeenCalled();
+        expect(gameListStoreSpy.searchRecentlyPlayedGames).toHaveBeenCalled();
         expect(obtainedTrophyStoreSpy.resetState).toHaveBeenCalled();
         expect(obtainedTrophyStoreSpy.search).toHaveBeenCalled();
         expect(playerListStoreSpy.reset).toHaveBeenCalled();

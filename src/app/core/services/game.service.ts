@@ -23,4 +23,14 @@ export class GameService {
         return this.http.get<SearchResult<Game>>(this.API_URL, {params});
     }
 
+    searchRecentGames(
+        pageNumber: number,
+        pageSize: number
+    ): Observable<SearchResult<Game>> {
+        const params = new HttpParams()
+            .set('pageNumber', pageNumber)
+            .set('pageSize', pageSize);
+        return this.http.get<SearchResult<Game>>(`${this.API_URL}/recently-played`, {params});
+    }
+
 }
