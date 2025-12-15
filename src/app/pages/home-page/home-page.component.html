@@ -9,7 +9,7 @@
 
     <div class="home-page-content">
         <div class="game-list">
-            <h2>List of games</h2>
+            <h2>Most recent popular games</h2>
             @for (game of gameListStore.results(); track game.id) {
                 <app-home-game-card [game]="game" class="home-game-card"></app-home-game-card>
             }

@@ -30,7 +30,7 @@ export class HomePageComponent {
 
     ngOnInit(): void {
         this.gameListStore.resetState();
-        this.gameListStore.search();
+        this.gameListStore.searchRecentlyPlayedGames();
         this.obtainedTrophiesStore.resetState();
         this.obtainedTrophiesStore.search();
         this.playerListStore.reset();
