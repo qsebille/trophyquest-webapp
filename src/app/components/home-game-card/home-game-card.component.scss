@@ -1,21 +1,27 @@
 @use "styles/colors" as *;
 
 .home-game-card {
-  padding: 5px;
-  margin: 1px;
-  background-color: $tq-blue-lighter;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 5px;
-}
-
-.title-image-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: $tq-blue-lighter;
+  border-radius: 10px;
+
+  .game-infos {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 10px
+  }
+
+  .game-image {
+    border-radius: 5px;
+  }
 
   .game-title {
-    padding-left: 10px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
   }
 }
+

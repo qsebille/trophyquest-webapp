@@ -1,0 +1,6 @@
+@if (headerTemplate && contentTemplate) {
+    <div class="trophyquest-block">
+        <ng-container *ngTemplateOutlet="headerTemplate.tpl"/>
+        <ng-container *ngTemplateOutlet="contentTemplate.tpl"/>
+    </div>
+}

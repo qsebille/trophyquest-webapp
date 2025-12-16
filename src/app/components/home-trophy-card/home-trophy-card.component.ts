@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {ObtainedTrophy} from '../../core/models/dto/obtained-trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 
@@ -13,5 +13,4 @@ import {DatePipe, NgOptimizedImage} from '@angular/common';
 })
 export class HomeTrophyCardComponent {
     readonly trophy = input.required<ObtainedTrophy>();
-    readonly clickOnPlayer = output();
 }

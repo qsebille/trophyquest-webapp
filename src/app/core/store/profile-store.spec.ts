@@ -2,7 +2,7 @@ import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 import {of} from 'rxjs';
 
 import {ProfileStore} from './profile-store';
-import {PlayerService} from '../services/player.service';
+import {PlayerService} from '../services/http/player.service';
 import {Player} from '../models/dto/player';
 import {TrophyCount} from '../models/dto/trophy-count';
 import {Trophy} from '../models/dto/trophy';

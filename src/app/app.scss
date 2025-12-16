@@ -1,3 +1,5 @@
+@use 'styles/colors' as *;
+
 .trophy-quest-app {
-  background-image: url('/assets/images/background.png');
+  background-color: $tq-white;
 }

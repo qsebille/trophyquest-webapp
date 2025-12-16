@@ -1,5 +1,5 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {PlayerService} from '../services/player.service';
+import {PlayerService} from '../services/http/player.service';
 import {forkJoin} from 'rxjs';
 import {ProfileState} from '../models/states/profile-state';
 import {LoadingStatus} from '../models/loading-status.enum';

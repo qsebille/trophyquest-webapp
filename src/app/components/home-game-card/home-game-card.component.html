@@ -1,7 +1,9 @@
 <div class="home-game-card">
-    <div class="title-image-wrapper">
-        <img [alt]="game().title" [height]="50" [ngSrc]="game().imageUrl"
-             [width]="50"/>
+    <div class="game-infos">
+        <img [alt]="game().title" [height]="50" [ngSrc]="game().imageUrl" class="game-image" [width]="50"/>
         <div class="game-title">{{ game().title }}</div>
+    </div>
+    <div class="players">
+        {{ game().recentPlayers | number }} players
     </div>
 </div>

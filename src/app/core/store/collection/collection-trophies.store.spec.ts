@@ -1,7 +1,7 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {CollectionTrophiesStore} from './collection-trophies.store';
-import {PlayerService} from '../../services/player.service';
+import {PlayerService} from '../../services/http/player.service';
 import {Trophy} from '../../models/dto/trophy';
 import {of, throwError} from "rxjs";
 
@@ -143,5 +143,5 @@ describe('CollectionTrophiesStore', () => {
         expect(store.baseGameTrophies()).toEqual([baseTrophy, earnedBaseTrophy]);
         expect(store.dlcs()).toEqual([{groupName: 'dlc', trophies: [dlcTrophy, earnedDlcTrophy]}]);
     }));
-    
+
 });
