@@ -1,7 +1,7 @@
 import {computed, Injectable, signal} from '@angular/core';
 import {Trophy} from '../../models/dto/trophy';
 import {LoadingStatus} from '../../models/loading-status.enum';
-import {PlayerService} from '../../services/player.service';
+import {PlayerService} from '../../services/http/player.service';
 import {GameGroupTrophies} from '../../models/dto/game-group-trophies';
 import {TrophyFilters} from '../../models/filters/trophy-filters';
 
@@ -15,7 +15,7 @@ export class CollectionTrophiesStore {
     private readonly _trophies = signal<Trophy[]>([]);
     readonly displayedTrophies = computed(() => this._trophies().filter(t => this._filterTrophies(this._trophies(), this.earnedFilter()).includes(t)));
     readonly baseGameTrophies = computed(() => this.displayedTrophies().filter(t => t.gameGroup === 'default'));
-    readonly dlcs = computed(() => this._computeDlcGroups(this.displayedTrophies()));
+    readonly dlcs = computed(() => this._computeDlcGroups());
 
     private readonly _loadingStatus = signal<LoadingStatus>(LoadingStatus.NONE);
     readonly isLoaded = computed(() => this._loadingStatus() === LoadingStatus.FULLY_LOADED);
@@ -57,7 +57,7 @@ export class CollectionTrophiesStore {
         this._filters.update(f => ({...f, earned: filter}));
     }
 
-    private _computeDlcGroups(trophies: Trophy[]): GameGroupTrophies[] {
+    private _computeDlcGroups(): GameGroupTrophies[] {
         const groups: GameGroupTrophies[] = [];
         this.displayedTrophies()
             .filter(t => t.gameGroup !== 'default')

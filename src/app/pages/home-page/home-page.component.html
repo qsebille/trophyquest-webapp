@@ -1,42 +1,68 @@
 <div class="home-page container container-fluid">
-    <div class="home-page-header">
-        <span class="welcome-message">Welcome on TrophyQuest</span>
-        <app-home-summary [nbGames]="gameListStore.total()"
-                          [nbPlayers]="playerListStore.total()"
-                          [nbTrophies]="obtainedTrophiesStore.total()"
-                          class="home-summary"/>
+    <div class="left-column">
+        <app-trophyquest-block>
+            <ng-template appBlockHeader>
+                <span class="block-header">TrophyQuest</span>
+            </ng-template>
+            <ng-template appBlockContent>
+                @if (isLoadingSummary()) {
+                    <mat-spinner/>
+                } @else if (hasFailedLoadingSummary()) {
+                    <app-error-message [errorMessage]="'Failed to load summary'"/>
+                } @else {
+                    <app-home-summary class="home-summary" [nbGames]="totalGames()"
+                                      [nbPlayers]="totalPlayers()"
+                                      [nbTrophies]="totalEarnedTrophies()"/>
+                }
+            </ng-template>
+        </app-trophyquest-block>
+
+        <app-trophyquest-block>
+            <ng-template appBlockHeader>
+                <span class="block-header">Top 10 recent games</span>
+            </ng-template>
+            <ng-template appBlockContent>
+                @if (isLoadingGames()) {
+                    <mat-spinner/>
+                } @else if (hasFailedLoadingGames()) {
+                    <app-error-message [errorMessage]="'Failed to load games'"/>
+                } @else {
+                    @for (game of games(); track game.id) {
+                        <app-home-game-card [game]="game" class="home-game-card"/>
+                    }
+                }
+            </ng-template>
+        </app-trophyquest-block>
     </div>
 
-    <div class="home-page-content">
-        <div class="game-list">
-            <h2>Most recent popular games</h2>
-            @for (game of gameListStore.results(); track game.id) {
-                <app-home-game-card [game]="game" class="home-game-card"></app-home-game-card>
-            }
-            @if (gameListStore.hasMoreGames() && !gameListStore.isLoading()) {
-                <a (click)="loadMoreGames()" class="button load-more">Load more games...</a>
-            }
-            @if (gameListStore.isLoading()) {
-                <div class="spinner-container">
-                    <mat-spinner></mat-spinner>
-                </div>
-            }
-        </div>
-
-        <div class="last-obtained-trophies">
-            <h2>Last obtained trophies</h2>
-            @for (trophy of obtainedTrophiesStore.results(); track trophy.id) {
-                <app-home-trophy-card (clickOnPlayer)="navigateToProfilePage(trophy.playerId)"
-                                      [trophy]="trophy"
-                                      class="home-trophy-card"/>
-            }
-            @if (obtainedTrophiesStore.hasMoreTrophies() && !obtainedTrophiesStore.isLoading()) {
-                <a (click)="loadMoreTrophies()" class="button load-more">Load more trophies...</a>
-            }
-            @if (obtainedTrophiesStore.isLoading()) {
-                <div class="spinner-container"></div>
-            }
-        </div>
-
+    <div class="right-column">
+        <app-trophyquest-block>
+            <ng-template appBlockHeader>
+                <span class="block-header">Recent players</span>
+            </ng-template>
+            <ng-template appBlockContent>
+                @if (isLoadingPlayers()) {
+                    <mat-spinner/>
+                } @else if (hasFailedLoadingPlayers()) {
+                    <app-error-message [errorMessage]="'Failed to load players'"/>
+                } @else {
+                    @for (recentPlayer of recentPlayers(); track recentPlayer.player.id) {
+                        <app-section-list>
+                            <ng-template appSectionListHeader>
+                                <app-home-player-card [player]="recentPlayer.player"
+                                                      [trophyCount]="recentPlayer.recentTrophyCount"
+                                                      (clickOnPseudo)="navigateToProfilePage(recentPlayer.player.id)"
+                                                      class="home-player-card"/>
+                            </ng-template>
+                            <ng-template appSectionListContent>
+                                @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
+                                    <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"/>
+                                }
+                            </ng-template>
+                        </app-section-list>
+                    }
+                }
+            </ng-template>
+        </app-trophyquest-block>
     </div>
 </div>

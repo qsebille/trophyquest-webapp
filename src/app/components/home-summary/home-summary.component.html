@@ -1,11 +1,14 @@
 <div class="home-summary">
-    <div class="total-played-games summary-item">
-        Total played games : {{ nbGames() }}
+    <div class="summary-item">
+        <span class="stat">{{ nbGames() }}</span>
+        <span class="label">games</span>
     </div>
-    <div class="total-players summary-item">
-        Total players : {{ nbPlayers() }}
+    <div class="summary-item">
+        <span class="stat">{{ nbPlayers() }}</span>
+        <span class="label">players</span>
     </div>
-    <div class="total-earned-trophies summary-item">
-        Total earned trophies : {{ nbTrophies() | number }}
+    <div class="summary-item">
+        <span class="stat">{{ nbTrophies() | number }}</span>
+        <span class="label">trophies</span>
     </div>
 </div>

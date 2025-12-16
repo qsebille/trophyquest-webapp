@@ -14,9 +14,6 @@ describe('HomeTrophyCardComponent', () => {
         trophyDescription: 'Get trophy 1',
         trophyIconUrl: 'trophy.png',
         gameTitle: 'Game',
-        playerPseudo: 'Pseudo',
-        playerId: 'player-001',
-        playerAvatarUrl: 'avatar.png',
         obtainedDate: '2025-01-01T00:00:00',
     }
 

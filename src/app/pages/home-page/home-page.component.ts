@@ -1,48 +1,66 @@
-import {Component} from '@angular/core';
-import {GameListStore} from '../../core/store/game-list-store';
+import {Component, computed} from '@angular/core';
 import {HomeGameCardComponent} from '../../components/home-game-card/home-game-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {ObtainedTrophiesStore} from '../../core/store/obtained-trophies-store';
-import {HomeTrophyCardComponent} from '../../components/home-trophy-card/home-trophy-card.component';
 import {HomeSummaryComponent} from '../../components/home-summary/home-summary.component';
-import {PlayerListStore} from '../../core/store/player-list-store';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {HomeSummaryStoreService} from "../../core/store/home/home-summary-store.service";
+import {HomeRecentPlayerStoreService} from "../../core/store/home/home-recent-player-store.service";
+import {SectionListComponent} from "../../components/section-list/section-list.component";
+import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../templates/section-list.template";
+import {HomeTrophyCardComponent} from "../../components/home-trophy-card/home-trophy-card.component";
+import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
+import {HomeGameStoreService} from "../../core/store/home/home-game-store.service";
+import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
+import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
+import {HomePlayerCardComponent} from "../../components/home-player-card/home-player-card.component";
+
 
 @Component({
     selector: 'app-home-page',
     imports: [
         HomeGameCardComponent,
-        HomeTrophyCardComponent,
         MatProgressSpinnerModule,
         HomeSummaryComponent,
+        SectionListComponent,
+        SectionListHeaderTemplate,
+        SectionListContentTemplate,
+        HomeTrophyCardComponent,
+        ErrorMessageComponent,
+        TrophyquestBlockComponent,
+        BlockHeaderTemplate,
+        BlockContentTemplate,
+        HomePlayerCardComponent,
     ],
     templateUrl: './home-page.component.html',
     styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent {
     constructor(
+        private readonly _homeSummaryStore: HomeSummaryStoreService,
+        private readonly _homeRecentPlayerStore: HomeRecentPlayerStoreService,
+        private readonly _homeGameStore: HomeGameStoreService,
         private readonly _navigator: NavigatorService,
-        public readonly gameListStore: GameListStore,
-        public readonly obtainedTrophiesStore: ObtainedTrophiesStore,
-        public readonly playerListStore: PlayerListStore,
     ) {
     }
 
+    readonly totalGames = computed(() => this._homeSummaryStore.nbGames());
+    readonly totalPlayers = computed(() => this._homeSummaryStore.nbPlayers());
+    readonly totalEarnedTrophies = computed(() => this._homeSummaryStore.nbEarnedTrophies());
+    readonly isLoadingSummary = computed(() => this._homeSummaryStore.isLoading());
+    readonly hasFailedLoadingSummary = computed(() => this._homeSummaryStore.isError());
+
+    readonly games = computed(() => this._homeGameStore.games())
+    readonly isLoadingGames = computed(() => this._homeGameStore.isLoading());
+    readonly hasFailedLoadingGames = computed(() => this._homeGameStore.isError());
+
+    readonly recentPlayers = computed(() => this._homeRecentPlayerStore.list());
+    readonly isLoadingPlayers = computed(() => this._homeRecentPlayerStore.isLoading());
+    readonly hasFailedLoadingPlayers = computed(() => this._homeRecentPlayerStore.isError())
+
     ngOnInit(): void {
-        this.gameListStore.resetState();
-        this.gameListStore.searchRecentlyPlayedGames();
-        this.obtainedTrophiesStore.resetState();
-        this.obtainedTrophiesStore.search();
-        this.playerListStore.reset();
-        this.playerListStore.count();
-    }
-
-    loadMoreGames(): void {
-        this.gameListStore.loadMore();
-    }
-
-    loadMoreTrophies(): void {
-        this.obtainedTrophiesStore.loadMore();
+        this._homeSummaryStore.fetch();
+        this._homeRecentPlayerStore.fetch();
+        this._homeGameStore.fetch();
     }
 
     navigateToProfilePage(playerId: string): void {

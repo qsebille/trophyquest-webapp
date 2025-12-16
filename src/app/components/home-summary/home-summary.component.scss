@@ -2,14 +2,24 @@
 
 .home-summary {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: space-around;
-  height: 100%;
+  align-items: center;
+
+
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stat {
+    font-size: 24px;
+    color: $tq-blue-medium;
+  }
+
+  .label {
+    font-size: 18px;
+    color: $tq-blue-medium;
+  }
 }
 
-.summary-item {
-  font-size: 25px;
-  font-weight: bold;
-  color: $tq-blue-medium;
-}
