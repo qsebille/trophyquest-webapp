@@ -8,12 +8,13 @@ import {Trophy} from '../../models/dto/trophy';
 import {PlayerCollection} from '../../models/dto/player-collection';
 import {PlayerSummary} from '../../models/dto/player-summary';
 import {RecentPlayerResponse} from "../../models/dto/recent-player-response";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root',
 })
 export class PlayerService {
-    private readonly API_URL = "http://localhost:8080/api/player";
+    private readonly API_URL = `${environment.apiUrl}/api/game`;
 
     constructor(private http: HttpClient) {
     }
