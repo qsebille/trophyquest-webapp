@@ -15,7 +15,7 @@
                                     [textSizePx]="14" [trophyCount]="collection().earnedTrophies"
                                     class="trophy-count"/>
         <div [class.completed]="isCompleted()" class="progress-bar-wrapper">
-            <mat-progress-bar [mode]="'buffer'" [value]="completionScore"/>
+            <mat-progress-bar [mode]="'buffer'" [value]="completionScore()"/>
             {{ completionScore() | number:'1.0-0':'en-US' }}%
         </div>
     </div>
