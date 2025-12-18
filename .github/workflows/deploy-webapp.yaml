@@ -38,4 +38,4 @@ jobs:
 
       - name: Sync to S3
         run: |
-          aws s3 sync dist/trophyquest-webapp/ s3://${{ secrets.S3_BUCKET }} --delete
+          aws s3 sync dist/trophyquest-webapp/browser s3://${{ secrets.S3_BUCKET }} --delete
