@@ -8,7 +8,7 @@ import {environment} from "../../../../environments/environment";
     providedIn: 'root',
 })
 export class CollectionService {
-    private readonly API_URL = `${environment.apiUrl}/api/game`;
+    private readonly API_URL = `${environment.apiUrl}/api/collection`;
 
     constructor(private _http: HttpClient) {
     }
