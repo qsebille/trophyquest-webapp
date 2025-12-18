@@ -7,7 +7,7 @@ import {environment} from "../../../../environments/environment";
     providedIn: 'root',
 })
 export class TrophyService {
-    private readonly API_URL = `${environment.apiUrl}/api/game`;
+    private readonly API_URL = `${environment.apiUrl}/api/trophy`;
 
     constructor(private _http: HttpClient) {
     }

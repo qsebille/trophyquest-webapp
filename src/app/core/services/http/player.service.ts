@@ -14,7 +14,7 @@ import {environment} from "../../../../environments/environment";
     providedIn: 'root',
 })
 export class PlayerService {
-    private readonly API_URL = `${environment.apiUrl}/api/game`;
+    private readonly API_URL = `${environment.apiUrl}/api/player`;
 
     constructor(private http: HttpClient) {
     }
