@@ -4,12 +4,13 @@ import {Observable} from 'rxjs';
 import {SearchResult} from '../../models/dto/search-result';
 import {Game} from '../../models/dto/game';
 import {RecentlyPlayedGame} from "../../models/dto/recently-played-game";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
     providedIn: 'root',
 })
 export class GameService {
-    private readonly API_URL = "http://localhost:8080/api/game";
+    private readonly API_URL = `${environment.apiUrl}/api/game`;
 
     constructor(private http: HttpClient) {
     }
