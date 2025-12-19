@@ -1,45 +1,28 @@
 @use 'styles/colors' as *;
 
 .players-page {
-  padding-bottom: 50px;
-}
+  .players-content {
+    padding-top: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.players-content {
-  margin-top: 20px;
-  padding-left: 10%;
-  padding-right: 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .player-card {
+    width: 100%;
+    margin: 10px;
+  }
 
-.player-card {
-  width: 100%;
-  margin: 10px;
-}
+  .load-more-button {
+    margin-top: 20px;
+    font-size: 15px;
+    color: $tq-blue-medium;
+    cursor: pointer;
+  }
 
-.load-more-button {
-  margin-top: 20px;
-  font-size: 15px;
-  color: $tq-blue-medium;
-  cursor: pointer;
-}
-
-.error-message-wrapper {
-  margin-top: 20px;
-  width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
-  height: 100px;
-  font-size: 30px;
-  text-align: center;
-  border-radius: 2px;
-  background-color: $tq-red-lighter;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.error-message {
-  color: $tq-red-dark;
+  .error-block {
+    width: 50%;
+  }
 }

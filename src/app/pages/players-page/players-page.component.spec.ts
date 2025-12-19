@@ -24,7 +24,7 @@ describe('PlayersPageComponent', () => {
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerGamePage']);
-        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError', 'isPartiallyLoaded']);
 
         playerListStoreSpy.playerSummaries.and.returnValue([]);
 
