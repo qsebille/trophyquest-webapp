@@ -1,18 +1,18 @@
 <div [class.completed]="isCompleted()" class="profile-game-card">
     <div class="game-infos">
-        <img alt="" class="collection-image" src="{{collection().collectionImageUrl}}"/>
+        <img alt="" class="game-image" src="{{game().imageUrl}}"/>
         <div class="platform-and-title">
-            <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ collection().collectionTitle }}</a>
+            <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ game().title }}</a>
             <div class="platform">
-        <span class="platform-label platform-label--{{collection().collectionPlatform}}">
-          {{ collection().collectionPlatform }}
+        <span class="platform-label platform-label--{{game().platform}}">
+          {{ game().platform }}
         </span>
             </div>
         </div>
     </div>
     <div class="game-progression">
         <app-trophy-count-displayer [labelOrientation]="'vertical'"
-                                    [textSizePx]="14" [trophyCount]="collection().earnedTrophies"
+                                    [textSizePx]="14" [trophyCount]="game().earnedTrophies"
                                     class="trophy-count"/>
         <div [class.completed]="isCompleted()" class="progress-bar-wrapper">
             <mat-progress-bar [mode]="'buffer'" [value]="completionScore()"/>

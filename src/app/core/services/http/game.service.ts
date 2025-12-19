@@ -3,8 +3,9 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchResult} from '../../models/dto/search-result';
 import {Game} from '../../models/dto/game';
-import {RecentlyPlayedGame} from "../../models/dto/recently-played-game";
+import {PopularGame} from "../../models/dto/popular-game";
 import {environment} from "../../../../environments/environment";
+import {GameSummary} from "../../models/dto/game-summary";
 
 @Injectable({
     providedIn: 'root',
@@ -12,7 +13,7 @@ import {environment} from "../../../../environments/environment";
 export class GameService {
     private readonly API_URL = `${environment.apiUrl}/api/game`;
 
-    constructor(private http: HttpClient) {
+    constructor(private readonly _http: HttpClient) {
     }
 
     searchGames(
@@ -22,15 +23,19 @@ export class GameService {
         const params = new HttpParams()
             .set('pageNumber', pageNumber)
             .set('pageSize', pageSize);
-        return this.http.get<SearchResult<Game>>(this.API_URL, {params});
+        return this._http.get<SearchResult<Game>>(this.API_URL, {params});
     }
 
-    searchRecentGames(): Observable<RecentlyPlayedGame[]> {
-        return this.http.get<RecentlyPlayedGame[]>(`${this.API_URL}/recently-played`);
+    searchPopularGames(): Observable<PopularGame[]> {
+        return this._http.get<PopularGame[]>(`${this.API_URL}/most-popular`);
     }
 
     count(): Observable<number> {
-        return this.http.get<number>(`${this.API_URL}/count`);
+        return this._http.get<number>(`${this.API_URL}/count`);
+    }
+
+    getSummary(gameId: String): Observable<GameSummary> {
+        return this._http.get<GameSummary>(`${this.API_URL}/${gameId}/summary`);
     }
 
 }

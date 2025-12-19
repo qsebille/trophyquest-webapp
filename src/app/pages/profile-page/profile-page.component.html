@@ -1,56 +1,56 @@
 <div class="profile-page container container-fluid">
-    <app-profile-summary [player]="profileStore.player()" [style.animationDelay.ms]="100"
-                         [totalEarnedTrophies]="profileStore.totalEarnedTrophies()"
-                         [totalGamesPlayed]="profileStore.totalPlayedGames()"
-                         [trophyCount]="profileStore.trophyCount()"
+    <app-profile-summary [player]="player()" [style.animationDelay.ms]="100"
+                         [totalEarnedTrophies]="totalEarnedTrophies()"
+                         [totalGamesPlayed]="totalPlayedGames()"
+                         [trophyCount]="trophyCount()"
                          animate.enter="block-enter"/>
 
-    <div class="profile-collection-wrapper">
+    <div class="profile-game-wrapper">
         <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-game-list">
-            <span class="collection-title">Last played games</span>
-            @for (collection of profileStore.collections(); track collection.collectionId; let i = $index) {
+            <span class="game-title">Last played games</span>
+            @for (game of games(); track game.id; let i = $index) {
                 @if (i !== 0) {
                     <hr class="game-separator"/>
                 }
-                <app-profile-collection-card (clickOnTitle)="navigateToPlayerCollectionPage(collection.collectionId)"
-                                             [collection]="collection"
-                                             class="profile-game-card"/>
+                <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
+                                       [game]="game"
+                                       class="profile-game-card"/>
             }
-            @if (profileStore.hasMoreCollections() && !profileStore.isLoadingCollections()) {
+            @if (hasMoreGames() && !isLoadingGames()) {
                 <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
             }
-            @if (profileStore.isLoadingCollections()) {
+            @if (isLoadingGames()) {
                 <div class="spinner-container">
                     <mat-spinner></mat-spinner>
                 </div>
             }
-            @if (profileStore.hasNoCollections()) {
+            @if (hasNoGames()) {
                 <span class="no-items-message">No games found</span>
             }
-            @if (profileStore.hasErrorLoadingCollections()) {
+            @if (hasErrorLoadingGames()) {
                 <span class="error-message">Error loading games!</span>
             }
         </div>
         <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-trophies-list">
-            <span class="collection-title">Last earned trophies</span>
-            @for (trophy of profileStore.trophies(); track trophy.id; let i = $index) {
+            <span class="game-title">Last earned trophies</span>
+            @for (trophy of trophies(); track trophy.id; let i = $index) {
                 @if (i !== 0) {
                     <hr class="trophy-separator"/>
                 }
                 <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
             }
-            @if (profileStore.hasMoreTrophies() && !profileStore.isLoadingTrophies()) {
+            @if (hasMoreTrophies() && !isLoadingTrophies()) {
                 <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
             }
-            @if (profileStore.isLoadingTrophies()) {
+            @if (isLoadingTrophies()) {
                 <div class="spinner-container">
                     <mat-spinner/>
                 </div>
             }
-            @if (profileStore.hasNoTrophies()) {
+            @if (hasNoTrophies()) {
                 <span class="no-items-message">No trophies found</span>
             }
-            @if (profileStore.hasErrorLoadingTrophies()) {
+            @if (hasErrorLoadingTrophies()) {
                 <span class="error-message">Error loading trophies!</span>
             }
         </div>

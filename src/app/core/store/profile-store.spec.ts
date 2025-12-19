@@ -7,7 +7,7 @@ import {Player} from '../models/dto/player';
 import {TrophyCount} from '../models/dto/trophy-count';
 import {Trophy} from '../models/dto/trophy';
 import {SearchResult} from '../models/dto/search-result';
-import {PlayerCollection} from '../models/dto/player-collection';
+import {PlayerGame} from '../models/dto/player-game';
 import {NavigatorService} from "../services/utils/navigator.service";
 
 describe('ProfileStore', () => {
@@ -17,20 +17,17 @@ describe('ProfileStore', () => {
 
     const mockPlayer: Player = {id: '123', pseudo: 'Player 123', avatarUrl: 'avatar.png'};
     const mockTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
-    const mockGames: PlayerCollection[] = [
+    const mockGames: PlayerGame[] = [
         {
-            collectionId: '123',
-            collectionTitle: 'Collection 123',
-            collectionPlatform: 'PS5',
-            collectionImageUrl: 'collection-img.png',
-            gameId: '001',
-            gameTitle: 'Game 001',
-            gameImageUrl: 'game-img.png',
-            collectionTrophies: mockTrophyCount,
+            id: '001',
+            title: 'Game 001',
+            platform: 'PS5',
+            imageUrl: 'game-img.png',
+            totalTrophies: mockTrophyCount,
             earnedTrophies: mockTrophyCount,
         }
     ];
-    const mockCollectionSearchResult: SearchResult<PlayerCollection> = {content: mockGames, total: 10}
+    const mockGameSearchResult: SearchResult<PlayerGame> = {content: mockGames, total: 10}
     const mockTrophies: Trophy[] = [
         {
             id: 'trophy-1',
@@ -47,7 +44,7 @@ describe('ProfileStore', () => {
     const mockTrophySearchResult: SearchResult<Trophy> = {content: mockTrophies, total: 10}
 
     beforeEach(() => {
-        playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['retrieve', 'searchCollections', 'countPlayedGames', 'countEarnedTrophies', 'searchEarnedTrophies']);
+        playerServiceSpy = jasmine.createSpyObj<PlayerService>('PlayerService', ['retrieve', 'searchGames', 'countPlayedGames', 'countEarnedTrophies', 'searchEarnedTrophies']);
         navigatorServiceSpy = jasmine.createSpyObj<NavigatorService>('NavigatorService', ['goToErrorPage']);
 
         TestBed.configureTestingModule({
@@ -67,7 +64,7 @@ describe('ProfileStore', () => {
         store.reset();
 
         expect(store.player()).toEqual({id: '', pseudo: '', avatarUrl: ''});
-        expect(store.collections()).toEqual([]);
+        expect(store.games()).toEqual([]);
         expect(store.trophies()).toEqual([]);
     });
 
@@ -93,25 +90,25 @@ describe('ProfileStore', () => {
         expect(playerServiceSpy.retrieve).not.toHaveBeenCalled();
     });
 
-    it('should search collections searchCollections is called', fakeAsync(() => {
-        playerServiceSpy.searchCollections.and.returnValue(of(mockCollectionSearchResult));
+    it('should search games when searchGames is called', fakeAsync(() => {
+        playerServiceSpy.searchGames.and.returnValue(of(mockGameSearchResult));
 
-        store.searchCollections('123');
+        store.searchGames('123');
         flushMicrotasks();
 
-        expect(playerServiceSpy.searchCollections).toHaveBeenCalledWith('123', 0, 20);
-        expect(store.collections()).toEqual(mockCollectionSearchResult.content);
-        expect(store.isLoadingCollections()).toBeFalse();
-        expect(store.hasMoreCollections()).toBeTrue();
+        expect(playerServiceSpy.searchGames).toHaveBeenCalledWith('123', 0, 20);
+        expect(store.games()).toEqual(mockGameSearchResult.content);
+        expect(store.isLoadingGames()).toBeFalse();
+        expect(store.hasMoreGames()).toBeTrue();
     }));
 
-    it('should search for collections when loadMoreCollections is called', fakeAsync(() => {
-        playerServiceSpy.searchCollections.and.returnValue(of(mockCollectionSearchResult));
+    it('should search for games with incremented page when loadMoreGames is called', fakeAsync(() => {
+        playerServiceSpy.searchGames.and.returnValue(of(mockGameSearchResult));
 
-        store.loadMoreCollections('123');
+        store.loadMoreGames('123');
         flushMicrotasks();
 
-        expect(playerServiceSpy.searchCollections).toHaveBeenCalledWith('123', 1, 20);
+        expect(playerServiceSpy.searchGames).toHaveBeenCalledWith('123', 1, 20);
     }));
 
     it('should search for earned trophies when searchEarnedTrophies is called', fakeAsync(() => {

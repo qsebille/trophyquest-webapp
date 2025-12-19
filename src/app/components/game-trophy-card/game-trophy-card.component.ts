@@ -5,21 +5,21 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 
 @Component({
-    selector: 'app-collection-trophy-card',
+    selector: 'app-game-trophy-card',
     imports: [
         MatCardModule,
         MatIconModule,
         NgOptimizedImage,
         DatePipe,
     ],
-    templateUrl: './collection-trophy-card.component.html',
-    styleUrl: './collection-trophy-card.component.scss',
+    templateUrl: './game-trophy-card.component.html',
+    styleUrl: './game-trophy-card.component.scss',
 })
-export class CollectionTrophyCardComponent {
+export class GameTrophyCardComponent {
     readonly trophy = input.required<Trophy>();
     readonly imageSize = input<number>(50);
     readonly showHiddenTrophies = input<boolean>(false);
-    
+
     readonly trophyIsEarned = computed(() => this.trophy().earnedDate !== null);
 
     get isTrophyHidden(): boolean {

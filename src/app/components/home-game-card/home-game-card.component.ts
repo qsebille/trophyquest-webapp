@@ -1,6 +1,6 @@
 import {Component, input} from '@angular/core';
 import {DecimalPipe, NgOptimizedImage} from '@angular/common';
-import {RecentlyPlayedGame} from "../../core/models/dto/recently-played-game";
+import {PopularGame} from "../../core/models/dto/popular-game";
 
 @Component({
     selector: 'app-home-game-card',
@@ -12,5 +12,5 @@ import {RecentlyPlayedGame} from "../../core/models/dto/recently-played-game";
     styleUrl: './home-game-card.component.scss',
 })
 export class HomeGameCardComponent {
-    readonly game = input.required<RecentlyPlayedGame>();
+    readonly game = input.required<PopularGame>();
 }

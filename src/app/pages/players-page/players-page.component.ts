@@ -29,11 +29,11 @@ export class PlayersPageComponent {
         this._navigator.goToProfilePage(playerId);
     }
 
-    navigateToPlayerCollectionPage(
-        collectionId: string,
+    navigateToPlayerGamePage(
+        gameId: string,
         playerId: string
     ): void {
-        this._navigator.goToPlayerCollectionPage(collectionId, playerId);
+        this._navigator.goToPlayerGamePage(gameId, playerId);
     }
 
 }

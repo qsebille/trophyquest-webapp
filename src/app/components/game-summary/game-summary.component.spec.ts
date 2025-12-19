@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CollectionSummaryComponent} from './collection-summary.component';
+import {GameSummaryComponent} from './game-summary.component';
 
-describe('CollectionSummaryComponent', () => {
-    let component: CollectionSummaryComponent;
-    let fixture: ComponentFixture<CollectionSummaryComponent>;
+describe('GameSummaryComponent', () => {
+    let component: GameSummaryComponent;
+    let fixture: ComponentFixture<GameSummaryComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CollectionSummaryComponent]
+            imports: [GameSummaryComponent]
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(CollectionSummaryComponent);
+        fixture = TestBed.createComponent(GameSummaryComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

@@ -4,7 +4,7 @@ import {HomePageComponent} from './home-page.component';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 import {HomeSummaryStoreService} from "../../core/store/home/home-summary-store.service";
 import {HomeRecentPlayerStoreService} from "../../core/store/home/home-recent-player-store.service";
-import {HomeGameStoreService} from "../../core/store/home/home-game-store.service";
+import {HomePopularGamesStoreService} from "../../core/store/home/home-popular-games-store.service";
 import {HomeGameCardComponent} from "../../components/home-game-card/home-game-card.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeSummaryComponent} from "../../components/home-summary/home-summary.component";
@@ -22,7 +22,7 @@ describe('HomePageComponent', () => {
 
     let homeSummaryStoreSpy: jasmine.SpyObj<HomeSummaryStoreService>;
     let homeRecentPlayerStoreSpy: jasmine.SpyObj<HomeRecentPlayerStoreService>;
-    let homeGameStoreSpy: jasmine.SpyObj<HomeGameStoreService>;
+    let homeGameStoreSpy: jasmine.SpyObj<HomePopularGamesStoreService>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
 
     const playerId: string = 'player-123';
@@ -55,7 +55,7 @@ describe('HomePageComponent', () => {
                 providers: [
                     {provide: HomeSummaryStoreService, useValue: homeSummaryStoreSpy},
                     {provide: HomeRecentPlayerStoreService, useValue: homeRecentPlayerStoreSpy},
-                    {provide: HomeGameStoreService, useValue: homeGameStoreSpy},
+                    {provide: HomePopularGamesStoreService, useValue: homeGameStoreSpy},
                     {provide: NavigatorService, useValue: navigatorSpy},
                 ],
             }

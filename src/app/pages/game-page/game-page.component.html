@@ -1,0 +1,54 @@
+<div class="game-page container container-fluid">
+    <div [style.animationDelay.ms]="100" animate.enter="block-enter" class="game-header">
+        @if (isLoadingSummary()) {
+            <mat-spinner/>
+        } @else if (isSummaryError()) {
+            <div class="error-message-wrapper">
+                <span class="error-message">Error loading game details!</span>
+                <button class="btn" (click)="retrieveSummary()">Try again</button>
+            </div>
+        } @else {
+            <app-game-summary [gameSummary]="gameSummary()" class="game-summary"/>
+        }
+    </div>
+
+    @if (isLoadingTrophies()) {
+        <mat-spinner/>
+    } @else if (isTrophiesError()) {
+        <!--TODO: add button in error-message component-->
+        <div class="error-message-wrapper">
+            <span class="error-message">Error loading trophies!</span>
+            <button class="btn" (click)="retrieveTrophies()">Try again</button>
+        </div>
+    } @else {
+        <app-trophy-filters [filter]="earnedFilter()"
+                            (filterChange)="changeTrophyEarnedType($event)"
+                            (showHiddenTrophyChange)="showHiddenTrophies($event)"
+                            class="trophy-filters"/>
+
+        <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="trophy-list-wrapper">
+            @for (trophy of baseGameTrophies(); track trophy.id; let i = $index) {
+                <div class="group-trophy-list">
+                    @if (i !== 0) {
+                        <hr class="trophy-separator"/>
+                    }
+                    <app-game-trophy-card [showHiddenTrophies]="shouldShowHiddenTrophies" [trophy]="trophy"
+                                          class="game-page-trophy-card"/>
+                </div>
+            }
+            @for (dlc of dlcs(); track dlc.groupName) {
+                @if (dlc.trophies.length > 0) {
+                    <div class="group-trophy-list">
+                        <h2 class="game-group-name">DLC Trophy Pack {{ dlc.groupName }}</h2>
+                        @for (trophy of dlc.trophies; track trophy.id; let i = $index) {
+                            @if (i !== 0) {
+                                <hr class="trophy-separator"/>
+                            }
+                            <app-game-trophy-card [trophy]="trophy" class="game-page-trophy-card"/>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

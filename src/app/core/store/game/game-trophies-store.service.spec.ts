@@ -1,16 +1,16 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
-import {CollectionTrophiesStore} from './collection-trophies.store';
+import {GameTrophiesStore} from './game-trophies-store.service';
 import {PlayerService} from '../../services/http/player.service';
 import {Trophy} from '../../models/dto/trophy';
 import {of, throwError} from "rxjs";
 
-describe('CollectionTrophiesStore', () => {
-    let store: CollectionTrophiesStore;
+describe('GameTrophiesStore', () => {
+    let store: GameTrophiesStore;
 
     let playerServiceSpy: jasmine.SpyObj<PlayerService>;
 
-    const collectionId = '123';
+    const gameId = '123';
     const playerId = '456';
     const baseTrophy: Trophy = {
         id: 'trophy-1',
@@ -59,7 +59,7 @@ describe('CollectionTrophiesStore', () => {
     const trophies: Trophy[] = [baseTrophy, earnedBaseTrophy, dlcTrophy, earnedDlcTrophy];
 
     beforeEach(() => {
-        playerServiceSpy = jasmine.createSpyObj('PlayerService', ['retrieveCollectionTrophies']);
+        playerServiceSpy = jasmine.createSpyObj('PlayerService', ['fetchGameTrophies']);
 
         TestBed.configureTestingModule({
             providers: [
@@ -67,13 +67,13 @@ describe('CollectionTrophiesStore', () => {
             ]
         });
 
-        store = TestBed.inject(CollectionTrophiesStore);
+        store = TestBed.inject(GameTrophiesStore);
 
         // Mock player service
-        playerServiceSpy.retrieveCollectionTrophies
-            .withArgs(playerId, collectionId)
+        playerServiceSpy.fetchGameTrophies
+            .withArgs(playerId, gameId)
             .and.returnValue(of(trophies));
-        playerServiceSpy.retrieveCollectionTrophies
+        playerServiceSpy.fetchGameTrophies
             .and.returnValue(throwError(() => new Error('Not Found')));
     });
 
@@ -81,8 +81,8 @@ describe('CollectionTrophiesStore', () => {
         expect(store).toBeTruthy();
     });
 
-    it('should retrieve collection trophies when collection id and player id are provided', fakeAsync(() => {
-        store.retrieve(collectionId, playerId);
+    it('should retrieve game trophies when game id and player id are provided', fakeAsync(() => {
+        store.retrieve(gameId, playerId);
         flushMicrotasks();
 
         expect(store.isLoading()).toBeFalse();
@@ -93,22 +93,22 @@ describe('CollectionTrophiesStore', () => {
         expect(store.dlcs()).toEqual([{groupName: 'dlc', trophies: [dlcTrophy, earnedDlcTrophy]}]);
     }));
 
-    it('should fail retrieve collection trophies when collection id is null', () => {
+    it('should fail retrieve game trophies when game id is null', () => {
         store.retrieve(null, playerId);
 
-        expect(playerServiceSpy.retrieveCollectionTrophies).not.toHaveBeenCalled();
+        expect(playerServiceSpy.fetchGameTrophies).not.toHaveBeenCalled();
         expect(store.isError()).toBeTrue();
     });
 
-    it('should fail retrieve collection trophies when player id is null', () => {
-        store.retrieve(collectionId, null);
+    it('should fail retrieve game trophies when player id is null', () => {
+        store.retrieve(gameId, null);
 
-        expect(playerServiceSpy.retrieveCollectionTrophies).not.toHaveBeenCalled();
+        expect(playerServiceSpy.fetchGameTrophies).not.toHaveBeenCalled();
         expect(store.isError()).toBeTrue();
     });
 
     it('should reset state when reset is called', fakeAsync(() => {
-        store.retrieve(collectionId, playerId);
+        store.retrieve(gameId, playerId);
         flushMicrotasks();
         store.reset();
 
@@ -122,7 +122,7 @@ describe('CollectionTrophiesStore', () => {
 
     it('should filter trophies depending on earned status', fakeAsync(() => {
         // Fetching mocked trophies
-        store.retrieve(collectionId, playerId);
+        store.retrieve(gameId, playerId);
         flushMicrotasks();
 
         // Change filter to earned trophies only

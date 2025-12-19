@@ -1,4 +1,4 @@
-export interface RecentlyPlayedGame {
+export interface PopularGame {
     id: string;
     title: string;
     imageUrl: string;

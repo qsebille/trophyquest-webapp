@@ -8,7 +8,7 @@ import {TrophyFilters} from '../../models/filters/trophy-filters';
 @Injectable({
     providedIn: 'root',
 })
-export class CollectionTrophiesStore {
+export class GameTrophiesStore {
     private readonly _filters = signal<TrophyFilters>({earned: 'all'});
     readonly earnedFilter = computed(() => this._filters().earned);
 
@@ -31,23 +31,23 @@ export class CollectionTrophiesStore {
     }
 
     retrieve(
-        collectionId: string | null,
+        gameId: string | null,
         playerId: string | null,
     ): void {
-        if (null == playerId || null == collectionId) {
-            console.error('Invalid player id or collection id');
+        if (null == playerId || null == gameId) {
+            console.error('Invalid player id or game id');
             this._loadingStatus.set(LoadingStatus.ERROR);
             return;
         }
 
         this._loadingStatus.set(LoadingStatus.LOADING);
-        this._playerService.retrieveCollectionTrophies(playerId, collectionId).subscribe({
+        this._playerService.fetchGameTrophies(playerId, gameId).subscribe({
             next: trophies => {
                 this._trophies.set(trophies);
                 this._loadingStatus.set(LoadingStatus.FULLY_LOADED);
             },
             error: () => {
-                console.error(`Failed loading trophies for collection ${collectionId} of player ${playerId}`);
+                console.error(`Failed loading trophies for game ${gameId} of player ${playerId}`);
                 this._loadingStatus.set(LoadingStatus.ERROR);
             }
         });

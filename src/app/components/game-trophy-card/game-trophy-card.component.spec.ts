@@ -1,11 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CollectionTrophyCardComponent} from './collection-trophy-card.component';
+import {GameTrophyCardComponent} from './game-trophy-card.component';
 import {Trophy} from "../../core/models/dto/trophy";
 
-describe('CollectionTrophyCardComponent', () => {
-    let component: CollectionTrophyCardComponent;
-    let fixture: ComponentFixture<CollectionTrophyCardComponent>;
+describe('GameTrophyCardComponent', () => {
+    let component: GameTrophyCardComponent;
+    let fixture: ComponentFixture<GameTrophyCardComponent>;
 
     const mockTrophy: Trophy = {
         id: '001',
@@ -21,11 +21,11 @@ describe('CollectionTrophyCardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CollectionTrophyCardComponent]
+            imports: [GameTrophyCardComponent]
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(CollectionTrophyCardComponent);
+        fixture = TestBed.createComponent(GameTrophyCardComponent);
         component = fixture.componentInstance;
 
         fixture.componentRef.setInput('trophy', mockTrophy);

@@ -15,7 +15,6 @@ describe('PlayerCardComponent', () => {
         player: mockPlayer,
         trophyCount: mockTrophyCount,
         totalGamesPlayed: 100,
-        lastPlayedCollectionId: 'collection-001',
         lastPlayedGameId: 'game-001',
         lastPlayedGameTitle: 'Horizon: Forbidden West',
         lastPlayedGameImageUrl: 'horizon.png'
@@ -29,7 +28,7 @@ describe('PlayerCardComponent', () => {
 
         fixture = TestBed.createComponent(PlayerCardComponent);
         component = fixture.componentInstance;
-        
+
         fixture.componentRef.setInput('playerSummary', mockPlayerSummary);
 
         fixture.detectChanges();

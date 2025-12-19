@@ -1,63 +1,65 @@
 @use "styles/colors" as *;
 
-.profile-collection-wrapper {
-  padding-top: 10px;
-  display: flex;
-  justify-content: space-between;
-}
+.profile-page {
+  .profile-game-wrapper {
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
 
-.profile-game-list {
-  width: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .profile-game-list {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.collection-title {
-  text-align: center;
-  width: 100%;
-  font-weight: 600;
-  font-size: 25px;
-  margin-bottom: 20px;
-}
+  .game-title {
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
 
-.profile-game-card {
-  width: 100%;
-}
+  .profile-game-card {
+    width: 100%;
+  }
 
-.game-separator {
-  color: $tq-blue-medium;
-  margin: 2px;
-  width: 95%;
-}
+  .game-separator {
+    color: $tq-blue-medium;
+    margin: 2px;
+    width: 95%;
+  }
 
-.trophy-separator {
-  color: $tq-blue-medium;
-  margin: 2px;
-  width: 95%;
-}
+  .trophy-separator {
+    color: $tq-blue-medium;
+    margin: 2px;
+    width: 95%;
+  }
 
-.profile-trophies-list {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .profile-trophies-list {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.profile-trophy-card {
-  width: 100%;
-}
+  .profile-trophy-card {
+    width: 100%;
+  }
 
-.load-more-button {
-  padding: 20px;
-  cursor: pointer;
-}
+  .load-more-button {
+    padding: 20px;
+    cursor: pointer;
+  }
 
-.no-trophies-message {
-  font-size: 18px;
-}
+  .no-trophies-message {
+    font-size: 18px;
+  }
 
-.error-message {
-  color: $tq-red-dark;
-  font-size: 25px;
+  .error-message {
+    color: $tq-red-dark;
+    font-size: 25px;
+  }
 }
