@@ -1,59 +1,43 @@
 <div class="profile-page container container-fluid">
-    <app-profile-summary [player]="player()" [style.animationDelay.ms]="100"
-                         [totalEarnedTrophies]="totalEarnedTrophies()"
-                         [totalGamesPlayed]="totalPlayedGames()"
-                         [trophyCount]="trophyCount()"
-                         animate.enter="block-enter"/>
+    @if (isLoading()) {
+        <mat-spinner/>
+    } @else if (hasFailedLoading()) {
+        <app-error-message class="error-message" [hasRetryButton]="true" (retry)="loadProfileData()"
+                           [errorMessage]="'Failed to load profile information'"/>
+    } @else {
+        <app-profile-summary class="summary" [player]="player()" [style.animationDelay.ms]="100"
+                             [totalEarnedTrophies]="totalEarnedTrophies()"
+                             [totalGamesPlayed]="totalPlayedGames()"
+                             [trophyCount]="trophyCountPerType()"
+                             animate.enter="block-enter"/>
 
-    <div class="profile-game-wrapper">
-        <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-game-list">
-            <span class="game-title">Last played games</span>
-            @for (game of games(); track game.id; let i = $index) {
-                @if (i !== 0) {
-                    <hr class="game-separator"/>
+        <div class="profile-game-trophies-wrapper" [style.animationDelay.ms]="200" animate.enter="block-enter">
+            <div class="profile-game-list">
+                <span class="section-title">Last played games</span>
+                @for (game of games(); track game.id; let i = $index) {
+                    @if (i !== 0) {
+                        <hr class="separator"/>
+                    }
+                    <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
+                                           [game]="game"
+                                           class="profile-game-card"/>
                 }
-                <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
-                                       [game]="game"
-                                       class="profile-game-card"/>
-            }
-            @if (hasMoreGames() && !isLoadingGames()) {
-                <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
-            }
-            @if (isLoadingGames()) {
-                <div class="spinner-container">
-                    <mat-spinner></mat-spinner>
-                </div>
-            }
-            @if (hasNoGames()) {
-                <span class="no-items-message">No games found</span>
-            }
-            @if (hasErrorLoadingGames()) {
-                <span class="error-message">Error loading games!</span>
-            }
-        </div>
-        <div [style.animationDelay.ms]="200" animate.enter="block-enter" class="profile-trophies-list">
-            <span class="game-title">Last earned trophies</span>
-            @for (trophy of trophies(); track trophy.id; let i = $index) {
-                @if (i !== 0) {
-                    <hr class="trophy-separator"/>
+                @if (hasMoreGames()) {
+                    <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
                 }
-                <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
-            }
-            @if (hasMoreTrophies() && !isLoadingTrophies()) {
-                <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
-            }
-            @if (isLoadingTrophies()) {
-                <div class="spinner-container">
-                    <mat-spinner/>
-                </div>
-            }
-            @if (hasNoTrophies()) {
-                <span class="no-items-message">No trophies found</span>
-            }
-            @if (hasErrorLoadingTrophies()) {
-                <span class="error-message">Error loading trophies!</span>
-            }
+            </div>
+            <div class="profile-trophies-list">
+                <span class="section-title">Last earned trophies</span>
+                @for (trophy of trophies(); track trophy.id; let i = $index) {
+                    @if (i !== 0) {
+                        <hr class="separator"/>
+                    }
+                    <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
+                }
+                @if (hasMoreTrophies()) {
+                    <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
+                }
+            </div>
         </div>
-    </div>
-
+    }
 </div>

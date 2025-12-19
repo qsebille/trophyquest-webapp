@@ -2,59 +2,46 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ProfilePageComponent} from './profile-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {ProfileStore} from '../../core/store/profile-store';
-import {Component, input} from '@angular/core';
-import {TrophyCount} from '../../core/models/dto/trophy-count';
-import {Player} from '../../core/models/dto/player';
-import {Trophy} from '../../core/models/dto/trophy';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {ProfileSummaryComponent} from "../../components/profile-summary/profile-summary.component";
+import {ProfileTrophyCardComponent} from "../../components/profile-trophy-card/profile-trophy-card.component";
+import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-store.service";
+import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
+import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
+import {EMPTY_TROPHY_COUNT_PER_TYPE} from "../../core/models/dto/trophy-count-per-type";
 
 describe('ProfilePageComponent', () => {
     let component: ProfilePageComponent;
     let fixture: ComponentFixture<ProfilePageComponent>;
-    let profileStoreSpy: jasmine.SpyObj<ProfileStore>;
+    let profileSummaryStoreSpy: jasmine.SpyObj<ProfileSummaryStore>;
+    let profileGamesStoreSpy: jasmine.SpyObj<ProfileGamesStore>;
+    let profileTrophiesStoreSpy: jasmine.SpyObj<ProfileTrophiesStore>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
-
-    @Component({selector: 'app-profile-summary', template: ''})
-    class MockProfileSummary {
-        readonly player = input.required<Player>();
-        readonly trophyCount = input.required<TrophyCount>();
-        readonly totalGamesPlayed = input.required<number>();
-        readonly totalEarnedTrophies = input.required<number>();
-    }
-
-    @Component({selector: 'app-profile-trophy-card', template: ''})
-    class MockProfileTrophyCard {
-        readonly trophy = input.required<Trophy>();
-    }
 
     const playerId: string = 'player-123';
     const gameId: string = 'game-123';
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerGamePage']);
-        profileStoreSpy = jasmine.createSpyObj('ProfileStore', [
-            'reset', 'retrieve',
-            'player', 'trophyCount', 'totalPlayedGames', 'totalEarnedTrophies',
-            'games', 'searchGames', 'loadMoreGames', 'hasMoreGames', 'hasNoGames', 'isLoadingGames', 'hasErrorLoadingGames',
-            'trophies', 'searchTrophies', 'loadMoreTrophies', 'hasMoreTrophies', 'hasNoTrophies', 'isLoadingTrophies', 'hasErrorLoadingTrophies',
-        ]);
+        profileSummaryStoreSpy = jasmine.createSpyObj('ProfileSummaryStore', ['retrieve', 'reset', 'player', 'gameCount', 'trophyCountPerType', 'isLoading', 'isError']);
+        profileGamesStoreSpy = jasmine.createSpyObj('ProfileGamesStore', ['searchGames', 'reset', 'games', 'isLoading', 'isError', 'isPartiallyLoaded']);
+        profileTrophiesStoreSpy = jasmine.createSpyObj('ProfileTrophiesStore', ['searchTrophies', 'reset', 'trophies', 'isLoading', 'isError', 'isPartiallyLoaded']);
 
         const routeParamMap = new Map<string, string>();
         routeParamMap.set('playerId', playerId);
 
         await TestBed.configureTestingModule({
-            imports: [ProfilePageComponent, MockProfileSummary, MockProfileTrophyCard],
+            imports: [ProfilePageComponent, ProfileSummaryComponent, ProfileTrophyCardComponent],
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
-                {provide: ProfileStore, useValue: profileStoreSpy},
+                {provide: ProfileSummaryStore, useValue: profileSummaryStoreSpy},
+                {provide: ProfileGamesStore, useValue: profileGamesStoreSpy},
+                {provide: ProfileTrophiesStore, useValue: profileTrophiesStoreSpy},
                 {provide: ActivatedRoute, useValue: {snapshot: {paramMap: routeParamMap}}},
             ]
         }).compileComponents();
 
-        TestBed.overrideComponent(ProfilePageComponent, {
-            set: {imports: [MockProfileSummary, MockProfileSummary, MockProfileTrophyCard]}
-        });
+        profileSummaryStoreSpy.trophyCountPerType.and.returnValue(EMPTY_TROPHY_COUNT_PER_TYPE);
 
         fixture = TestBed.createComponent(ProfilePageComponent);
         component = fixture.componentInstance;
@@ -66,10 +53,12 @@ describe('ProfilePageComponent', () => {
     });
 
     it('should fetch profile infos on init', () => {
-        expect(profileStoreSpy.reset).toHaveBeenCalled();
-        expect(profileStoreSpy.retrieve).toHaveBeenCalledWith(playerId);
-        expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
-        expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
+        expect(profileSummaryStoreSpy.reset).toHaveBeenCalled();
+        expect(profileSummaryStoreSpy.retrieve).toHaveBeenCalledWith(playerId);
+        expect(profileGamesStoreSpy.reset).toHaveBeenCalled();
+        expect(profileGamesStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
+        expect(profileTrophiesStoreSpy.reset).toHaveBeenCalled();
+        expect(profileTrophiesStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
     });
 
     it('should navigate to game page when clicking on game card', () => {

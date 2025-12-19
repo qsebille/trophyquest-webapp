@@ -1,38 +1,47 @@
 @use "styles/colors" as *;
 
 .profile-page {
-  .profile-game-wrapper {
-    padding-top: 10px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+
+  .error-message {
+    width: 40%;
+  }
+
+  .summary {
+    width: 70%;
+  }
+
+  .profile-game-trophies-wrapper {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    gap: 50px;
   }
 
   .profile-game-list {
-    width: 55%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .game-title {
+  .section-title {
     text-align: center;
     width: 100%;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 20px;
     margin-bottom: 20px;
+    color: $tq-blue-medium;
   }
 
   .profile-game-card {
     width: 100%;
   }
 
-  .game-separator {
-    color: $tq-blue-medium;
-    margin: 2px;
-    width: 95%;
-  }
-
-  .trophy-separator {
+  .separator {
     color: $tq-blue-medium;
     margin: 2px;
     width: 95%;
@@ -52,14 +61,5 @@
   .load-more-button {
     padding: 20px;
     cursor: pointer;
-  }
-
-  .no-trophies-message {
-    font-size: 18px;
-  }
-
-  .error-message {
-    color: $tq-red-dark;
-    font-size: 25px;
   }
 }

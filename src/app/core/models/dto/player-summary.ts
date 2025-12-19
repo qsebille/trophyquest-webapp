@@ -1,9 +1,9 @@
 import {Player} from './player';
-import {TrophyCount} from './trophy-count';
+import {TrophyCountPerType} from './trophy-count-per-type';
 
 export interface PlayerSummary {
     player: Player;
-    trophyCount: TrophyCount;
+    trophyCount: TrophyCountPerType;
     totalGamesPlayed: number;
     lastPlayedGameId: string;
     lastPlayedGameTitle: string;

@@ -1,10 +1,10 @@
-import {TrophyCount} from './trophy-count';
+import {TrophyCountPerType} from './trophy-count-per-type';
 
 export interface PlayerGame {
     id: string;
     title: string;
     platform: string;
     imageUrl: string;
-    totalTrophies: TrophyCount;
-    earnedTrophies: TrophyCount;
+    totalTrophies: TrophyCountPerType;
+    earnedTrophies: TrophyCountPerType;
 }

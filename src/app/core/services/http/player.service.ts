@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Player} from '../../models/dto/player';
 import {SearchResult} from '../../models/dto/search-result';
-import {TrophyCount} from '../../models/dto/trophy-count';
+import {TrophyCountPerType} from '../../models/dto/trophy-count-per-type';
 import {Trophy} from '../../models/dto/trophy';
 import {PlayerGame} from '../../models/dto/player-game';
 import {PlayerSummary} from '../../models/dto/player-summary';
@@ -84,8 +84,8 @@ export class PlayerService {
         return this._http.get<number>(`${this.API_URL}/${playerId}/game/count`);
     }
 
-    countEarnedTrophies(playerId: string): Observable<TrophyCount> {
-        return this._http.get<TrophyCount>(`${this.API_URL}/${playerId}/trophy/count`);
+    getTrophyCountPerType(playerId: string): Observable<TrophyCountPerType> {
+        return this._http.get<TrophyCountPerType>(`${this.API_URL}/${playerId}/trophy/count`);
     }
 
     fetchRecentPlayers(): Observable<RecentPlayerResponse[]> {

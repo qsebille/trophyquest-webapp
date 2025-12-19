@@ -1,7 +1,7 @@
 import {Component, input} from '@angular/core';
 import {GameSummary} from '../../core/models/dto/game-summary';
 import {TrophyCountDisplayerComponent} from "../trophy-count-displayer/trophy-count-displayer.component";
-import {TrophyCount} from "../../core/models/dto/trophy-count";
+import {TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
 
 @Component({
     selector: 'app-game-summary',
@@ -14,7 +14,7 @@ import {TrophyCount} from "../../core/models/dto/trophy-count";
 export class GameSummaryComponent {
     readonly gameSummary = input<GameSummary | null>(null);
 
-    get trophyCount(): TrophyCount {
+    get trophyCount(): TrophyCountPerType {
         return this.gameSummary()?.trophyCount ?? {platinum: 0, gold: 0, silver: 0, bronze: 0};
     }
 }
