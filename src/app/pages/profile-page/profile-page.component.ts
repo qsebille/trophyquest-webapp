@@ -1,11 +1,15 @@
 import {Component, computed} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ProfileStore} from '../../core/store/profile-store';
 import {ProfileSummaryComponent} from '../../components/profile-summary/profile-summary.component';
 import {ProfileTrophyCardComponent} from '../../components/profile-trophy-card/profile-trophy-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 import {ProfileGameCardComponent} from "../../components/profile-game-card/profile-game-card.component";
+import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-store.service";
+import {getTotalTrophies} from "../../core/models/dto/trophy-count-per-type";
+import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
+import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
+import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
 
 @Component({
     selector: 'app-profile-page',
@@ -14,6 +18,7 @@ import {ProfileGameCardComponent} from "../../components/profile-game-card/profi
         ProfileTrophyCardComponent,
         MatProgressSpinnerModule,
         ProfileGameCardComponent,
+        ErrorMessageComponent,
     ],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss',
@@ -24,34 +29,37 @@ export class ProfilePageComponent {
     constructor(
         private readonly _route: ActivatedRoute,
         private readonly _navigator: NavigatorService,
-        private readonly _profileStore: ProfileStore,
+        private readonly _profileSummaryStore: ProfileSummaryStore,
+        private readonly _profileGamesStore: ProfileGamesStore,
+        private readonly _profileTrophiesStore: ProfileTrophiesStore,
     ) {
     }
 
-    // todo: faire plusieurs stores et revoir la logique de display dans le template
-    readonly player = computed(() => this._profileStore.player());
-    readonly totalEarnedTrophies = computed(() => this._profileStore.totalEarnedTrophies());
-    readonly totalPlayedGames = computed(() => this._profileStore.totalPlayedGames());
-    readonly trophyCount = computed(() => this._profileStore.trophyCount());
+    readonly player = computed(() => this._profileSummaryStore.player());
+    readonly games = computed(() => this._profileGamesStore.games());
+    readonly hasMoreGames = computed(() => this._profileGamesStore.isPartiallyLoaded());
+    readonly trophies = computed(() => this._profileTrophiesStore.trophies());
+    readonly hasMoreTrophies = computed(() => this._profileTrophiesStore.isPartiallyLoaded());
+    readonly totalPlayedGames = computed(() => this._profileSummaryStore.gameCount());
+    readonly trophyCountPerType = computed(() => this._profileSummaryStore.trophyCountPerType());
+    readonly totalEarnedTrophies = computed(() => getTotalTrophies(this.trophyCountPerType()));
 
-    readonly games = computed(() => this._profileStore.games());
-    readonly hasMoreGames = computed(() => this._profileStore.hasMoreGames());
-    readonly isLoadingGames = computed(() => this._profileStore.isLoadingGames());
-    readonly hasNoGames = computed(() => this._profileStore.hasNoGames());
-    readonly hasErrorLoadingGames = computed(() => this._profileStore.hasErrorLoadingGames());
+    readonly isLoading = computed(() => this._profileSummaryStore.isLoading() || this._profileGamesStore.isLoading() || this._profileTrophiesStore.isLoading());
+    readonly hasFailedLoading = computed(() => this._profileSummaryStore.isError() || this._profileGamesStore.isError() || this._profileTrophiesStore.isError());
 
-    readonly trophies = computed(() => this._profileStore.trophies());
-    readonly hasMoreTrophies = computed(() => this._profileStore.hasMoreTrophies());
-    readonly isLoadingTrophies = computed(() => this._profileStore.isLoadingTrophies());
-    readonly hasNoTrophies = computed(() => this._profileStore.hasNoTrophies());
-    readonly hasErrorLoadingTrophies = computed(() => this._profileStore.hasErrorLoadingTrophies());
 
     ngOnInit(): void {
         this.playerId = this._route.snapshot.paramMap.get('playerId');
-        this._profileStore.reset();
-        this._profileStore.retrieve(this.playerId);
-        this._profileStore.searchGames(this.playerId);
-        this._profileStore.searchTrophies(this.playerId);
+        this.loadProfileData();
+    }
+
+    loadProfileData(): void {
+        this._profileSummaryStore.reset();
+        this._profileSummaryStore.retrieve(this.playerId);
+        this._profileGamesStore.reset();
+        this._profileGamesStore.searchGames(this.playerId);
+        this._profileTrophiesStore.reset();
+        this._profileTrophiesStore.searchTrophies(this.playerId);
     }
 
     navigateToPlayerGamePage(gameId: string): void {
@@ -63,11 +71,11 @@ export class ProfilePageComponent {
     }
 
     loadMoreGames(): void {
-        this._profileStore.loadMoreGames(this.playerId);
+        this._profileGamesStore.loadMoreGames(this.playerId);
     }
 
     loadMoreTrophies(): void {
-        this._profileStore.loadMoreTrophies(this.playerId);
+        this._profileTrophiesStore.loadMoreTrophies(this.playerId);
     }
 
 }

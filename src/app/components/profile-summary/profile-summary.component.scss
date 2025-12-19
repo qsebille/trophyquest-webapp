@@ -1,79 +1,51 @@
 @use 'styles/colors' as *;
 
-.profile-card {
-  max-width: 720px;
-  margin: 1.5rem auto;
-  padding: 1.5rem 2rem;
-  border-radius: 1.5rem;
-  background: $tq-blue-lighter;
-  box-shadow: 0 6px 16px $tq-shadow;
+.profile-summary {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+  gap: 20px;
 
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.avatar-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: $tq-white;
-  border: 3px solid $tq-blue-dark;
-}
-
-.avatar-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile-name {
-  flex: 1;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-
-.game-trophies-summary {
-  margin-top: 0.5rem;
-  padding: 1rem 1.25rem;
-  border-radius: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
-.total-played-games {
-  font-size: 20px;
-}
-
-.total-earned-trophies {
-  font-size: 20px;
-}
-
-.trophy-count {
-  justify-self: flex-end;
-}
-
-
-@media (max-width: 600px) {
-  .profile-card {
-    padding: 1.25rem 1rem;
+  .summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
   }
 
-  .profile-header {
+  .avatar-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: $tq-white;
+    border: 3px solid $tq-blue-dark;
+  }
+
+  .player-pseudo {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .summary-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .counts {
+    display: flex;
     flex-direction: column;
-    text-align: center;
+    align-items: center;
+    gap: 15px;
   }
 
-  .profile-name {
-    text-align: center;
+  .summary-count {
+    font-size: 16px;
+
+    b {
+      color: $tq-blue-light;
+    }
   }
 }

@@ -5,7 +5,7 @@ import {PlayerService} from '../services/http/player.service';
 import {of} from 'rxjs';
 import {Player} from '../models/dto/player';
 import {SearchResult} from '../models/dto/search-result';
-import {TrophyCount} from '../models/dto/trophy-count';
+import {TrophyCountPerType} from '../models/dto/trophy-count-per-type';
 import {PlayerSummary} from '../models/dto/player-summary';
 
 describe('PlayerListStore', () => {
@@ -14,7 +14,7 @@ describe('PlayerListStore', () => {
     let playerServiceSpy: jasmine.SpyObj<PlayerService>;
 
     const mockPlayer: Player = {id: '123', pseudo: 'John Doe', avatarUrl: 'avatar.png'};
-    const mockTrophyCount: TrophyCount = {platinum: 1, gold: 2, silver: 3, bronze: 4};
+    const mockTrophyCount: TrophyCountPerType = {platinum: 1, gold: 2, silver: 3, bronze: 4};
     const mockPlayerSummary: PlayerSummary = {
         player: mockPlayer,
         trophyCount: mockTrophyCount,

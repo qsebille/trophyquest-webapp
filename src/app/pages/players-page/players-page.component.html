@@ -1,28 +1,25 @@
 <div class="players-page container">
     <div class="players-content">
-        @for (playerSummary of playerListStore.playerSummaries(); track playerSummary.player.id) {
-            <app-player-card
-                    (clickOnGame)="navigateToPlayerGamePage(playerSummary.lastPlayedGameId, playerSummary.player.id)"
-                    (clickOnPseudo)="navigateToProfilePage(playerSummary.player.id)"
-                    [playerSummary]="playerSummary"
-                    class="player-card"></app-player-card>
-        }
+        @if (isLoadingPlayers()) {
+            <mat-spinner/>
+        } @else if (hasFailedLoadingPlayers()) {
+            <app-error-message class="error-block"
+                               (retry)="retrievePlayers()"
+                               [hasRetryButton]="true" [errorMessage]="'Failed to load players'"/>
+        } @else {
+            @for (playerSummary of playerSummaries(); track playerSummary.player.id) {
+                <app-player-card
+                        (clickOnGame)="navigateToPlayerGamePage(playerSummary.lastPlayedGameId, playerSummary.player.id)"
+                        (clickOnPseudo)="navigateToProfilePage(playerSummary.player.id)"
+                        [playerSummary]="playerSummary"
+                        class="player-card"></app-player-card>
+            }
 
-        @if (playerListStore.hasMorePlayers() && !playerListStore.isLoading()) {
-            <div (click)="playerListStore.loadMore()" class="load-more-button">
-                Load more players...
-            </div>
-        }
-        @if (playerListStore.isLoading()) {
-            <div class="spinner-container">
-                <mat-spinner></mat-spinner>
-            </div>
-        }
-
-        @if (playerListStore.isError()) {
-            <div class="error-message-wrapper">
-                <span class="error-message">Error loading players!</span>
-            </div>
+            @if (hasMorePlayersToLoad()) {
+                <div (click)="loadMorePlayers()" class="load-more-button">
+                    Load more players...
+                </div>
+            }
         }
     </div>
 </div>

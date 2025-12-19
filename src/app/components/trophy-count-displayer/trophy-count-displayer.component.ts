@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {TrophyCount} from '../../core/models/dto/trophy-count';
+import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
 import {MatIconModule} from '@angular/material/icon';
 import {NgOptimizedImage} from '@angular/common';
 
@@ -13,7 +13,7 @@ import {NgOptimizedImage} from '@angular/common';
     styleUrl: './trophy-count-displayer.component.scss',
 })
 export class TrophyCountDisplayerComponent {
-    readonly trophyCount = input.required<TrophyCount>();
+    readonly trophyCount = input.required<TrophyCountPerType>();
     readonly labelOrientation = input.required<'horizontal' | 'vertical'>();
     readonly iconSizePx = input<number>(32);
     readonly textSizePx = input<number>(20);
