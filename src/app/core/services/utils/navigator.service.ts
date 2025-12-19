@@ -18,11 +18,11 @@ export class NavigatorService {
             .then(() => console.info(`Navigated to profile page: ${playerId}`));
     }
 
-    goToPlayerCollectionPage(
-        collectionId: string,
+    goToPlayerGamePage(
+        gameId: string,
         playerId: string
     ): void {
-        this._router.navigate(['/collection', collectionId], {queryParams: {playerId}})
-            .then(() => console.info(`Navigated to collection page: ${collectionId} for player ${playerId}`));
+        this._router.navigate(['/game', gameId], {queryParams: {playerId}})
+            .then(() => console.info(`Navigated to game page: ${gameId} for player ${playerId}`));
     }
 }

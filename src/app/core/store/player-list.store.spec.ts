@@ -19,7 +19,6 @@ describe('PlayerListStore', () => {
         player: mockPlayer,
         trophyCount: mockTrophyCount,
         totalGamesPlayed: 100,
-        lastPlayedCollectionId: '',
         lastPlayedGameId: '',
         lastPlayedGameTitle: '',
         lastPlayedGameImageUrl: '',

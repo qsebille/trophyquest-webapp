@@ -19,7 +19,7 @@
 
         <app-trophyquest-block>
             <ng-template appBlockHeader>
-                <span class="block-header">Top 10 recent games</span>
+                <span class="block-header">Most popular games this week</span>
             </ng-template>
             <ng-template appBlockContent>
                 @if (isLoadingGames()) {
@@ -27,7 +27,7 @@
                 } @else if (hasFailedLoadingGames()) {
                     <app-error-message [errorMessage]="'Failed to load games'"/>
                 } @else {
-                    @for (game of games(); track game.id) {
+                    @for (game of popularGames(); track game.id) {
                         <app-home-game-card [game]="game" class="home-game-card"/>
                     }
                 }

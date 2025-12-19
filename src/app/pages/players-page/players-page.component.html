@@ -2,7 +2,7 @@
     <div class="players-content">
         @for (playerSummary of playerListStore.playerSummaries(); track playerSummary.player.id) {
             <app-player-card
-                    (clickOnGame)="navigateToPlayerCollectionPage(playerSummary.lastPlayedCollectionId, playerSummary.player.id)"
+                    (clickOnGame)="navigateToPlayerGamePage(playerSummary.lastPlayedGameId, playerSummary.player.id)"
                     (clickOnPseudo)="navigateToProfilePage(playerSummary.player.id)"
                     [playerSummary]="playerSummary"
                     class="player-card"></app-player-card>

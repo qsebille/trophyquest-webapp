@@ -9,7 +9,7 @@ import {SectionListComponent} from "../../components/section-list/section-list.c
 import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../templates/section-list.template";
 import {HomeTrophyCardComponent} from "../../components/home-trophy-card/home-trophy-card.component";
 import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
-import {HomeGameStoreService} from "../../core/store/home/home-game-store.service";
+import {HomePopularGamesStoreService} from "../../core/store/home/home-popular-games-store.service";
 import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
 import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
 import {HomePlayerCardComponent} from "../../components/home-player-card/home-player-card.component";
@@ -38,7 +38,7 @@ export class HomePageComponent {
     constructor(
         private readonly _homeSummaryStore: HomeSummaryStoreService,
         private readonly _homeRecentPlayerStore: HomeRecentPlayerStoreService,
-        private readonly _homeGameStore: HomeGameStoreService,
+        private readonly _homeGameStore: HomePopularGamesStoreService,
         private readonly _navigator: NavigatorService,
     ) {
     }
@@ -49,7 +49,7 @@ export class HomePageComponent {
     readonly isLoadingSummary = computed(() => this._homeSummaryStore.isLoading());
     readonly hasFailedLoadingSummary = computed(() => this._homeSummaryStore.isError());
 
-    readonly games = computed(() => this._homeGameStore.games())
+    readonly popularGames = computed(() => this._homeGameStore.games())
     readonly isLoadingGames = computed(() => this._homeGameStore.isLoading());
     readonly hasFailedLoadingGames = computed(() => this._homeGameStore.isError());
 

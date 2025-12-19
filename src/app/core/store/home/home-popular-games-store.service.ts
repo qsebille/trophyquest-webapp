@@ -1,13 +1,13 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {RecentlyPlayedGame} from "../../models/dto/recently-played-game";
+import {PopularGame} from "../../models/dto/popular-game";
 import {LoadingStatus} from "../../models/loading-status.enum";
 import {GameService} from "../../services/http/game.service";
 
 @Injectable({
     providedIn: 'root',
 })
-export class HomeGameStoreService {
-    private _games = signal<RecentlyPlayedGame[]>([]);
+export class HomePopularGamesStoreService {
+    private _games = signal<PopularGame[]>([]);
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
     readonly games = computed(() => this._games());
@@ -20,7 +20,7 @@ export class HomeGameStoreService {
     fetch(): void {
         console.info('Fetching recently played games...');
         this._status.set(LoadingStatus.LOADING);
-        this._gameService.searchRecentGames().subscribe({
+        this._gameService.searchPopularGames().subscribe({
             next: games => {
                 this._games.set(games);
                 this._status.set(LoadingStatus.FULLY_LOADED);

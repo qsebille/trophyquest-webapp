@@ -19,11 +19,11 @@ describe('PlayersPageComponent', () => {
         readonly clickOnGame = output();
     }
 
-    const collectionId: string = 'collection-123';
+    const gameId: string = 'game-123';
     const playerId: string = 'player-123';
 
     beforeEach(async () => {
-        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerCollectionPage']);
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerGamePage']);
         playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError']);
 
         playerListStoreSpy.playerSummaries.and.returnValue([]);
@@ -57,10 +57,10 @@ describe('PlayersPageComponent', () => {
         expect(navigatorSpy.goToProfilePage).toHaveBeenCalledOnceWith(playerId);
     });
 
-    it('should navigate to player last collection page', () => {
-        component.navigateToPlayerCollectionPage(collectionId, playerId);
+    it('should navigate to player last game page', () => {
+        component.navigateToPlayerGamePage(gameId, playerId);
 
-        expect(navigatorSpy.goToPlayerCollectionPage).toHaveBeenCalledWith(collectionId, playerId);
+        expect(navigatorSpy.goToPlayerGamePage).toHaveBeenCalledWith(gameId, playerId);
     });
 
 });

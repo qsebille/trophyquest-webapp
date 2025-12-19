@@ -1,16 +1,16 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
-import {HomeGameStoreService} from './home-game-store.service';
+import {HomePopularGamesStoreService} from './home-popular-games-store.service';
 import {GameService} from "../../services/http/game.service";
 import {of} from "rxjs";
-import {RecentlyPlayedGame} from "../../models/dto/recently-played-game";
+import {PopularGame} from "../../models/dto/popular-game";
 
-describe('HomeGameStoreService', () => {
-    let store: HomeGameStoreService;
+describe('HomePopularGamesStoreService', () => {
+    let store: HomePopularGamesStoreService;
 
     let gameServiceSpy: jasmine.SpyObj<GameService>;
 
-    const mockRecentGames: RecentlyPlayedGame[] = [
+    const mockRecentGames: PopularGame[] = [
         {
             id: 'game-1',
             title: 'Game 1',
@@ -26,11 +26,11 @@ describe('HomeGameStoreService', () => {
     ];
 
     beforeEach(() => {
-        gameServiceSpy = jasmine.createSpyObj('GameService', ['searchRecentGames']);
+        gameServiceSpy = jasmine.createSpyObj('GameService', ['searchPopularGames']);
         TestBed.configureTestingModule({
             providers: [{provide: GameService, useValue: gameServiceSpy}]
         });
-        store = TestBed.inject(HomeGameStoreService);
+        store = TestBed.inject(HomePopularGamesStoreService);
     });
 
     it('should be created', () => {
@@ -38,12 +38,12 @@ describe('HomeGameStoreService', () => {
     });
 
     it('should update games when fetch is called', fakeAsync(() => {
-        gameServiceSpy.searchRecentGames.and.returnValue(of(mockRecentGames));
+        gameServiceSpy.searchPopularGames.and.returnValue(of(mockRecentGames));
 
         store.fetch();
         flushMicrotasks();
 
-        expect(gameServiceSpy.searchRecentGames).toHaveBeenCalled();
+        expect(gameServiceSpy.searchPopularGames).toHaveBeenCalled();
         expect(store.games()).toEqual(mockRecentGames);
         expect(store.isLoading()).toBeFalse();
         expect(store.isError()).toBeFalse();

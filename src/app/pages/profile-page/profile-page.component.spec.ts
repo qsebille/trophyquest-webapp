@@ -29,14 +29,14 @@ describe('ProfilePageComponent', () => {
     }
 
     const playerId: string = 'player-123';
-    const collectionId: string = 'collection-123';
+    const gameId: string = 'game-123';
 
     beforeEach(async () => {
-        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerCollectionPage']);
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerGamePage']);
         profileStoreSpy = jasmine.createSpyObj('ProfileStore', [
             'reset', 'retrieve',
             'player', 'trophyCount', 'totalPlayedGames', 'totalEarnedTrophies',
-            'collections', 'searchCollections', 'loadMoreCollections', 'hasMoreCollections', 'hasNoCollections', 'isLoadingCollections', 'hasErrorLoadingCollections',
+            'games', 'searchGames', 'loadMoreGames', 'hasMoreGames', 'hasNoGames', 'isLoadingGames', 'hasErrorLoadingGames',
             'trophies', 'searchTrophies', 'loadMoreTrophies', 'hasMoreTrophies', 'hasNoTrophies', 'isLoadingTrophies', 'hasErrorLoadingTrophies',
         ]);
 
@@ -68,14 +68,14 @@ describe('ProfilePageComponent', () => {
     it('should fetch profile infos on init', () => {
         expect(profileStoreSpy.reset).toHaveBeenCalled();
         expect(profileStoreSpy.retrieve).toHaveBeenCalledWith(playerId);
-        expect(profileStoreSpy.searchCollections).toHaveBeenCalledWith(playerId);
+        expect(profileStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
         expect(profileStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
     });
 
     it('should navigate to game page when clicking on game card', () => {
-        component.navigateToPlayerCollectionPage(collectionId);
+        component.navigateToPlayerGamePage(gameId);
 
-        expect(navigatorSpy.goToPlayerCollectionPage).toHaveBeenCalledOnceWith(collectionId, playerId);
+        expect(navigatorSpy.goToPlayerGamePage).toHaveBeenCalledOnceWith(gameId, playerId);
     });
 
 });

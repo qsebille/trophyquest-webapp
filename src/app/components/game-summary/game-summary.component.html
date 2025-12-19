@@ -1,0 +1,19 @@
+@if (gameSummary()) {
+    <div class="game-summary">
+        <div class="image-wrapper">
+            <img alt="" class="game-image" src="{{gameSummary()?.imageUrl}}"/>
+        </div>
+        <div class="summary-content">
+            <div class="title-and-platform">
+                <span class="game-title">{{ gameSummary()?.title }}</span>
+                <div class="game-platform">
+                    <span class="platform-label platform-label--{{gameSummary()?.platform}}">{{ gameSummary()?.platform }}</span>
+                </div>
+            </div>
+            <div class="trophy-count-wrapper">
+                <app-trophy-count-displayer [iconSizePx]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
+                                            [trophyCount]="trophyCount"/>
+            </div>
+        </div>
+    </div>
+}

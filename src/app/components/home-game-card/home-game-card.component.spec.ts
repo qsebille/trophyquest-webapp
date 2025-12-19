@@ -10,6 +10,7 @@ describe('HomeGameCardComponent', () => {
     const gameMock: Game = {
         id: '001',
         title: 'Game 1',
+        platform: 'PS5',
         imageUrl: 'game.png'
     }
 
