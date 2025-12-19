@@ -6,9 +6,7 @@
         <div class="summary-content">
             <div class="title-and-platform">
                 <span class="game-title">{{ gameSummary()?.title }}</span>
-                <div class="game-platform">
-                    <span class="platform-label platform-label--{{gameSummary()?.platform}}">{{ gameSummary()?.platform }}</span>
-                </div>
+                <app-platform-label [platform]="gameSummary()?.platform ?? 'PS4'" class="game-platform"/>
             </div>
             <div class="trophy-count-wrapper">
                 <app-trophy-count-displayer [iconSizePx]="50" [labelOrientation]="'vertical'" [textSizePx]="18"

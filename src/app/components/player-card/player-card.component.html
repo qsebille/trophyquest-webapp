@@ -1,19 +1,22 @@
 <div class="player-card">
-    <div class="player-image-pseudo-wrapper">
-        <img [height]="100" [width]="100" alt="" class="player-image" ngSrc="{{ player().avatarUrl }}"/>
-        <a (click)="clickOnPseudo.emit()" class="player-pseudo">{{ player().pseudo }}</a>
+    <div class="avatar-wrapper">
+        <img [height]="50" [width]="50" alt="" class="avatar" ngSrc="{{ player().avatarUrl }}"/>
     </div>
-    <div class="player-games-infos">
-        <span class="total-played-games"><b>{{ totalPlayedGames() }}</b> games played !</span>
-        <hr class="separator"/>
-        <span class="last-game-played-label">Last game played :</span>
-        <div (click)="clickOnGame.emit()" class="last-played-game-wrapper">
-            <span class="last-game-played-title">{{ lastGamePlayedTitle() }}</span>
-            <img [height]="40" [width]="40" alt="" class="last-game-played-image"
-                 ngSrc="{{ lastGamePlayedImageUrl() }}"/>
+    <a (click)="clickOnPseudo.emit()" class="pseudo">{{ player().pseudo }}</a>
+    <div class="played-games">
+        <b>{{ totalPlayedGames() }}</b>
+        <span>games</span>
+    </div>
+    <div class="last-played-game-wrapper">
+        <span class="played-game-label">Last game played</span>
+        <div class="last-game-title-platform">
+            <a (click)="clickOnGame.emit()" class="game-title">{{ lastGamePlayedTitle() }}</a>
+            <app-platform-label [platform]="lastPlayedGamePlatform()"/>
         </div>
     </div>
-    <app-trophy-count-displayer [labelOrientation]="'vertical'" [textSizePx]="16"
+    <app-trophy-count-displayer [labelOrientation]="'vertical'"
+                                [textSizePx]="12"
+                                [iconSizePx]="16"
                                 [trophyCount]="trophyCount()"
                                 class="trophy-count"/>
 </div>

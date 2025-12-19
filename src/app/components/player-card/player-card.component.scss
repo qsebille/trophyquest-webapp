@@ -1,84 +1,71 @@
 @use 'styles/colors' as *;
 
 .player-card {
-  padding: 10px;
+  padding: 5px;
   background-color: $tq-blue-lighter;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
   width: 100%;
 
-  &:hover {
-    box-shadow: 0 4px 8px $tq-shadow;
-  }
-
-  .player-image-pseudo-wrapper {
-    width: 15%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .player-image {
-    border-radius: 50%;
+  .avatar-wrapper {
+    width: 5%;
     margin-right: 10px;
   }
 
-  .player-pseudo {
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    margin-left: 15px;
-  }
-
-  .player-games-infos {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    .separator {
-      color: $tq-blue-medium;
-      margin: 20px;
-      width: 95%;
-    }
-  }
-
-  .total-played-games {
-    font-size: 20px;
-  }
-
-  .last-played-game-wrapper {
-    cursor: pointer;
-    margin-top: 10px;
-    text-align: center;
-    width: 100%;
-  }
-
-  .last-game-played-label {
-    font-style: italic;
-  }
-
-  .last-game-played {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .last-game-played-title {
-    color: $tq-blue-medium;
-    font-size: 15px;
-    font-weight: bold;
-  }
-
-  .last-game-played-image {
-    margin-left: 10px;
+  .avatar {
     border-radius: 50%;
   }
 
+  .pseudo {
+    cursor: pointer;
+    width: 25%;
+    color: $tq-blue-dark;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .played-games {
+    width: 15%;
+    color: $tq-blue-dark;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    b {
+      color: $tq-blue-light;
+    }
+  }
+
+  .last-played-game-wrapper {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .played-game-label {
+    color: $tq-blue-dark;
+    font-size: 12px;
+  }
+
+  .last-game-title-platform {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .game-title {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    color: $tq-blue-dark;
+  }
+
   .trophy-count {
-    justify-self: flex-end;
+    width: 30%;
   }
 }
 

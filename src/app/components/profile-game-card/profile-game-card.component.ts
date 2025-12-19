@@ -3,6 +3,7 @@ import {TrophyCountDisplayerComponent} from '../trophy-count-displayer/trophy-co
 import {PlayerGame} from '../../core/models/dto/player-game';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DecimalPipe} from '@angular/common';
+import {PlatformLabelComponent} from "../utils/platform-label/platform-label.component";
 
 @Component({
     selector: 'app-profile-game-card',
@@ -10,6 +11,7 @@ import {DecimalPipe} from '@angular/common';
         TrophyCountDisplayerComponent,
         MatProgressBarModule,
         DecimalPipe,
+        PlatformLabelComponent,
     ],
     templateUrl: './profile-game-card.component.html',
     styleUrl: './profile-game-card.component.scss',
