@@ -26,7 +26,7 @@ describe('HomePopularGamesStoreService', () => {
     ];
 
     beforeEach(() => {
-        gameServiceSpy = jasmine.createSpyObj('GameService', ['searchRecentGames']);
+        gameServiceSpy = jasmine.createSpyObj('GameService', ['searchPopularGames']);
         TestBed.configureTestingModule({
             providers: [{provide: GameService, useValue: gameServiceSpy}]
         });

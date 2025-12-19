@@ -7,15 +7,7 @@ import {GameService} from "../../services/http/game.service";
     providedIn: 'root',
 })
 export class GameSummaryStore {
-    private static readonly DEFAULT_SUMMARY: GameSummary = {
-        id: '',
-        title: '',
-        platform: '',
-        imageUrl: '',
-        trophyCount: {platinum: 0, gold: 0, silver: 0, bronze: 0}
-    }
-
-    private readonly _gameSummary = signal<GameSummary>(GameSummaryStore.DEFAULT_SUMMARY);
+    private readonly _gameSummary = signal<GameSummary | null>(null);
     private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
     readonly summary = computed(() => this._gameSummary());
@@ -28,7 +20,7 @@ export class GameSummaryStore {
     }
 
     reset(): void {
-        this._gameSummary.set(GameSummaryStore.DEFAULT_SUMMARY);
+        this._gameSummary.set(null);
         this._status.set(LoadingStatus.NONE);
     }
 
@@ -47,7 +39,7 @@ export class GameSummaryStore {
             },
             error: error => {
                 console.error(error);
-                this._gameSummary.set(GameSummaryStore.DEFAULT_SUMMARY);
+                this._gameSummary.set(null);
                 this._status.set(LoadingStatus.ERROR);
             },
         });

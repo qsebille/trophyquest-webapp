@@ -42,7 +42,7 @@ describe('GamePageComponent', () => {
     const routeQueryParamMap: Map<string, string> = new Map<string, string>();
 
     beforeEach(async () => {
-        gameSummaryStoreSpy = jasmine.createSpyObj('GameSummaryStore', ['reset', 'retrieve', 'gameSummary', 'isLoading', 'isError']);
+        gameSummaryStoreSpy = jasmine.createSpyObj('GameSummaryStore', ['reset', 'retrieve', 'summary', 'isLoading', 'isError']);
         gameTrophiesStoreSpy = jasmine.createSpyObj('GameTrophiesStore', ['reset', 'retrieve', 'changeEarnedFilter', 'earnedFilter', 'displayedTrophies', 'baseGameTrophies', 'dlcs', 'isLoading', 'isError']);
 
         routeParamMap.set('gameId', gameId);

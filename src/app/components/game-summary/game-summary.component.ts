@@ -12,9 +12,9 @@ import {TrophyCount} from "../../core/models/dto/trophy-count";
     styleUrl: './game-summary.component.scss',
 })
 export class GameSummaryComponent {
-    readonly gameSummary = input.required<GameSummary>();
+    readonly gameSummary = input<GameSummary | null>(null);
 
     get trophyCount(): TrophyCount {
-        return this.gameSummary().trophyCount ?? {platinum: 0, gold: 0, silver: 0, bronze: 0};
+        return this.gameSummary()?.trophyCount ?? {platinum: 0, gold: 0, silver: 0, bronze: 0};
     }
 }
