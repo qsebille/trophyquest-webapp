@@ -21,6 +21,7 @@ describe('PlayerListStore', () => {
         totalGamesPlayed: 100,
         lastPlayedGameId: '',
         lastPlayedGameTitle: '',
+        lastPlayedGamePlatform: '',
         lastPlayedGameImageUrl: '',
     }
     const mockSearchResult: SearchResult<PlayerSummary> = {content: [mockPlayerSummary], total: 10}

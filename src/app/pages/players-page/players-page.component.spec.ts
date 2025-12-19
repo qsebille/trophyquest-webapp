@@ -1,9 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PlayersPageComponent} from './players-page.component';
 import {PlayerListStore} from '../../core/store/player-list-store';
-import {PlayerSummary} from '../../core/models/dto/player-summary';
-import {Component, input, output} from '@angular/core';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {AddPlayerStore} from "../../core/store/players/add-player-store.service";
+import {PlayerCardComponent} from "../../components/player-card/player-card.component";
+import {AddPlayerFormComponent} from "../../components/players/add-player-form/add-player-form.component";
 
 describe('PlayersPageComponent', () => {
     let component: PlayersPageComponent;
@@ -11,31 +12,26 @@ describe('PlayersPageComponent', () => {
 
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
     let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
-
-    @Component({selector: 'app-player-card', template: ''})
-    class MockPlayerCard {
-        readonly playerSummary = input.required<PlayerSummary>();
-        readonly clickOnPseudo = output();
-        readonly clickOnGame = output();
-    }
+    let addPlayerStoreSpy: jasmine.SpyObj<AddPlayerStore>;
 
     const gameId: string = 'game-123';
     const playerId: string = 'player-123';
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerGamePage']);
-        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError', 'isPartiallyLoaded']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'total', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError', 'isPartiallyLoaded']);
+        addPlayerStoreSpy = jasmine.createSpyObj('AddPlayerStore', ['addPlayer', 'status']);
 
         playerListStoreSpy.playerSummaries.and.returnValue([]);
 
         await TestBed.configureTestingModule({
-            imports: [PlayersPageComponent, MockPlayerCard],
+            imports: [PlayersPageComponent, PlayerCardComponent, AddPlayerFormComponent],
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
                 {provide: PlayerListStore, useValue: playerListStoreSpy},
+                {provide: AddPlayerStore, useValue: addPlayerStoreSpy},
             ]
         }).compileComponents();
-        TestBed.overrideComponent(PlayersPageComponent, {set: {imports: [MockPlayerCard]}});
 
         fixture = TestBed.createComponent(PlayersPageComponent);
         component = fixture.componentInstance;

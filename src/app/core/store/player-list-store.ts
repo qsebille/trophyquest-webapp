@@ -15,6 +15,7 @@ export class PlayerListStore {
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
     readonly playerSummaries: Signal<PlayerSummary[]> = computed(() => this._results());
+    readonly total: Signal<number> = computed(() => this._total());
     readonly isLoading: Signal<boolean> = computed(() => this._status() === LoadingStatus.LOADING);
     readonly isError: Signal<boolean> = computed(() => this._status() === LoadingStatus.ERROR);
     readonly isPartiallyLoaded: Signal<boolean> = computed(() => this._status() === LoadingStatus.PARTIALLY_LOADED);
