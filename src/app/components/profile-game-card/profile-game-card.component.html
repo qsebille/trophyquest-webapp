@@ -3,11 +3,7 @@
         <img alt="" class="game-image" src="{{game().imageUrl}}"/>
         <div class="platform-and-title">
             <a (click)="clickOnTitle.emit()" class="profile-game-title">{{ game().title }}</a>
-            <div class="platform">
-        <span class="platform-label platform-label--{{game().platform}}">
-          {{ game().platform }}
-        </span>
-            </div>
+            <app-platform-label [platform]="game().platform" class="platform"/>
         </div>
     </div>
     <div class="game-progression">

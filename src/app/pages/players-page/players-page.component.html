@@ -1,5 +1,8 @@
-<div class="players-page container">
-    <div class="players-content">
+<div class="players-page container container-fluid">
+    <app-add-player-form class="add-player-form" [status]="addPlayerStatus()" (refreshPlayers)="retrievePlayers()"
+                         (addPlayer)="addPlayer($event)"/>
+
+    <div class="player-list-wrapper">
         @if (isLoadingPlayers()) {
             <mat-spinner/>
         } @else if (hasFailedLoadingPlayers()) {
@@ -7,7 +10,13 @@
                                (retry)="retrievePlayers()"
                                [hasRetryButton]="true" [errorMessage]="'Failed to load players'"/>
         } @else {
-            @for (playerSummary of playerSummaries(); track playerSummary.player.id) {
+            <div class="total-nb-players">
+                Total: {{ nbOfPlayers() }} players
+            </div>
+            @for (playerSummary of playerSummaries(); track playerSummary.player.id; let i = $index) {
+                @if (i !== 0) {
+                    <hr class="separator"/>
+                }
                 <app-player-card
                         (clickOnGame)="navigateToPlayerGamePage(playerSummary.lastPlayedGameId, playerSummary.player.id)"
                         (clickOnPseudo)="navigateToProfilePage(playerSummary.player.id)"

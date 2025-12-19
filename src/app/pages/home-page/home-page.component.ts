@@ -8,8 +8,8 @@ import {HomeRecentPlayerStoreService} from "../../core/store/home/home-recent-pl
 import {SectionListComponent} from "../../components/section-list/section-list.component";
 import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../templates/section-list.template";
 import {HomeTrophyCardComponent} from "../../components/home-trophy-card/home-trophy-card.component";
-import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
-import {HomePopularGamesStoreService} from "../../core/store/home/home-popular-games-store.service";
+import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
+import {HomePopularGamesStore} from "../../core/store/home/home-popular-games-store.service";
 import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
 import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
 import {HomePlayerCardComponent} from "../../components/home-player-card/home-player-card.component";
@@ -38,7 +38,7 @@ export class HomePageComponent {
     constructor(
         private readonly _homeSummaryStore: HomeSummaryStoreService,
         private readonly _homeRecentPlayerStore: HomeRecentPlayerStoreService,
-        private readonly _homeGameStore: HomePopularGamesStoreService,
+        private readonly _homeGameStore: HomePopularGamesStore,
         private readonly _navigator: NavigatorService,
     ) {
     }

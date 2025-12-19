@@ -4,14 +4,14 @@ import {HomePageComponent} from './home-page.component';
 import {NavigatorService} from "../../core/services/utils/navigator.service";
 import {HomeSummaryStoreService} from "../../core/store/home/home-summary-store.service";
 import {HomeRecentPlayerStoreService} from "../../core/store/home/home-recent-player-store.service";
-import {HomePopularGamesStoreService} from "../../core/store/home/home-popular-games-store.service";
+import {HomePopularGamesStore} from "../../core/store/home/home-popular-games-store.service";
 import {HomeGameCardComponent} from "../../components/home-game-card/home-game-card.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HomeSummaryComponent} from "../../components/home-summary/home-summary.component";
 import {SectionListComponent} from "../../components/section-list/section-list.component";
 import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../templates/section-list.template";
 import {HomeTrophyCardComponent} from "../../components/home-trophy-card/home-trophy-card.component";
-import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
+import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
 import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
 import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
 import {HomePlayerCardComponent} from "../../components/home-player-card/home-player-card.component";
@@ -22,7 +22,7 @@ describe('HomePageComponent', () => {
 
     let homeSummaryStoreSpy: jasmine.SpyObj<HomeSummaryStoreService>;
     let homeRecentPlayerStoreSpy: jasmine.SpyObj<HomeRecentPlayerStoreService>;
-    let homeGameStoreSpy: jasmine.SpyObj<HomePopularGamesStoreService>;
+    let homeGameStoreSpy: jasmine.SpyObj<HomePopularGamesStore>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
 
     const playerId: string = 'player-123';
@@ -55,7 +55,7 @@ describe('HomePageComponent', () => {
                 providers: [
                     {provide: HomeSummaryStoreService, useValue: homeSummaryStoreSpy},
                     {provide: HomeRecentPlayerStoreService, useValue: homeRecentPlayerStoreSpy},
-                    {provide: HomePopularGamesStoreService, useValue: homeGameStoreSpy},
+                    {provide: HomePopularGamesStore, useValue: homeGameStoreSpy},
                     {provide: NavigatorService, useValue: navigatorSpy},
                 ],
             }

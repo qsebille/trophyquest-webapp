@@ -6,7 +6,7 @@ import {GameService} from "../../services/http/game.service";
 @Injectable({
     providedIn: 'root',
 })
-export class HomePopularGamesStoreService {
+export class HomePopularGamesStore {
     private _games = signal<PopularGame[]>([]);
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
 

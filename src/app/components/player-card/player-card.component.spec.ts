@@ -17,6 +17,7 @@ describe('PlayerCardComponent', () => {
         totalGamesPlayed: 100,
         lastPlayedGameId: 'game-001',
         lastPlayedGameTitle: 'Horizon: Forbidden West',
+        lastPlayedGamePlatform: 'PS5',
         lastPlayedGameImageUrl: 'horizon.png'
     }
 

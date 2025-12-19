@@ -1,7 +1,17 @@
 @use 'styles/colors' as *;
 
 .players-page {
-  .players-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  .add-player-form {
+    padding-top: 20px;
+  }
+
+  .player-list-wrapper {
+    width: 90%;
     padding-top: 20px;
     padding-left: 10%;
     padding-right: 10%;
@@ -10,9 +20,22 @@
     align-items: center;
   }
 
+  .total-nb-players {
+    align-self: flex-start;
+    color: $tq-blue-medium;
+    font-weight: bold;
+  }
+
   .player-card {
     width: 100%;
-    margin: 10px;
+    margin: 5px;
+  }
+
+  .separator {
+    color: $tq-blue-dark;
+    width: 90%;
+    margin-top: 1px;
+    margin-bottom: 1px;
   }
 
   .load-more-button {

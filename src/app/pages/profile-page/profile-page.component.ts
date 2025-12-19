@@ -9,7 +9,7 @@ import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-stor
 import {getTotalTrophies} from "../../core/models/dto/trophy-count-per-type";
 import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
 import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
-import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
+import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
 
 @Component({
     selector: 'app-profile-page',

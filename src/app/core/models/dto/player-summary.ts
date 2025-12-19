@@ -7,5 +7,6 @@ export interface PlayerSummary {
     totalGamesPlayed: number;
     lastPlayedGameId: string;
     lastPlayedGameTitle: string;
+    lastPlayedGamePlatform: string;
     lastPlayedGameImageUrl: string;
 }

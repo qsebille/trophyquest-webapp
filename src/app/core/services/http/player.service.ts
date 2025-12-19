@@ -9,6 +9,7 @@ import {PlayerGame} from '../../models/dto/player-game';
 import {PlayerSummary} from '../../models/dto/player-summary';
 import {RecentPlayerResponse} from "../../models/dto/recent-player-response";
 import {environment} from "../../../../environments/environment";
+import {PlayerByPseudoResponse} from "../../models/dto/response/player-by-pseudo-response";
 
 @Injectable({
     providedIn: 'root',
@@ -37,6 +38,10 @@ export class PlayerService {
      */
     retrieve(playerId: string): Observable<Player> {
         return this._http.get<Player>(`${this.API_URL}/${playerId}`);
+    }
+
+    fetchByPseudo(pseudo: string): Observable<PlayerByPseudoResponse> {
+        return this._http.get<PlayerByPseudoResponse>(`${this.API_URL}/pseudo/${pseudo}`);
     }
 
     /**

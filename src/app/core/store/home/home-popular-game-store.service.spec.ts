@@ -1,12 +1,12 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
-import {HomePopularGamesStoreService} from './home-popular-games-store.service';
+import {HomePopularGamesStore} from './home-popular-games-store.service';
 import {GameService} from "../../services/http/game.service";
 import {of} from "rxjs";
 import {PopularGame} from "../../models/dto/popular-game";
 
-describe('HomePopularGamesStoreService', () => {
-    let store: HomePopularGamesStoreService;
+describe('HomePopularGamesStore', () => {
+    let store: HomePopularGamesStore;
 
     let gameServiceSpy: jasmine.SpyObj<GameService>;
 
@@ -30,7 +30,7 @@ describe('HomePopularGamesStoreService', () => {
         TestBed.configureTestingModule({
             providers: [{provide: GameService, useValue: gameServiceSpy}]
         });
-        store = TestBed.inject(HomePopularGamesStoreService);
+        store = TestBed.inject(HomePopularGamesStore);
     });
 
     it('should be created', () => {

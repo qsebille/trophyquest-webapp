@@ -2,11 +2,13 @@ import {Component, input} from '@angular/core';
 import {GameSummary} from '../../core/models/dto/game-summary';
 import {TrophyCountDisplayerComponent} from "../trophy-count-displayer/trophy-count-displayer.component";
 import {TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
+import {PlatformLabelComponent} from "../utils/platform-label/platform-label.component";
 
 @Component({
     selector: 'app-game-summary',
     imports: [
-        TrophyCountDisplayerComponent
+        TrophyCountDisplayerComponent,
+        PlatformLabelComponent
     ],
     templateUrl: './game-summary.component.html',
     styleUrl: './game-summary.component.scss',
