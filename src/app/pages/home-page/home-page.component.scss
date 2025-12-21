@@ -27,8 +27,20 @@
     width: 80%;
   }
 
+  .separator {
+    color: $tq-blue-medium;
+    margin: 2px;
+  }
+
   .home-game-card {
     width: 100%;
+  }
+
+  .most-active-players {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
 }

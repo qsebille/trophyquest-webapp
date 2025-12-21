@@ -10,6 +10,8 @@ import {getTotalTrophies} from "../../core/models/dto/trophy-count-per-type";
 import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
 import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
 import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
+import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
+import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
 
 @Component({
     selector: 'app-profile-page',
@@ -19,6 +21,9 @@ import {ErrorMessageComponent} from "../../components/utils/error-message/error-
         MatProgressSpinnerModule,
         ProfileGameCardComponent,
         ErrorMessageComponent,
+        BlockContentTemplate,
+        BlockHeaderTemplate,
+        TrophyquestBlockComponent,
     ],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss',
@@ -44,9 +49,13 @@ export class ProfilePageComponent {
     readonly trophyCountPerType = computed(() => this._profileSummaryStore.trophyCountPerType());
     readonly totalEarnedTrophies = computed(() => getTotalTrophies(this.trophyCountPerType()));
 
-    readonly isLoading = computed(() => this._profileSummaryStore.isLoading() || this._profileGamesStore.isLoading() || this._profileTrophiesStore.isLoading());
+    readonly isLoadingSummary = computed(() => this._profileSummaryStore.isLoading());
+    readonly isLoadingGames = computed(() => this._profileGamesStore.isLoading());
+    readonly isLoadingTrophies = computed(() => this._profileTrophiesStore.isLoading());
     readonly hasFailedLoading = computed(() => this._profileSummaryStore.isError() || this._profileGamesStore.isError() || this._profileTrophiesStore.isError());
 
+    readonly displayLoadMoreGamesButton = computed(() => this.hasMoreGames() && !this.isLoadingGames());
+    readonly displayLoadMoreTrophiesButton = computed(() => this.hasMoreTrophies() && !this.isLoadingTrophies());
 
     ngOnInit(): void {
         this.playerId = this._route.snapshot.paramMap.get('playerId');

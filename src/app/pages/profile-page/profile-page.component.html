@@ -1,43 +1,60 @@
 <div class="profile-page container container-fluid">
-    @if (isLoading()) {
-        <mat-spinner/>
-    } @else if (hasFailedLoading()) {
+    @if (hasFailedLoading()) {
         <app-error-message class="error-message" [hasRetryButton]="true" (retry)="loadProfileData()"
                            [errorMessage]="'Failed to load profile information'"/>
     } @else {
-        <app-profile-summary class="summary" [player]="player()" [style.animationDelay.ms]="100"
-                             [totalEarnedTrophies]="totalEarnedTrophies()"
-                             [totalGamesPlayed]="totalPlayedGames()"
-                             [trophyCount]="trophyCountPerType()"
-                             animate.enter="block-enter"/>
+        @if (isLoadingSummary()) {
+            <app-profile-summary class="summary" [player]="player()" [style.animationDelay.ms]="100"
+                                 [totalEarnedTrophies]="totalEarnedTrophies()"
+                                 [totalGamesPlayed]="totalPlayedGames()"
+                                 [trophyCount]="trophyCountPerType()"
+                                 animate.enter="block-enter"/>
+        }
 
         <div class="profile-game-trophies-wrapper" [style.animationDelay.ms]="200" animate.enter="block-enter">
-            <div class="profile-game-list">
-                <span class="section-title">Last played games</span>
-                @for (game of games(); track game.id; let i = $index) {
-                    @if (i !== 0) {
-                        <hr class="separator"/>
+            <app-trophyquest-block class="profile-game-list">
+                <ng-template appBlockHeader>
+                    <span class="section-title">Last played games</span>
+                </ng-template>
+                <ng-template appBlockContent>
+                    @for (game of games(); track game.id; let i = $index) {
+                        @if (i !== 0) {
+                            <hr class="separator"/>
+                        }
+                        <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
+                                               [game]="game"
+                                               class="profile-game-card"/>
                     }
-                    <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
-                                           [game]="game"
-                                           class="profile-game-card"/>
-                }
-                @if (hasMoreGames()) {
-                    <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
-                }
-            </div>
-            <div class="profile-trophies-list">
-                <span class="section-title">Last earned trophies</span>
-                @for (trophy of trophies(); track trophy.id; let i = $index) {
-                    @if (i !== 0) {
-                        <hr class="separator"/>
+                    @if (isLoadingGames()) {
+                        <mat-spinner/>
                     }
-                    <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
-                }
-                @if (hasMoreTrophies()) {
-                    <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
-                }
-            </div>
+                    @if (displayLoadMoreGamesButton()) {
+                        <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
+                    }
+                </ng-template>
+            </app-trophyquest-block>
+
+            <app-trophyquest-block class="profile-trophies-list">
+                <ng-template appBlockHeader>
+                    <span class="section-title">Last earned trophies</span>
+                </ng-template>
+                <ng-template appBlockContent>
+                    @for (trophy of trophies(); track trophy.id; let i = $index) {
+                        @if (i !== 0) {
+                            <div class="separator-wrapper">
+                                <hr class="separator"/>
+                            </div>
+                        }
+                        <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
+                    }
+                    @if (isLoadingTrophies()) {
+                        <mat-spinner/>
+                    }
+                    @if (displayLoadMoreTrophiesButton()) {
+                        <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
+                    }
+                </ng-template>
+            </app-trophyquest-block>
         </div>
     }
 </div>

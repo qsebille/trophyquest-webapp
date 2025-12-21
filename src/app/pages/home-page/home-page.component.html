@@ -19,7 +19,7 @@
 
         <app-trophyquest-block>
             <ng-template appBlockHeader>
-                <span class="block-header">Most popular games this week</span>
+                <span class="block-header">Most recent popular games</span>
             </ng-template>
             <ng-template appBlockContent>
                 @if (isLoadingGames()) {
@@ -28,6 +28,9 @@
                     <app-error-message [errorMessage]="'Failed to load games'"/>
                 } @else {
                     @for (game of popularGames(); track game.id) {
+                        @if ($index !== 0) {
+                            <hr class="separator"/>
+                        }
                         <app-home-game-card [game]="game" class="home-game-card"/>
                     }
                 }
@@ -38,7 +41,7 @@
     <div class="right-column">
         <app-trophyquest-block>
             <ng-template appBlockHeader>
-                <span class="block-header">Recent players</span>
+                <span class="block-header">Top recent players</span>
             </ng-template>
             <ng-template appBlockContent>
                 @if (isLoadingPlayers()) {
@@ -46,21 +49,22 @@
                 } @else if (hasFailedLoadingPlayers()) {
                     <app-error-message [errorMessage]="'Failed to load players'"/>
                 } @else {
-                    @for (recentPlayer of recentPlayers(); track recentPlayer.player.id) {
-                        <app-section-list>
-                            <ng-template appSectionListHeader>
-                                <app-home-player-card [player]="recentPlayer.player"
-                                                      [trophyCount]="recentPlayer.recentTrophyCount"
-                                                      (clickOnPseudo)="navigateToProfilePage(recentPlayer.player.id)"
-                                                      class="home-player-card"/>
-                            </ng-template>
-                            <ng-template appSectionListContent>
-                                @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
-                                    <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"/>
-                                }
-                            </ng-template>
-                        </app-section-list>
-                    }
+                    <div class="most-active-players">
+                        @for (recentPlayer of recentPlayers(); track recentPlayer.player.id) {
+                            <app-section-list>
+                                <ng-template appSectionListHeader>
+                                    <app-home-player-card [player]="recentPlayer.player"
+                                                          [trophyCount]="recentPlayer.recentTrophyCount"
+                                                          (clickOnPseudo)="navigateToProfilePage(recentPlayer.player.id)"/>
+                                </ng-template>
+                                <ng-template appSectionListContent>
+                                    @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
+                                        <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"/>
+                                    }
+                                </ng-template>
+                            </app-section-list>
+                        }
+                    </div>
                 }
             </ng-template>
         </app-trophyquest-block>
