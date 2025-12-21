@@ -1,4 +1,5 @@
 @use 'styles/colors' as *;
+@use '@angular/material' as mat;
 
 .profile-game-card {
   border: 1px solid transparent;
@@ -14,20 +15,51 @@
     background-color: $tq-green-lighter;
   }
 
-  &:hover {
-    box-shadow: 0 4px 8px $tq-shadow;
-  }
-
-  .game-infos {
+  .game-block-start {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
 
   .game-image {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 60px;
+    max-height: 60px;
     object-fit: contain;
     border-radius: 5px;
+  }
+
+  .spinner-wrapper {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+
+    &.completed .spinner-center {
+      font-weight: 600;
+    }
+
+    &.completed .progress-spinner {
+      @include mat.progress-spinner-overrides((
+              active-indicator-color: $tq-green-dark,
+      ));
+    }
+
+    .spinner-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+
+      font-size: 12px;
+      line-height: 1;
+      color: $tq-blue-light;
+    }
+
+    .check-icon {
+      color: $tq-green-dark;
+    }
   }
 
   .platform-and-title {
@@ -41,21 +73,22 @@
     cursor: pointer;
   }
 
-  .game-progression {
+  .game-block-end {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 35%;
+    align-items: center;
+    gap: 10px;
   }
 
-  .progress-bar-wrapper {
-    width: 100%;
+  .trophy-count {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-
-    &.completed {
-      color: $tq-green-medium;
-    }
+    align-items: center;
   }
+
+  .trophy-count-value {
+    color: $tq-blue-medium;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
 }

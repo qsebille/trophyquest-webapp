@@ -1,17 +1,18 @@
 import {Component, computed, input, output} from '@angular/core';
-import {TrophyCountDisplayerComponent} from '../trophy-count-displayer/trophy-count-displayer.component';
 import {PlayerGame} from '../../core/models/dto/player-game';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {PlatformLabelComponent} from "../utils/platform-label/platform-label.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
     selector: 'app-profile-game-card',
     imports: [
-        TrophyCountDisplayerComponent,
-        MatProgressBarModule,
         DecimalPipe,
+        MatProgressSpinnerModule,
+        MatIconModule,
         PlatformLabelComponent,
+        NgOptimizedImage,
     ],
     templateUrl: './profile-game-card.component.html',
     styleUrl: './profile-game-card.component.scss',
@@ -35,4 +36,19 @@ export class ProfileGameCardComponent {
         return earnedTrophies / totalTrophies * 100;
     });
     readonly isCompleted = computed(() => this.completionScore() === 100);
+
+    getEarnedTrophyByType(type: string): number {
+        switch (type) {
+            case 'platinum':
+                return this.earnedTrophies().platinum;
+            case 'gold':
+                return this.earnedTrophies().gold;
+            case 'silver':
+                return this.earnedTrophies().silver;
+            case 'bronze':
+                return this.earnedTrophies().bronze;
+            default:
+                return 0;
+        }
+    }
 }

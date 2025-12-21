@@ -7,6 +7,7 @@
   padding: 5px;
   background-color: $tq-blue-lighter;
   border-radius: 10px;
+  min-height: 50px;
 
   .game-infos {
     width: 80%;
@@ -17,6 +18,7 @@
 
   .game-image {
     border-radius: 5px;
+    max-width: 50px;
   }
 
   .game-title {
