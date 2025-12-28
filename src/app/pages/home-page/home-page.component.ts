@@ -68,4 +68,8 @@ export class HomePageComponent {
     navigateToProfilePage(playerId: string): void {
         this._navigator.goToProfilePage(playerId);
     }
+
+    navigateToGamePage(gameId: string): void {
+        this._navigator.goToGamePage(gameId);
+    }
 }

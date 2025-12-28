@@ -33,7 +33,8 @@
                         @if ($index !== 0) {
                             <hr class="separator"/>
                         }
-                        <app-home-game-card [game]="game" class="home-game-card"/>
+                        <app-home-game-card [game]="game" (clickOnGameTitle)="navigateToGamePage(game.id)"
+                                            class="home-game-card"/>
                     }
                 }
             </ng-template>

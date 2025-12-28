@@ -41,14 +41,15 @@ export class GamePageComponent {
     readonly dlcs = computed(() => this._gameTrophiesStore.dlcs());
     readonly isLoadingTrophies = computed(() => this._gameTrophiesStore.isLoading());
     readonly isTrophiesError = computed(() => this._gameTrophiesStore.isError());
-    readonly earnedFilter = computed(() => this._gameTrophiesStore.earnedFilter());
 
+    readonly showEarnedTrophyFilter = computed(() => this.playerId !== null);
+    readonly earnedFilter = computed(() => this._gameTrophiesStore.earnedFilter());
 
     ngOnInit(): void {
         this._gameSummaryStore.reset();
-        this._gameSummaryStore.retrieve(this.gameId);
+        this.retrieveSummary();
         this._gameTrophiesStore.reset();
-        this._gameTrophiesStore.retrieve(this.gameId, this.playerId);
+        this.retrieveTrophies();
     }
 
     retrieveSummary(): void {
@@ -56,7 +57,11 @@ export class GamePageComponent {
     }
 
     retrieveTrophies(): void {
-        this._gameTrophiesStore.retrieve(this.gameId, this.playerId);
+        if (this.playerId !== null) {
+            this._gameTrophiesStore.retrieveForPlayer(this.gameId, this.playerId);
+        } else {
+            this._gameTrophiesStore.retrieveForGame(this.gameId);
+        }
     }
 
     showHiddenTrophies($event: boolean): void {

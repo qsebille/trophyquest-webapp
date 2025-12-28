@@ -4,6 +4,7 @@ import {LoadingStatus} from '../../models/loading-status.enum';
 import {PlayerService} from '../../services/http/player.service';
 import {GameGroupTrophies} from '../../models/dto/game-group-trophies';
 import {TrophyFilters} from '../../models/filters/trophy-filters';
+import {GameService} from "../../services/http/game.service";
 
 @Injectable({
     providedIn: 'root',
@@ -22,7 +23,10 @@ export class GameTrophiesStore {
     readonly isLoading = computed(() => this._loadingStatus() === LoadingStatus.LOADING);
     readonly isError = computed(() => this._loadingStatus() === LoadingStatus.ERROR);
 
-    constructor(private readonly _playerService: PlayerService) {
+    constructor(
+        private readonly _playerService: PlayerService,
+        private readonly _gameService: GameService,
+    ) {
     }
 
     reset(): void {
@@ -30,7 +34,27 @@ export class GameTrophiesStore {
         this._loadingStatus.set(LoadingStatus.NONE);
     }
 
-    retrieve(
+    retrieveForGame(gameId: string | null): void {
+        if (null == gameId) {
+            console.error('Invalid game id');
+            this._loadingStatus.set(LoadingStatus.ERROR);
+            return;
+        }
+
+        this._loadingStatus.set(LoadingStatus.LOADING);
+        this._gameService.getTrophies(gameId).subscribe({
+            next: trophies => {
+                this._trophies.set(trophies);
+                this._loadingStatus.set(LoadingStatus.FULLY_LOADED);
+            },
+            error: () => {
+                console.error(`Failed loading trophies for game ${gameId}`);
+                this._loadingStatus.set(LoadingStatus.ERROR);
+            }
+        })
+    }
+
+    retrieveForPlayer(
         gameId: string | null,
         playerId: string | null,
     ): void {

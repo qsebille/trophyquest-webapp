@@ -4,13 +4,15 @@
         <span class="trophy-filter-label">Show hidden trophies</span>
     </div>
 
-    <div class="trophy-filter">
-        <span class="trophy-filter-label">Select trophy earned type</span>
+    @if (showEarnedTrophyFilter()) {
+        <div class="trophy-filter">
+            <span class="trophy-filter-label">Select trophy earned type</span>
 
-        <mat-radio-group [value]="filter()" (change)="changeFilter($event.value)">
-            <mat-radio-button value="all">All</mat-radio-button>
-            <mat-radio-button value="earned">Earned</mat-radio-button>
-            <mat-radio-button value="notEarned">Not earned</mat-radio-button>
-        </mat-radio-group>
-    </div>
+            <mat-radio-group [value]="filter()" (change)="changeFilter($event.value)">
+                <mat-radio-button value="all">All</mat-radio-button>
+                <mat-radio-button value="earned">Earned</mat-radio-button>
+                <mat-radio-button value="notEarned">Not earned</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    }
 </div>

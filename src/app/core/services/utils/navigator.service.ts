@@ -25,4 +25,9 @@ export class NavigatorService {
         this._router.navigate(['/game', gameId], {queryParams: {playerId}})
             .then(() => console.info(`Navigated to game page: ${gameId} for player ${playerId}`));
     }
+
+    goToGamePage(gameId: string): void {
+        this._router.navigate(['/game', gameId])
+            .then(() => console.info(`Navigated to game page: ${gameId}`));
+    }
 }

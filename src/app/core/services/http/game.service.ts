@@ -6,6 +6,7 @@ import {Game} from '../../models/dto/game';
 import {PopularGame} from "../../models/dto/popular-game";
 import {environment} from "../../../../environments/environment";
 import {GameSummary} from "../../models/dto/game-summary";
+import {Trophy} from "../../models/dto/trophy";
 
 @Injectable({
     providedIn: 'root',
@@ -36,6 +37,10 @@ export class GameService {
 
     getSummary(gameId: String): Observable<GameSummary> {
         return this._http.get<GameSummary>(`${this.API_URL}/${gameId}/summary`);
+    }
+    
+    getTrophies(gameId: string): Observable<Trophy[]> {
+        return this._http.get<Trophy[]>(`${this.API_URL}/${gameId}/trophies`);
     }
 
 }
