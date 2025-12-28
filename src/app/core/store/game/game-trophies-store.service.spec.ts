@@ -4,11 +4,13 @@ import {GameTrophiesStore} from './game-trophies-store.service';
 import {PlayerService} from '../../services/http/player.service';
 import {Trophy} from '../../models/dto/trophy';
 import {of, throwError} from "rxjs";
+import {GameService} from "../../services/http/game.service";
 
 describe('GameTrophiesStore', () => {
     let store: GameTrophiesStore;
 
     let playerServiceSpy: jasmine.SpyObj<PlayerService>;
+    let gameServiceSpy: jasmine.SpyObj<GameService>;
 
     const gameId = '123';
     const playerId = '456';
@@ -60,10 +62,12 @@ describe('GameTrophiesStore', () => {
 
     beforeEach(() => {
         playerServiceSpy = jasmine.createSpyObj('PlayerService', ['fetchGameTrophies']);
+        gameServiceSpy = jasmine.createSpyObj('GameService', ['getTrophies']);
 
         TestBed.configureTestingModule({
             providers: [
                 {provide: PlayerService, useValue: playerServiceSpy},
+                {provide: GameService, useValue: gameServiceSpy},
             ]
         });
 
@@ -82,7 +86,7 @@ describe('GameTrophiesStore', () => {
     });
 
     it('should retrieve game trophies when game id and player id are provided', fakeAsync(() => {
-        store.retrieve(gameId, playerId);
+        store.retrieveForPlayer(gameId, playerId);
         flushMicrotasks();
 
         expect(store.isLoading()).toBeFalse();
@@ -94,21 +98,21 @@ describe('GameTrophiesStore', () => {
     }));
 
     it('should fail retrieve game trophies when game id is null', () => {
-        store.retrieve(null, playerId);
+        store.retrieveForPlayer(null, playerId);
 
         expect(playerServiceSpy.fetchGameTrophies).not.toHaveBeenCalled();
         expect(store.isError()).toBeTrue();
     });
 
     it('should fail retrieve game trophies when player id is null', () => {
-        store.retrieve(gameId, null);
+        store.retrieveForPlayer(gameId, null);
 
         expect(playerServiceSpy.fetchGameTrophies).not.toHaveBeenCalled();
         expect(store.isError()).toBeTrue();
     });
 
     it('should reset state when reset is called', fakeAsync(() => {
-        store.retrieve(gameId, playerId);
+        store.retrieveForPlayer(gameId, playerId);
         flushMicrotasks();
         store.reset();
 
@@ -122,7 +126,7 @@ describe('GameTrophiesStore', () => {
 
     it('should filter trophies depending on earned status', fakeAsync(() => {
         // Fetching mocked trophies
-        store.retrieve(gameId, playerId);
+        store.retrieveForPlayer(gameId, playerId);
         flushMicrotasks();
 
         // Change filter to earned trophies only

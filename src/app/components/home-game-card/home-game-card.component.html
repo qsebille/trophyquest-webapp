@@ -1,7 +1,7 @@
 <div class="home-game-card">
     <div class="game-infos">
         <img alt="" [src]="game().imageUrl" class="game-image"/>
-        <div class="game-title">{{ game().title }}</div>
+        <a class="game-title tq-link" (click)="clickOnGameTitle.emit()">{{ game().title }}</a>
     </div>
     <div class="players">
         {{ game().recentPlayers | number }} players

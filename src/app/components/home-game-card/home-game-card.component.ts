@@ -1,11 +1,10 @@
-import {Component, input} from '@angular/core';
-import {DecimalPipe, NgOptimizedImage} from '@angular/common';
+import {Component, input, output} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
 import {PopularGame} from "../../core/models/dto/popular-game";
 
 @Component({
     selector: 'app-home-game-card',
     imports: [
-        NgOptimizedImage,
         DecimalPipe
     ],
     templateUrl: './home-game-card.component.html',
@@ -13,4 +12,5 @@ import {PopularGame} from "../../core/models/dto/popular-game";
 })
 export class HomeGameCardComponent {
     readonly game = input.required<PopularGame>();
+    readonly clickOnGameTitle = output();
 }

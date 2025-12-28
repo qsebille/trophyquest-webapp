@@ -3,7 +3,7 @@
         <img [height]="32" [width]="32" alt="Trophy" class="trophy-image" ngSrc="{{trophy().trophyIconUrl}}"/>
         <div class="title-game">
             <div class="trophy-title">{{ trophy().trophyTitle }}</div>
-            <div class="game-title">{{ trophy().gameTitle }}</div>
+            <a class="game-title tq-link" (click)="clickOnGameTitle.emit()">{{ trophy().gameTitle }}</a>
         </div>
     </div>
     <div class="icon-and-earned-date">

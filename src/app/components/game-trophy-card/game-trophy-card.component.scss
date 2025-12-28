@@ -7,6 +7,10 @@
     background-color: $tq-green-lighter;
   }
 
+  &.hidden {
+    opacity: 0.5;
+  }
+
   padding: 10px;
   border-radius: 0.75rem;
 }
@@ -24,21 +28,6 @@
 
 .trophy-image {
   margin-right: 10px;
-}
-
-.hidden-trophy-image-wrapper {
-  cursor: default;
-  background-color: $tq-blue-lighter;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hidden-trophy-image {
-  color: $tq-blue-darker;
-  font-size: 2rem;
-  font-family: 'Arial', serif;
 }
 
 .trophy-title {

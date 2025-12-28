@@ -13,6 +13,7 @@ describe('HomeTrophyCardComponent', () => {
         trophyType: 'bronze',
         trophyDescription: 'Get trophy 1',
         trophyIconUrl: 'trophy.png',
+        gameId: 'g001',
         gameTitle: 'Game',
         obtainedDate: '2025-01-01T00:00:00',
     }

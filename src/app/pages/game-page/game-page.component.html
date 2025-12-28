@@ -22,6 +22,7 @@
         </div>
     } @else {
         <app-trophy-filters [filter]="earnedFilter()"
+                            [showEarnedTrophyFilter]="showEarnedTrophyFilter()"
                             (filterChange)="changeTrophyEarnedType($event)"
                             (showHiddenTrophyChange)="showHiddenTrophies($event)"
                             class="trophy-filters"/>

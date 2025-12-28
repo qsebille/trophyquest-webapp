@@ -52,10 +52,12 @@ export class HomePageComponent {
     readonly popularGames = computed(() => this._homeGameStore.games())
     readonly isLoadingGames = computed(() => this._homeGameStore.isLoading());
     readonly hasFailedLoadingGames = computed(() => this._homeGameStore.isError());
+    readonly hasNoPopularGames = computed(() => this._homeGameStore.games().length == 0 && !this.isLoadingGames() && !this.hasFailedLoadingGames());
 
     readonly recentPlayers = computed(() => this._homeRecentPlayerStore.list());
     readonly isLoadingPlayers = computed(() => this._homeRecentPlayerStore.isLoading());
     readonly hasFailedLoadingPlayers = computed(() => this._homeRecentPlayerStore.isError())
+    readonly hasNoRecentPlayers = computed(() => this._homeRecentPlayerStore.list().length == 0 && !this.isLoadingPlayers() && !this.hasFailedLoadingPlayers());
 
     ngOnInit(): void {
         this._homeSummaryStore.fetch();
@@ -65,5 +67,16 @@ export class HomePageComponent {
 
     navigateToProfilePage(playerId: string): void {
         this._navigator.goToProfilePage(playerId);
+    }
+
+    navigateToGamePage(gameId: string): void {
+        this._navigator.goToGamePage(gameId);
+    }
+
+    navigateToPlayerGamePage(
+        gameId: string,
+        playerId: string
+    ): void {
+        this._navigator.goToPlayerGamePage(gameId, playerId);
     }
 }

@@ -50,6 +50,10 @@ describe('HomePageComponent', () => {
             ],
         }).compileComponents();
 
+
+        homeGameStoreSpy.games.and.returnValue([]);
+        homeRecentPlayerStoreSpy.list.and.returnValue([]);
+
         TestBed.overrideComponent(HomePageComponent, {
             set: {
                 providers: [

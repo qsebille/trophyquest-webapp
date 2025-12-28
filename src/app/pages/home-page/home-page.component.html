@@ -22,7 +22,9 @@
                 <span class="block-header">Most recent popular games</span>
             </ng-template>
             <ng-template appBlockContent>
-                @if (isLoadingGames()) {
+                @if (hasNoPopularGames()) {
+                    <div class="no-popular-games">No popular games</div>
+                } @else if (isLoadingGames()) {
                     <mat-spinner/>
                 } @else if (hasFailedLoadingGames()) {
                     <app-error-message [errorMessage]="'Failed to load games'"/>
@@ -31,7 +33,8 @@
                         @if ($index !== 0) {
                             <hr class="separator"/>
                         }
-                        <app-home-game-card [game]="game" class="home-game-card"/>
+                        <app-home-game-card [game]="game" (clickOnGameTitle)="navigateToGamePage(game.id)"
+                                            class="home-game-card"/>
                     }
                 }
             </ng-template>
@@ -44,7 +47,9 @@
                 <span class="block-header">Top recent players</span>
             </ng-template>
             <ng-template appBlockContent>
-                @if (isLoadingPlayers()) {
+                @if (hasNoRecentPlayers()) {
+                    <div class="no-recent-players">No recent players</div>
+                } @else if (isLoadingPlayers()) {
                     <mat-spinner/>
                 } @else if (hasFailedLoadingPlayers()) {
                     <app-error-message [errorMessage]="'Failed to load players'"/>
@@ -59,7 +64,8 @@
                                 </ng-template>
                                 <ng-template appSectionListContent>
                                     @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
-                                        <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"/>
+                                        <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"
+                                                              (clickOnGameTitle)="navigateToPlayerGamePage(trophy.gameId, recentPlayer.player.id)"/>
                                     }
                                 </ng-template>
                             </app-section-list>

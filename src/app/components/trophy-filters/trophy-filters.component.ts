@@ -15,6 +15,8 @@ import {FormsModule} from '@angular/forms';
 })
 export class TrophyFiltersComponent {
     readonly filter = input<'all' | 'earned' | 'notEarned'>('all');
+    readonly showEarnedTrophyFilter = input<boolean>(true);
+
     readonly filterChange = output<'all' | 'earned' | 'notEarned'>();
     readonly showHiddenTrophyChange = output<boolean>();
 
