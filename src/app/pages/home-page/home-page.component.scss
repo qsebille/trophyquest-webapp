@@ -32,8 +32,16 @@
     margin: 2px;
   }
 
+  .no-popular-games {
+    color: $tq-blue-medium;
+  }
+
   .home-game-card {
     width: 100%;
+  }
+
+  .no-recent-players {
+    color: $tq-blue-medium;
   }
 
   .most-active-players {

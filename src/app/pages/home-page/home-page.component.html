@@ -22,7 +22,9 @@
                 <span class="block-header">Most recent popular games</span>
             </ng-template>
             <ng-template appBlockContent>
-                @if (isLoadingGames()) {
+                @if (hasNoPopularGames()) {
+                    <div class="no-popular-games">No popular games</div>
+                } @else if (isLoadingGames()) {
                     <mat-spinner/>
                 } @else if (hasFailedLoadingGames()) {
                     <app-error-message [errorMessage]="'Failed to load games'"/>
@@ -44,7 +46,9 @@
                 <span class="block-header">Top recent players</span>
             </ng-template>
             <ng-template appBlockContent>
-                @if (isLoadingPlayers()) {
+                @if (hasNoRecentPlayers()) {
+                    <div class="no-recent-players">No recent players</div>
+                } @else if (isLoadingPlayers()) {
                     <mat-spinner/>
                 } @else if (hasFailedLoadingPlayers()) {
                     <app-error-message [errorMessage]="'Failed to load players'"/>
