@@ -20,10 +20,10 @@ export class GameTrophyCardComponent {
     readonly imageSize = input<number>(50);
     readonly showHiddenTrophies = input<boolean>(false);
 
-    readonly trophyIsEarned = computed(() => this.trophy().earnedDate !== null);
-
-    get isTrophyHidden(): boolean {
-        return !this.showHiddenTrophies && (this.trophy().isHidden ?? false) && this.trophyIsEarned();
-    }
+    readonly isTrophyEarned = computed(() => this.trophy().earnedDate !== null);
+    readonly isTrophyHidden = computed(() => {
+        if (this.showHiddenTrophies() || this.isTrophyEarned()) return false;
+        else return this.trophy().isHidden ?? false
+    });
 
 }

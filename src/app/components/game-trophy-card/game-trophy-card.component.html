@@ -1,38 +1,31 @@
-<div [class.completed]="trophyIsEarned()" class="trophy-card">
+<div [class.completed]="isTrophyEarned()" class="trophy-card" [class.hidden]="isTrophyHidden()">
     <div class="trophy-card-header">
         <div class="trophy-description-wrapper">
             <div class="trophy-image">
-                @if (isTrophyHidden) {
-                    <div [style.height.px]="imageSize()" [style.width.px]="imageSize()"
-                         class="hidden-trophy-image-wrapper">
-                        <span class="hidden-trophy-image">?</span>
-                    </div>
-                } @else {
-                    <img [alt]="trophy().trophyTitle" [height]="imageSize()" [ngSrc]="trophy().iconUrl"
-                         [width]="imageSize()"/>
-                }
+                <img [alt]="trophy().trophyTitle" [height]="imageSize()"
+                     [ngSrc]="trophy().iconUrl" [width]="imageSize()"/>
             </div>
             <div class="trophy-description">
-                <div class="trophy-title">{{ isTrophyHidden ? 'Hidden trophy' : trophy().trophyTitle }}</div>
+                <div class="trophy-title">{{ isTrophyHidden() ? 'Hidden trophy' : trophy().trophyTitle }}</div>
                 <div
                         class="trophy-description-text">
-                    {{ isTrophyHidden ? 'This trophy is hidden' : trophy().trophyDescription }}
+                    {{ isTrophyHidden() ? 'This trophy is hidden' : trophy().trophyDescription }}
                 </div>
             </div>
         </div>
         <div class="trophy-icon-wrapper">
             <div class="trophy-icon">
-                @if (isTrophyHidden) {
+                @if (isTrophyHidden()) {
                     <img [height]="28" [width]="28" alt="Trophy" ngSrc="assets/icons/trophy-hidden.png"/>
                 } @else {
                     <img [height]="28" [width]="28" alt="Trophy"
                          ngSrc="assets/icons/trophy-{{trophy().trophyType}}.png"/>
-                    @if (trophyIsEarned()) {
+                    @if (isTrophyEarned()) {
                         <mat-icon class="trophy-check-icon">check</mat-icon>
                     }
                 }
             </div>
-            @if (trophyIsEarned()) {
+            @if (isTrophyEarned()) {
                 <div class="trophy-earned-date">{{ trophy().earnedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
             }
         </div>
