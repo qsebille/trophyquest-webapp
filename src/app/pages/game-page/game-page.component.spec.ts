@@ -2,11 +2,11 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GamePageComponent} from './game-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {Component, input, output} from '@angular/core';
-import {Trophy} from '../../core/models/dto/trophy';
 import {GameSummaryStore} from "../../core/store/game/game-summary-store.service";
 import {GameTrophiesStore} from "../../core/store/game/game-trophies-store.service";
-import {GameSummary} from "../../core/models/dto/game-summary";
+import {GameSummaryComponent} from "../../components/game-summary/game-summary.component";
+import {TrophyFiltersComponent} from "../../components/trophy-filters/trophy-filters.component";
+import {GameTrophyCardComponent} from "../../components/game-trophy-card/game-trophy-card.component";
 
 describe('GamePageComponent', () => {
     let component: GamePageComponent;
@@ -14,26 +14,6 @@ describe('GamePageComponent', () => {
 
     let gameSummaryStoreSpy: jasmine.SpyObj<GameSummaryStore>;
     let gameTrophiesStoreSpy: jasmine.SpyObj<GameTrophiesStore>;
-
-
-    @Component({selector: 'app-game-summary', template: ''})
-    class MockGameSummaryComponent {
-        readonly gameSummary = input.required<GameSummary>();
-    }
-
-    @Component({selector: 'app-trophy-card', template: ''})
-    class MockTrophyCardComponent {
-        readonly trophy = input.required<Trophy>();
-        readonly imageSize = input<number>(50);
-        readonly showHiddenTrophies = input<boolean>(false);
-    }
-
-    @Component({selector: 'app-trophy-filters', template: ''})
-    class MockTrophyFiltersComponent {
-        readonly filter = input<'all' | 'earned' | 'notEarned'>('all');
-        readonly filterChange = output<'all' | 'earned' | 'notEarned'>();
-        readonly showHiddenTrophyChange = output<boolean>();
-    }
 
     const gameId = 'game-000';
     const playerId = 'player-000';
@@ -43,13 +23,13 @@ describe('GamePageComponent', () => {
 
     beforeEach(async () => {
         gameSummaryStoreSpy = jasmine.createSpyObj('GameSummaryStore', ['reset', 'retrieve', 'summary', 'isLoading', 'isError']);
-        gameTrophiesStoreSpy = jasmine.createSpyObj('GameTrophiesStore', ['reset', 'retrieve', 'changeEarnedFilter', 'earnedFilter', 'displayedTrophies', 'baseGameTrophies', 'dlcs', 'isLoading', 'isError']);
+        gameTrophiesStoreSpy = jasmine.createSpyObj('GameTrophiesStore', ['reset', 'retrieveForPlayer', 'retrieveForGame', 'changeEarnedFilter', 'earnedFilter', 'displayedTrophies', 'baseGameTrophies', 'dlcs', 'isLoading', 'isError']);
 
         routeParamMap.set('gameId', gameId);
         routeQueryParamMap.set('playerId', playerId);
 
         await TestBed.configureTestingModule({
-            imports: [GamePageComponent, MockGameSummaryComponent, MockTrophyFiltersComponent, MockTrophyCardComponent],
+            imports: [GamePageComponent, GameSummaryComponent, TrophyFiltersComponent, GameTrophyCardComponent],
             providers: [
                 {provide: GameSummaryStore, useValue: gameSummaryStoreSpy},
                 {provide: GameTrophiesStore, useValue: gameTrophiesStoreSpy},
@@ -60,10 +40,6 @@ describe('GamePageComponent', () => {
             ]
         })
             .compileComponents();
-
-        TestBed.overrideComponent(GamePageComponent, {
-            set: {imports: [MockGameSummaryComponent, MockTrophyFiltersComponent, MockTrophyCardComponent]}
-        });
 
         fixture = TestBed.createComponent(GamePageComponent);
         component = fixture.componentInstance;
