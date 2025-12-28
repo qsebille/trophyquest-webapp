@@ -64,7 +64,8 @@
                                 </ng-template>
                                 <ng-template appSectionListContent>
                                     @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
-                                        <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"/>
+                                        <app-home-trophy-card [trophy]="trophy" class="home-trophy-card"
+                                                              (clickOnGameTitle)="navigateToPlayerGamePage(trophy.gameId, recentPlayer.player.id)"/>
                                     }
                                 </ng-template>
                             </app-section-list>

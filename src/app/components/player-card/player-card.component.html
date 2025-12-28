@@ -2,7 +2,7 @@
     <div class="avatar-wrapper">
         <img [height]="50" [width]="50" alt="" class="avatar" ngSrc="{{ player().avatarUrl }}"/>
     </div>
-    <a (click)="clickOnPseudo.emit()" class="pseudo">{{ player().pseudo }}</a>
+    <a (click)="clickOnPseudo.emit()" class="pseudo tq-link">{{ player().pseudo }}</a>
     <div class="played-games">
         <b>{{ totalPlayedGames() }}</b>
         <span>games</span>
@@ -10,7 +10,7 @@
     <div class="last-played-game-wrapper">
         <span class="played-game-label">Last game played</span>
         <div class="last-game-title-platform">
-            <a (click)="clickOnGame.emit()" class="game-title">{{ lastGamePlayedTitle() }}</a>
+            <a (click)="clickOnGame.emit()" class="game-title tq-link">{{ lastGamePlayedTitle() }}</a>
             <app-platform-label [platform]="lastPlayedGamePlatform()"/>
         </div>
     </div>

@@ -71,6 +71,16 @@ body {
   }
 }
 
+.tq-link {
+  text-decoration: none;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 /**
  * ANIMATIONS
  */
