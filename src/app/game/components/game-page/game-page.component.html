@@ -1,0 +1,33 @@
+<div class="game-page container container-fluid">
+    <div [style.animationDelay.ms]="100" animate.enter="block-enter" class="game-header">
+        @if (isLoadingSummary()) {
+            <mat-spinner/>
+        } @else if (isSummaryError()) {
+            <div class="error-message-wrapper">
+                <span class="error-message">Error loading game details!</span>
+                <button class="btn" (click)="retrieveSummary()">Try again</button>
+            </div>
+        } @else if (hasLoadedSummary()) {
+            <app-game-summary [gameSummary]="gameSummary()" class="game-summary"/>
+        }
+    </div>
+
+    @if (isLoadingTrophies()) {
+        <mat-spinner/>
+    } @else if (isTrophiesError()) {
+        <!--TODO: add button in error-message component-->
+        <div class="error-message-wrapper">
+            <span class="error-message">Error loading trophies!</span>
+            <button class="btn" (click)="retrieveTrophies()">Try again</button>
+        </div>
+    } @else if (hasLoadedTrophies()) {
+        <app-trophy-filters [filter]="trophyFilters().earned"
+                            [showEarnedTrophyFilter]="hasPlayerData()"
+                            (filterChange)="toggleEarnedFilter($event)"
+                            (showHiddenTrophyChange)="toggleShowHiddenTrophies($event)"
+                            class="trophy-filters"/>
+
+        <app-game-trophy-list [trophies]="trophies()" [trophyFilters]="trophyFilters()"
+                              [style.animationDelay.ms]="200" animate.enter="block-enter"/>
+    }
+</div>

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GameSummaryComponent} from './game-summary.component';
-import {GameSummary} from "../../core/models/dto/game-summary";
+import {GameSummary} from "../../../core/models/dto/game-summary";
 
 describe('GameSummaryComponent', () => {
     let component: GameSummaryComponent;

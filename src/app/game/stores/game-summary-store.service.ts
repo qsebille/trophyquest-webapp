@@ -1,26 +1,23 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {LoadingStatus} from '../../models/loading-status.enum';
-import {GameSummary} from '../../models/dto/game-summary';
-import {GameService} from "../../services/http/game.service";
+import {LoadingStatus} from '../../core/models/loading-status.enum';
+import {GameSummary} from '../../core/models/dto/game-summary';
+import {GameService} from "../../core/services/http/game.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class GameSummaryStore {
-    private readonly _gameSummary = signal<GameSummary | null>(null);
+    private readonly _summary = signal<GameSummary | null>(null);
+    readonly summary = computed(() => this._summary());
+
     private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
+    readonly status = computed(() => this._status());
 
-    readonly summary = computed(() => this._gameSummary());
-    readonly isLoading = computed(() => this._status() === LoadingStatus.LOADING);
-    readonly isError = computed(() => this._status() === LoadingStatus.ERROR);
-
-    constructor(
-        private readonly _gameService: GameService,
-    ) {
+    constructor(private readonly _gameService: GameService) {
     }
 
     reset(): void {
-        this._gameSummary.set(null);
+        this._summary.set(null);
         this._status.set(LoadingStatus.NONE);
     }
 
@@ -34,12 +31,12 @@ export class GameSummaryStore {
         this._status.set(LoadingStatus.LOADING);
         this._gameService.getSummary(gameId).subscribe({
             next: summary => {
-                this._gameSummary.set(summary);
+                this._summary.set(summary);
                 this._status.set(LoadingStatus.FULLY_LOADED);
             },
             error: error => {
                 console.error(error);
-                this._gameSummary.set(null);
+                this._summary.set(null);
                 this._status.set(LoadingStatus.ERROR);
             },
         });

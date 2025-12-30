@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GameTrophyCardComponent} from './game-trophy-card.component';
-import {Trophy} from "../../core/models/dto/trophy";
+import {Trophy} from "../../../core/models/dto/trophy";
 
 describe('GameTrophyCardComponent', () => {
     let component: GameTrophyCardComponent;

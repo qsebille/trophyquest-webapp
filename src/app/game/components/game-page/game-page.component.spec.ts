@@ -2,11 +2,11 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {GamePageComponent} from './game-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {GameSummaryStore} from "../../core/store/game/game-summary-store.service";
-import {GameTrophiesStore} from "../../core/store/game/game-trophies-store.service";
-import {GameSummaryComponent} from "../../components/game-summary/game-summary.component";
-import {TrophyFiltersComponent} from "../../components/trophy-filters/trophy-filters.component";
-import {GameTrophyCardComponent} from "../../components/game-trophy-card/game-trophy-card.component";
+import {GameSummaryStore} from "../../stores/game-summary-store.service";
+import {GameTrophiesStore} from "../../stores/game-trophies-store.service";
+import {GameSummaryComponent} from "../game-summary/game-summary.component";
+import {TrophyFiltersComponent} from "../../../components/trophy-filters/trophy-filters.component";
+import {GameTrophyCardComponent} from "../game-trophy-card/game-trophy-card.component";
 
 describe('GamePageComponent', () => {
     let component: GamePageComponent;
@@ -22,8 +22,8 @@ describe('GamePageComponent', () => {
     const routeQueryParamMap: Map<string, string> = new Map<string, string>();
 
     beforeEach(async () => {
-        gameSummaryStoreSpy = jasmine.createSpyObj('GameSummaryStore', ['reset', 'retrieve', 'summary', 'isLoading', 'isError']);
-        gameTrophiesStoreSpy = jasmine.createSpyObj('GameTrophiesStore', ['reset', 'retrieveForPlayer', 'retrieveForGame', 'changeEarnedFilter', 'earnedFilter', 'displayedTrophies', 'baseGameTrophies', 'dlcs', 'isLoading', 'isError']);
+        gameSummaryStoreSpy = jasmine.createSpyObj('GameSummaryStore', ['reset', 'retrieve', 'summary', 'status']);
+        gameTrophiesStoreSpy = jasmine.createSpyObj('GameTrophiesStore', ['reset', 'retrieveForPlayer', 'retrieveForGame', 'trophies', 'status']);
 
         routeParamMap.set('gameId', gameId);
         routeQueryParamMap.set('playerId', playerId);
@@ -38,8 +38,7 @@ describe('GamePageComponent', () => {
                     useValue: {snapshot: {paramMap: routeParamMap, queryParamMap: routeQueryParamMap}}
                 }
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(GamePageComponent);
         component = fixture.componentInstance;

@@ -1,9 +1,10 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {GameSummaryStore} from './game-summary-store.service';
-import {GameSummary} from "../../models/dto/game-summary";
+import {GameSummary} from "../../core/models/dto/game-summary";
 import {of, throwError} from "rxjs";
-import {GameService} from "../../services/http/game.service";
+import {GameService} from "../../core/services/http/game.service";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('GameSummaryStore', () => {
     let store: GameSummaryStore;
@@ -41,8 +42,7 @@ describe('GameSummaryStore', () => {
         flushMicrotasks();
 
         expect(store.summary()).toEqual(mockSummary);
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeFalse();
+        expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 
     it('should handle failure in retrieve', fakeAsync(() => {
@@ -50,8 +50,7 @@ describe('GameSummaryStore', () => {
         flushMicrotasks();
 
         expect(store.summary()).toBeNull();
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeTrue();
+        expect(store.status()).toEqual(LoadingStatus.ERROR);
     }));
 
     it('should reset state when reset is called', fakeAsync(() => {
@@ -60,7 +59,6 @@ describe('GameSummaryStore', () => {
         store.reset();
 
         expect(store.summary()).toBeNull();
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeFalse();
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     }));
 });

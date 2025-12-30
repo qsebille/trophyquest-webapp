@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {Trophy} from '../../core/models/dto/trophy';
+import {Trophy} from '../../../core/models/dto/trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
