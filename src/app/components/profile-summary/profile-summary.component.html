@@ -1,5 +1,5 @@
 @if (player()) {
-    <tq-trophyquest-block class="profile-summary">
+    <tq-block class="profile-summary">
         <ng-template tqBlockHeader>
             <div class="summary-header">
                 <img [height]="100" [width]="100" alt="" class="avatar-image" ngSrc="{{player().avatarUrl}}"/>
@@ -16,5 +16,5 @@
                                            [trophyCount]="trophyCount()" class="trophy-count"/>
             </div>
         </ng-template>
-    </tq-trophyquest-block>
+    </tq-block>
 }

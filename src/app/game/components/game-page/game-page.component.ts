@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {GameSummaryStore} from '../../stores/game-summary-store.service';
 import {GameTrophiesStore} from '../../stores/game-trophies-store.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {TrophyFiltersComponent} from '../../../components/trophy-filters/trophy-filters.component';
+import {GameTrophyFiltersComponent} from '../game-trophy-filters/game-trophy-filters.component';
 import {GameSummaryComponent} from "../game-summary/game-summary.component";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {GameTrophyListComponent} from "../game-trophy-list/game-trophy-list.component";
@@ -13,7 +13,7 @@ import {TrophyFilters} from "../../../core/models/filters/trophy-filters";
     selector: 'tq-game-page',
     imports: [
         MatProgressSpinnerModule,
-        TrophyFiltersComponent,
+        GameTrophyFiltersComponent,
         GameSummaryComponent,
         GameTrophyListComponent,
     ],

@@ -1,5 +1,5 @@
 import {Component, computed, input, output} from '@angular/core';
-import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
+import {ErrorMessageComponent} from "../../../core/components/error-message/error-message.component";
 import {PlayerSummary} from "../../../core/models/dto/player-summary";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";

@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {TrophyQuestBlockComponent} from './trophy-quest-block.component';
+import {BlockComponent} from './block.component';
 
 describe('TrophyquestBlockComponent', () => {
-    let component: TrophyQuestBlockComponent;
-    let fixture: ComponentFixture<TrophyQuestBlockComponent>;
+    let component: BlockComponent;
+    let fixture: ComponentFixture<BlockComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TrophyQuestBlockComponent]
+            imports: [BlockComponent]
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(TrophyQuestBlockComponent);
+        fixture = TestBed.createComponent(BlockComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

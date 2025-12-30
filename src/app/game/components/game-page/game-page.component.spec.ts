@@ -5,7 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {GameSummaryStore} from "../../stores/game-summary-store.service";
 import {GameTrophiesStore} from "../../stores/game-trophies-store.service";
 import {GameSummaryComponent} from "../game-summary/game-summary.component";
-import {TrophyFiltersComponent} from "../../../components/trophy-filters/trophy-filters.component";
+import {GameTrophyFiltersComponent} from "../game-trophy-filters/game-trophy-filters.component";
 import {GameTrophyCardComponent} from "../game-trophy-card/game-trophy-card.component";
 
 describe('GamePageComponent', () => {
@@ -29,7 +29,7 @@ describe('GamePageComponent', () => {
         routeQueryParamMap.set('playerId', playerId);
 
         await TestBed.configureTestingModule({
-            imports: [GamePageComponent, GameSummaryComponent, TrophyFiltersComponent, GameTrophyCardComponent],
+            imports: [GamePageComponent, GameSummaryComponent, GameTrophyFiltersComponent, GameTrophyCardComponent],
             providers: [
                 {provide: GameSummaryStore, useValue: gameSummaryStoreSpy},
                 {provide: GameTrophiesStore, useValue: gameTrophiesStoreSpy},

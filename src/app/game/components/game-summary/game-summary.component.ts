@@ -1,10 +1,8 @@
 import {Component, input} from '@angular/core';
 import {GameSummary} from '../../../core/models/dto/game-summary';
-import {
-    TrophyCountDisplayerComponent
-} from "../../../components/trophy-count-displayer/trophy-count-displayer.component";
+import {TrophyCountDisplayerComponent} from "../../../core/trophy-count-displayer/trophy-count-displayer.component";
 import {TrophyCountPerType} from "../../../core/models/dto/trophy-count-per-type";
-import {PlatformLabelComponent} from "../../../components/utils/platform-label/platform-label.component";
+import {PlatformLabelComponent} from "../../../core/components/platform-label/platform-label.component";
 
 @Component({
     selector: 'tq-game-summary',

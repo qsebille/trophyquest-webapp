@@ -9,9 +9,9 @@ import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-stor
 import {getTotalTrophies} from "../../core/models/dto/trophy-count-per-type";
 import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
 import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
-import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
-import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
-import {TrophyQuestBlockComponent} from "../../components/trophyquest-block/trophy-quest-block.component";
+import {ErrorMessageComponent} from "../../core/components/error-message/error-message.component";
+import {BlockContentTemplate, BlockHeaderTemplate} from "../../core/templates/block.template";
+import {BlockComponent} from "../../core/components/trophyquest-block/block.component";
 
 @Component({
     selector: 'tq-profile-page',
@@ -21,9 +21,9 @@ import {TrophyQuestBlockComponent} from "../../components/trophyquest-block/trop
         MatProgressSpinnerModule,
         ProfileGameCardComponent,
         ErrorMessageComponent,
-        TrophyQuestBlockContentTemplate,
-        TrophyQuestBlockHeaderTemplate,
-        TrophyQuestBlockComponent,
+        BlockContentTemplate,
+        BlockHeaderTemplate,
+        BlockComponent,
     ],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss',

@@ -1,21 +1,21 @@
 import {Component, computed, input, output} from '@angular/core';
 import {RecentPlayerResponse} from "../../../core/models/dto/recent-player-response";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
-import {TrophyQuestBlockComponent} from "../../../components/trophyquest-block/trophy-quest-block.component";
-import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../../templates/block.template";
+import {BlockComponent} from "../../../core/components/trophyquest-block/block.component";
+import {BlockContentTemplate, BlockHeaderTemplate} from "../../../core/templates/block.template";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
-import {SectionListComponent} from "../../../components/section-list/section-list.component";
+import {ErrorMessageComponent} from "../../../core/components/error-message/error-message.component";
+import {SectionListComponent} from "../../../core/components/section-list/section-list.component";
 import {HomePlayerCardComponent} from "../home-player-card/home-player-card.component";
 import {HomeTrophyCardComponent} from "../home-trophy-card/home-trophy-card.component";
-import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../../templates/section-list.template";
+import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../../core/templates/section-list.template";
 
 @Component({
     selector: 'tq-home-player-list',
     imports: [
-        TrophyQuestBlockComponent,
-        TrophyQuestBlockHeaderTemplate,
-        TrophyQuestBlockContentTemplate,
+        BlockComponent,
+        BlockHeaderTemplate,
+        BlockContentTemplate,
         MatProgressSpinnerModule,
         ErrorMessageComponent,
         SectionListComponent,

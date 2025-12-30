@@ -1,7 +1,7 @@
 import {Component, computed, input, output} from '@angular/core';
 import {PlayerGame} from '../../core/models/dto/player-game';
 import {DecimalPipe, NgOptimizedImage} from '@angular/common';
-import {PlatformLabelComponent} from "../utils/platform-label/platform-label.component";
+import {PlatformLabelComponent} from "../../core/components/platform-label/platform-label.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 

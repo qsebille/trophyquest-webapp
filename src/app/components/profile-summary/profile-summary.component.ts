@@ -1,11 +1,11 @@
 import {Component, input} from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import {TrophyCountDisplayerComponent} from '../trophy-count-displayer/trophy-count-displayer.component';
+import {TrophyCountDisplayerComponent} from '../../core/trophy-count-displayer/trophy-count-displayer.component';
 import {DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {Player} from '../../core/models/dto/player';
 import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
-import {TrophyQuestBlockComponent} from "../trophyquest-block/trophy-quest-block.component";
-import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
+import {BlockComponent} from "../../core/components/trophyquest-block/block.component";
+import {BlockContentTemplate, BlockHeaderTemplate} from "../../core/templates/block.template";
 
 @Component({
     selector: 'tq-profile-summary',
@@ -14,9 +14,9 @@ import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from ".
         TrophyCountDisplayerComponent,
         NgOptimizedImage,
         DecimalPipe,
-        TrophyQuestBlockComponent,
-        TrophyQuestBlockContentTemplate,
-        TrophyQuestBlockHeaderTemplate,
+        BlockComponent,
+        BlockContentTemplate,
+        BlockHeaderTemplate,
     ],
     templateUrl: './profile-summary.component.html',
     styleUrl: './profile-summary.component.scss',

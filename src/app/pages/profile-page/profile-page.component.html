@@ -14,7 +14,7 @@
         }
 
         <div class="profile-game-trophies-wrapper" [style.animationDelay.ms]="200" animate.enter="block-enter">
-            <tq-trophyquest-block class="profile-game-list">
+            <tq-block class="profile-game-list">
                 <ng-template tqBlockHeader>
                     <span class="section-title">Last played games</span>
                 </ng-template>
@@ -34,9 +34,9 @@
                         <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
                     }
                 </ng-template>
-            </tq-trophyquest-block>
+            </tq-block>
 
-            <tq-trophyquest-block class="profile-trophies-list">
+            <tq-block class="profile-trophies-list">
                 <ng-template tqBlockHeader>
                     <span class="section-title">Last earned trophies</span>
                 </ng-template>
@@ -56,7 +56,7 @@
                         <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
                     }
                 </ng-template>
-            </tq-trophyquest-block>
+            </tq-block>
         </div>
     }
 </div>

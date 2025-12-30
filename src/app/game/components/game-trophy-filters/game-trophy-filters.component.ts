@@ -10,10 +10,10 @@ import {FormsModule} from '@angular/forms';
         MatRadioModule,
         FormsModule,
     ],
-    templateUrl: './trophy-filters.component.html',
-    styleUrl: './trophy-filters.component.scss',
+    templateUrl: './game-trophy-filters.component.html',
+    styleUrl: './game-trophy-filters.component.scss',
 })
-export class TrophyFiltersComponent {
+export class GameTrophyFiltersComponent {
     readonly filter = input<'all' | 'earned' | 'notEarned'>('all');
     readonly showEarnedTrophyFilter = input<boolean>(true);
 

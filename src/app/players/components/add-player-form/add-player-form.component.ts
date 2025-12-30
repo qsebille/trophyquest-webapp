@@ -6,8 +6,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from "@angular/material/icon";
 import {AddPlayerStatus} from "../../../core/models/add-player-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
-import {SuccessMessageComponent} from "../../../components/utils/success-message/success-message.component";
+import {ErrorMessageComponent} from "../../../core/components/error-message/error-message.component";
+import {SuccessMessageComponent} from "../../../core/components/success-message/success-message.component";
 
 @Component({
     selector: 'tq-add-player-form',

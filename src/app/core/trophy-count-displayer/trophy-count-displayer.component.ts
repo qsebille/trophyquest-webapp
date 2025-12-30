@@ -1,5 +1,5 @@
 import {Component, computed, input} from '@angular/core';
-import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
+import {TrophyCountPerType} from '../models/dto/trophy-count-per-type';
 import {MatIconModule} from '@angular/material/icon';
 import {NgOptimizedImage} from '@angular/common';
 

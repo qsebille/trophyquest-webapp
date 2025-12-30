@@ -1,10 +1,8 @@
 import {Component, computed, input, output} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
-import {
-    TrophyCountDisplayerComponent
-} from '../../../components/trophy-count-displayer/trophy-count-displayer.component';
+import {TrophyCountDisplayerComponent} from '../../../core/trophy-count-displayer/trophy-count-displayer.component';
 import {PlayerSummary} from '../../../core/models/dto/player-summary';
-import {PlatformLabelComponent} from "../../../components/utils/platform-label/platform-label.component";
+import {PlatformLabelComponent} from "../../../core/components/platform-label/platform-label.component";
 
 @Component({
     selector: 'tq-player-card',
