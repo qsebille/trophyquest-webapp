@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {PopularGame} from "../../core/models/dto/popular-game";
+import {PopularGame} from "../../../core/models/dto/popular-game";
 
 @Component({
     selector: 'app-home-game-card',

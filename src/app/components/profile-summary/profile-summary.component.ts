@@ -5,7 +5,7 @@ import {DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {Player} from '../../core/models/dto/player';
 import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
 import {TrophyquestBlockComponent} from "../trophyquest-block/trophyquest-block.component";
-import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
+import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
 
 @Component({
     selector: 'app-profile-summary',
@@ -15,8 +15,8 @@ import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.t
         NgOptimizedImage,
         DecimalPipe,
         TrophyquestBlockComponent,
-        BlockContentTemplate,
-        BlockHeaderTemplate,
+        TrophyQuestBlockContentTemplate,
+        TrophyQuestBlockHeaderTemplate,
 
     ],
     templateUrl: './profile-summary.component.html',

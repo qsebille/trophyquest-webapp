@@ -9,8 +9,9 @@ export class NavigatorService {
     constructor(private _router: Router) {
     }
 
-    goToErrorPage(message: string): void {
-        this._router.navigate(['/error']).then(() => console.error(message));
+    goToPlayersPage(): void {
+        this._router.navigate(['/players'])
+            .then(() => console.info('Navigated to players page'));
     }
 
     goToProfilePage(playerId: string): void {

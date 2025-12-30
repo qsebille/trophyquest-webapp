@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ProfilePageComponent} from './profile-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {NavigatorService} from "../../core/services/navigator.service";
 import {ProfileSummaryComponent} from "../../components/profile-summary/profile-summary.component";
 import {ProfileTrophyCardComponent} from "../../components/profile-trophy-card/profile-trophy-card.component";
 import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-store.service";

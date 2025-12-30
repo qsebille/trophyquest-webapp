@@ -2,7 +2,7 @@ import {Component, computed} from '@angular/core';
 import {PlayerListStore} from '../../core/store/player-list-store';
 import {PlayerCardComponent} from '../../components/player-card/player-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {NavigatorService} from "../../core/services/navigator.service";
 import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
 import {AddPlayerFormComponent} from "../../components/players/add-player-form/add-player-form.component";
 import {AddPlayerStore} from "../../core/store/players/add-player-store.service";

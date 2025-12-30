@@ -1,0 +1,22 @@
+<div class="home-page container container-fluid">
+    <div class="left-column">
+        <app-home-summary class="home-summary"
+                          (clickOnPlayers)="navigateToPlayersPage()"
+                          [status]="summaryStatus()"
+                          [nbGames]="totalGames()"
+                          [nbPlayers]="totalPlayers()"
+                          [nbTrophies]="totalEarnedTrophies()"/>
+        <app-home-game-list class="home-game-list"
+                            [status]="gamesStatus()"
+                            [games]="games()"
+                            (clickOnGameTitle)="navigateToGamePage($event)"/>
+    </div>
+
+    <div class="right-column">
+        <app-home-player-list class="home-player-list"
+                              [status]="playersStatus()"
+                              [players]="players()"
+                              (clickOnPlayer)="navigateToProfilePage($event)"
+                              (clickOnGame)="navigateToPlayerGamePage($event.gameId, $event.playerId)"/>
+    </div>
+</div>

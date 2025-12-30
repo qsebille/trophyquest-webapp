@@ -1,5 +1,5 @@
 import {Component, input, output} from '@angular/core';
-import {ObtainedTrophy} from '../../core/models/dto/obtained-trophy';
+import {ObtainedTrophy} from '../../../core/models/dto/obtained-trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 
 @Component({

@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomeGameCardComponent} from './home-game-card.component';
-import {Game} from '../../core/models/dto/game';
+import {Game} from '../../../core/models/dto/game';
 
 describe('HomeGameCardComponent', () => {
     let component: HomeGameCardComponent;

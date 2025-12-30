@@ -1,0 +1,27 @@
+<app-trophyquest-block>
+    <ng-template appBlockHeader>
+        <span class="summary-title">TrophyQuest</span>
+    </ng-template>
+    <ng-template appBlockContent>
+        @if (isLoading()) {
+            <mat-spinner/>
+        } @else if (hasFailed()) {
+            <app-error-message [errorMessage]="'Failed to load summary'"/>
+        } @else {
+            <div class="summary-stats">
+                <div class="summary-item">
+                    <span class="stat">{{ nbGames() }}</span>
+                    <span class="label">games</span>
+                </div>
+                <div class="summary-item">
+                    <span class="stat">{{ nbPlayers() }}</span>
+                    <a class="label tq-link" (click)="clickOnPlayers.emit()">players</a>
+                </div>
+                <div class="summary-item">
+                    <span class="stat">{{ nbTrophies() | number }}</span>
+                    <span class="label">trophies</span>
+                </div>
+            </div>
+        }
+    </ng-template>
+</app-trophyquest-block>

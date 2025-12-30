@@ -3,7 +3,7 @@ import {PlayersPageComponent} from './pages/players-page/players-page.component'
 import {ProfilePageComponent} from './pages/profile-page/profile-page.component';
 import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {GamePageComponent} from './game/components/game-page/game-page.component';
-import {HomePageComponent} from './pages/home-page/home-page.component';
+import {HomePageComponent} from './home/components/home-page/home-page.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomePageComponent},

@@ -1,10 +1,11 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {HomeSummaryStoreService} from './home-summary-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {GameService} from "../../services/http/game.service";
-import {TrophyService} from "../../services/http/trophy.service";
+import {PlayerService} from "../../core/services/http/player.service";
+import {GameService} from "../../core/services/http/game.service";
+import {TrophyService} from "../../core/services/http/trophy.service";
 import {of} from "rxjs";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('HomeSummaryStoreService', () => {
     let store: HomeSummaryStoreService;
@@ -29,6 +30,11 @@ describe('HomeSummaryStoreService', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+
+        expect(store.nbPlayers()).toEqual(0);
+        expect(store.nbGames()).toEqual(0);
+        expect(store.nbEarnedTrophies()).toEqual(0);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should update counts when fetch is called', fakeAsync(() => {
@@ -43,9 +49,9 @@ describe('HomeSummaryStoreService', () => {
         expect(gameServiceSpy.count).toHaveBeenCalled();
         expect(trophyServiceSpy.countObtained).toHaveBeenCalled();
 
-        expect(store.isLoading()).toBeFalse();
-        expect(store.nbPlayers()).toBe(3);
-        expect(store.nbGames()).toBe(2);
-        expect(store.nbEarnedTrophies()).toBe(1);
+        expect(store.nbPlayers()).toEqual(3);
+        expect(store.nbGames()).toEqual(2);
+        expect(store.nbEarnedTrophies()).toEqual(1);
+        expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 });

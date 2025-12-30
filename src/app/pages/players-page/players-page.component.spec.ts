@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PlayersPageComponent} from './players-page.component';
 import {PlayerListStore} from '../../core/store/player-list-store';
-import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {NavigatorService} from "../../core/services/navigator.service";
 import {AddPlayerStore} from "../../core/store/players/add-player-store.service";
 import {PlayerCardComponent} from "../../components/player-card/player-card.component";
 import {AddPlayerFormComponent} from "../../components/players/add-player-form/add-player-form.component";

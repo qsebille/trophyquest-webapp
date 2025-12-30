@@ -1,5 +1,5 @@
 import {Component, ContentChild} from '@angular/core';
-import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
+import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
 import {NgTemplateOutlet} from "@angular/common";
 
 @Component({
@@ -11,6 +11,6 @@ import {NgTemplateOutlet} from "@angular/common";
     styleUrl: './trophyquest-block.component.scss',
 })
 export class TrophyquestBlockComponent {
-    @ContentChild(BlockHeaderTemplate) headerTemplate?: BlockHeaderTemplate;
-    @ContentChild(BlockContentTemplate) contentTemplate?: BlockContentTemplate;
+    @ContentChild(TrophyQuestBlockHeaderTemplate) headerTemplate?: TrophyQuestBlockHeaderTemplate;
+    @ContentChild(TrophyQuestBlockContentTemplate) contentTemplate?: TrophyQuestBlockContentTemplate;
 }

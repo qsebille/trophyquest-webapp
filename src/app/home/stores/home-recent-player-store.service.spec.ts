@@ -1,9 +1,10 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {HomeRecentPlayerStoreService} from './home-recent-player-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {RecentPlayerResponse} from "../../models/dto/recent-player-response";
+import {PlayerService} from "../../core/services/http/player.service";
+import {RecentPlayerResponse} from "../../core/models/dto/recent-player-response";
 import {of} from "rxjs";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('HomeRecentPlayerStoreService', () => {
     let store: HomeRecentPlayerStoreService;
@@ -41,6 +42,8 @@ describe('HomeRecentPlayerStoreService', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.players()).toEqual([]);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should search recent players when fetch is called', fakeAsync(() => {
@@ -50,8 +53,7 @@ describe('HomeRecentPlayerStoreService', () => {
         flushMicrotasks();
 
         expect(playerServiceSpy.fetchRecentPlayers).toHaveBeenCalled();
-        expect(store.list()).toEqual(mockRecentPlayers);
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeFalse();
+        expect(store.players()).toEqual(mockRecentPlayers);
+        expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 });

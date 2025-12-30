@@ -1,9 +1,10 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {HomePopularGamesStore} from './home-popular-games-store.service';
-import {GameService} from "../../services/http/game.service";
+import {GameService} from "../../core/services/http/game.service";
 import {of} from "rxjs";
-import {PopularGame} from "../../models/dto/popular-game";
+import {PopularGame} from "../../core/models/dto/popular-game";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('HomePopularGamesStore', () => {
     let store: HomePopularGamesStore;
@@ -35,6 +36,8 @@ describe('HomePopularGamesStore', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.games()).toEqual([]);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should update games when fetch is called', fakeAsync(() => {
@@ -45,7 +48,6 @@ describe('HomePopularGamesStore', () => {
 
         expect(gameServiceSpy.searchPopularGames).toHaveBeenCalled();
         expect(store.games()).toEqual(mockRecentGames);
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeFalse();
+        expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 });

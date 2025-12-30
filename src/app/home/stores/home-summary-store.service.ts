@@ -1,15 +1,15 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {LoadingStatus} from "../../models/loading-status.enum";
-import {PlayerService} from "../../services/http/player.service";
-import {GameService} from "../../services/http/game.service";
-import {TrophyService} from "../../services/http/trophy.service";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
+import {PlayerService} from "../../core/services/http/player.service";
+import {GameService} from "../../core/services/http/game.service";
+import {TrophyService} from "../../core/services/http/trophy.service";
 import {forkJoin} from "rxjs";
 
 @Injectable({
     providedIn: 'root',
 })
 export class HomeSummaryStoreService {
-    private _loadingStatus = signal<LoadingStatus>(LoadingStatus.NONE);
+    private _status = signal<LoadingStatus>(LoadingStatus.NONE);
     private _nbGames = signal<number>(0);
     private _nbPlayers = signal<number>(0);
     private _nbTrophies = signal<number>(0);
@@ -17,8 +17,7 @@ export class HomeSummaryStoreService {
     readonly nbGames = computed(() => this._nbGames());
     readonly nbPlayers = computed(() => this._nbPlayers());
     readonly nbEarnedTrophies = computed(() => this._nbTrophies());
-    readonly isLoading = computed(() => this._loadingStatus() === LoadingStatus.LOADING);
-    readonly isError = computed(() => this._loadingStatus() === LoadingStatus.ERROR);
+    readonly status = computed(() => this._status());
 
     constructor(
         private readonly _playerService: PlayerService,
@@ -28,7 +27,7 @@ export class HomeSummaryStoreService {
     }
 
     fetch(): void {
-        this._loadingStatus.set(LoadingStatus.LOADING);
+        this._status.set(LoadingStatus.LOADING);
         forkJoin({
             players: this._playerService.count(),
             games: this._gameService.count(),
@@ -38,11 +37,11 @@ export class HomeSummaryStoreService {
                 this._nbPlayers.set(players);
                 this._nbGames.set(games);
                 this._nbTrophies.set(trophies);
-                this._loadingStatus.set(LoadingStatus.FULLY_LOADED);
+                this._status.set(LoadingStatus.FULLY_LOADED);
             },
             error: error => {
                 console.error(error);
-                this._loadingStatus.set(LoadingStatus.ERROR);
+                this._status.set(LoadingStatus.ERROR);
             }
         });
     }

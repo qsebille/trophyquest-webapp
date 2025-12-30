@@ -3,14 +3,14 @@ import {ActivatedRoute} from '@angular/router';
 import {ProfileSummaryComponent} from '../../components/profile-summary/profile-summary.component';
 import {ProfileTrophyCardComponent} from '../../components/profile-trophy-card/profile-trophy-card.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NavigatorService} from "../../core/services/utils/navigator.service";
+import {NavigatorService} from "../../core/services/navigator.service";
 import {ProfileGameCardComponent} from "../../components/profile-game-card/profile-game-card.component";
 import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-store.service";
 import {getTotalTrophies} from "../../core/models/dto/trophy-count-per-type";
 import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
 import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
 import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
-import {BlockContentTemplate, BlockHeaderTemplate} from "../../templates/block.template";
+import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
 import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
 
 @Component({
@@ -21,8 +21,8 @@ import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trop
         MatProgressSpinnerModule,
         ProfileGameCardComponent,
         ErrorMessageComponent,
-        BlockContentTemplate,
-        BlockHeaderTemplate,
+        TrophyQuestBlockContentTemplate,
+        TrophyQuestBlockHeaderTemplate,
         TrophyquestBlockComponent,
     ],
     templateUrl: './profile-page.component.html',
