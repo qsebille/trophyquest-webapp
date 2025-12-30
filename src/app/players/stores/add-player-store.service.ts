@@ -1,9 +1,9 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {PlayerService} from "../../services/http/player.service";
-import {AddPlayerStatus} from "../../models/add-player-status.enum";
-import {PlayerByPseudoResponse} from "../../models/dto/response/player-by-pseudo-response";
-import {PsnService} from "../../services/http/psn.service";
-import {PsnFetchResponse} from "../../models/dto/response/psn-fetch-response";
+import {PlayerService} from "../../core/services/http/player.service";
+import {AddPlayerStatus} from "../../core/models/add-player-status.enum";
+import {PlayerByPseudoResponse} from "../../core/models/dto/response/player-by-pseudo-response";
+import {PsnService} from "../../core/services/http/psn.service";
+import {PsnFetchResponse} from "../../core/models/dto/response/psn-fetch-response";
 import {catchError, EMPTY, switchMap, tap} from "rxjs";
 
 @Injectable({

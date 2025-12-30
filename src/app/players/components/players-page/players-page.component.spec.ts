@@ -1,10 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PlayersPageComponent} from './players-page.component';
-import {PlayerListStore} from '../../core/store/player-list-store';
-import {NavigatorService} from "../../core/services/navigator.service";
-import {AddPlayerStore} from "../../core/store/players/add-player-store.service";
-import {PlayerCardComponent} from "../../components/player-card/player-card.component";
-import {AddPlayerFormComponent} from "../../components/players/add-player-form/add-player-form.component";
+import {PlayerListStore} from '../../stores/player-list-store';
+import {NavigatorService} from "../../../core/services/navigator.service";
+import {AddPlayerStore} from "../../stores/add-player-store.service";
+import {PlayerCardComponent} from "../player-card/player-card.component";
+import {AddPlayerFormComponent} from "../add-player-form/add-player-form.component";
 
 describe('PlayersPageComponent', () => {
     let component: PlayersPageComponent;
@@ -19,7 +19,7 @@ describe('PlayersPageComponent', () => {
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerGamePage']);
-        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'total', 'playerSummaries', 'hasMorePlayers', 'loadMore', 'isLoading', 'isError', 'isPartiallyLoaded']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'loadMore', 'playerSummaries', 'total', 'status']);
         addPlayerStoreSpy = jasmine.createSpyObj('AddPlayerStore', ['addPlayer', 'status']);
 
         playerListStoreSpy.playerSummaries.and.returnValue([]);

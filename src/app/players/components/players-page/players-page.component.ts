@@ -1,18 +1,16 @@
 import {Component, computed} from '@angular/core';
-import {PlayerListStore} from '../../core/store/player-list-store';
-import {PlayerCardComponent} from '../../components/player-card/player-card.component';
+import {PlayerListStore} from '../../stores/player-list-store';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NavigatorService} from "../../core/services/navigator.service";
-import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
-import {AddPlayerFormComponent} from "../../components/players/add-player-form/add-player-form.component";
-import {AddPlayerStore} from "../../core/store/players/add-player-store.service";
+import {NavigatorService} from "../../../core/services/navigator.service";
+import {AddPlayerFormComponent} from "../add-player-form/add-player-form.component";
+import {AddPlayerStore} from "../../stores/add-player-store.service";
+import {PlayerListComponent} from "../player-list/player-list.component";
 
 @Component({
     imports: [
-        PlayerCardComponent,
         MatProgressSpinnerModule,
-        ErrorMessageComponent,
         AddPlayerFormComponent,
+        PlayerListComponent,
     ],
     templateUrl: './players-page.component.html',
     styleUrl: './players-page.component.scss',
@@ -26,11 +24,9 @@ export class PlayersPageComponent {
     ) {
     }
 
-    readonly playerSummaries = computed(() => this._playerListStore.playerSummaries());
-    readonly nbOfPlayers = computed(() => this._playerListStore.total());
-    readonly isLoadingPlayers = computed(() => this._playerListStore.isLoading());
-    readonly hasFailedLoadingPlayers = computed(() => this._playerListStore.isError());
-    readonly hasMorePlayersToLoad = computed(() => this._playerListStore.isPartiallyLoaded());
+    readonly players = computed(() => this._playerListStore.playerSummaries());
+    readonly totalPlayers = computed(() => this._playerListStore.total());
+    readonly playerListStatus = computed(() => this._playerListStore.status());
     readonly addPlayerStatus = computed(() => this._addPlayerStore.status());
 
     ngOnInit(): void {

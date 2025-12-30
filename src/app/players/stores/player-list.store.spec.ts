@@ -1,12 +1,13 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {PlayerListStore} from './player-list-store';
-import {PlayerService} from '../services/http/player.service';
+import {PlayerService} from '../../core/services/http/player.service';
 import {of} from 'rxjs';
-import {Player} from '../models/dto/player';
-import {SearchResult} from '../models/dto/search-result';
-import {TrophyCountPerType} from '../models/dto/trophy-count-per-type';
-import {PlayerSummary} from '../models/dto/player-summary';
+import {Player} from '../../core/models/dto/player';
+import {SearchResult} from '../../core/models/dto/search-result';
+import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
+import {PlayerSummary} from '../../core/models/dto/player-summary';
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('PlayerListStore', () => {
     let store: PlayerListStore;
@@ -38,12 +39,17 @@ describe('PlayerListStore', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.playerSummaries()).toEqual([]);
+        expect(store.total()).toEqual(0);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should reset state when reset is called', fakeAsync(() => {
         store.reset();
 
         expect(store.playerSummaries()).toEqual([]);
+        expect(store.total()).toEqual(0);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     }));
 
     it('should update player list when search succeeds', fakeAsync(() => {
@@ -54,7 +60,7 @@ describe('PlayerListStore', () => {
 
         expect(playerServiceSpy.search).toHaveBeenCalled();
         expect(store.playerSummaries()).toEqual([mockPlayerSummary]);
+        expect(store.total()).toEqual(10);
+        expect(store.status()).toEqual(LoadingStatus.PARTIALLY_LOADED);
     }));
-
-
 });

@@ -1,0 +1,13 @@
+<div class="players-page container container-fluid">
+    <app-add-player-form [status]="addPlayerStatus()"
+                         (refreshPlayers)="retrievePlayers()"
+                         (addPlayer)="addPlayer($event)"/>
+
+    <app-player-list [status]="playerListStatus()"
+                     [players]="players()"
+                     [total]="totalPlayers()"
+                     (retrievePlayers)="retrievePlayers()"
+                     (loadMorePlayers)="loadMorePlayers()"
+                     (clickOnPlayer)="navigateToProfilePage($event)"
+                     (clickOnGame)="navigateToPlayerGamePage($event.gameId, $event.playerId)"/>
+</div>

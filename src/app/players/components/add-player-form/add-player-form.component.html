@@ -3,7 +3,8 @@
     <div class="pseudo-input">
         <mat-form-field class="form-field">
             <mat-label>Profile Name</mat-label>
-            <input matInput type="text" [(ngModel)]="inputValue" (keydown.enter)="validate()">
+            <input [disabled]="isLoading()" matInput type="text" [(ngModel)]="inputValue"
+                   (keydown.enter)="validate()">
             @if (inputValue) {
                 <button matSuffix matIconButton aria-label="Clear" (click)="inputValue=''">
                     <mat-icon>close</mat-icon>
@@ -18,11 +19,11 @@
         <mat-spinner class="loading-spinner"/>
         <span class="loading-message">Adding user... this step may take a minute.</span>
     } @else if (isAlreadyInDatabase()) {
-        <app-error-message [errorMessage]="'Player is already registered in TrophyQuest'"/>
+        <app-error-message [errorMessage]="inputValue + ' is already registered in TrophyQuest'"/>
     } @else if (hasFailedAddPlayer()) {
-        <app-error-message [errorMessage]="'An error occured when adding player in Trophyquest'"/>
+        <app-error-message [errorMessage]="'An error occurred when adding player ' + inputValue +' in Trophyquest'"/>
     } @else if (hasSucceededAddPlayer()) {
-        <app-success-message [message]="'Player has been added to TrophyQuest!'" [hasButton]="true"
+        <app-success-message [message]="inputValue + ' has been added to TrophyQuest!'" [hasButton]="true"
                              (onClick)="refreshPlayers.emit()"/>
     }
 </div>

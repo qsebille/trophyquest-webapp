@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 
 import {AddPlayerStore} from './add-player-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {PsnService} from "../../services/http/psn.service";
+import {PlayerService} from "../../core/services/http/player.service";
+import {PsnService} from "../../core/services/http/psn.service";
 
 describe('AddPlayerStore', () => {
     let store: AddPlayerStore;

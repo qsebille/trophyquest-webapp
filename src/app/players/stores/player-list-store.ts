@@ -1,7 +1,7 @@
-import {computed, Injectable, Signal, signal} from '@angular/core';
-import {PlayerService} from '../services/http/player.service';
-import {LoadingStatus} from '../models/loading-status.enum';
-import {PlayerSummary} from '../models/dto/player-summary';
+import {computed, Injectable, signal} from '@angular/core';
+import {PlayerService} from '../../core/services/http/player.service';
+import {LoadingStatus} from '../../core/models/loading-status.enum';
+import {PlayerSummary} from '../../core/models/dto/player-summary';
 
 @Injectable({
     providedIn: 'root',
@@ -14,11 +14,9 @@ export class PlayerListStore {
     private _total = signal<number>(0);
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
-    readonly playerSummaries: Signal<PlayerSummary[]> = computed(() => this._results());
-    readonly total: Signal<number> = computed(() => this._total());
-    readonly isLoading: Signal<boolean> = computed(() => this._status() === LoadingStatus.LOADING);
-    readonly isError: Signal<boolean> = computed(() => this._status() === LoadingStatus.ERROR);
-    readonly isPartiallyLoaded: Signal<boolean> = computed(() => this._status() === LoadingStatus.PARTIALLY_LOADED);
+    readonly playerSummaries = computed(() => this._results());
+    readonly total = computed(() => this._total());
+    readonly status = computed(() => this._status());
 
     constructor(private readonly _playerService: PlayerService) {
     }

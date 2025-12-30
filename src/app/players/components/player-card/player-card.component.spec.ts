@@ -1,9 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PlayerCardComponent} from './player-card.component';
-import {PlayerSummary} from '../../core/models/dto/player-summary';
-import {Player} from '../../core/models/dto/player';
-import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
+import {PlayerSummary} from '../../../core/models/dto/player-summary';
+import {Player} from '../../../core/models/dto/player';
+import {TrophyCountPerType} from '../../../core/models/dto/trophy-count-per-type';
 
 describe('PlayerCardComponent', () => {
     let component: PlayerCardComponent;
