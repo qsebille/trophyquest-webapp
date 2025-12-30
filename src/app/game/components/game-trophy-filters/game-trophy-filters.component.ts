@@ -2,6 +2,7 @@ import {Component, input, output} from '@angular/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
+import {TrophyFilters} from "../../../core/models/filters/trophy-filters";
 
 @Component({
     selector: 'tq-trophy-filters',
@@ -14,7 +15,10 @@ import {FormsModule} from '@angular/forms';
     styleUrl: './game-trophy-filters.component.scss',
 })
 export class GameTrophyFiltersComponent {
-    readonly filter = input<'all' | 'earned' | 'notEarned'>('all');
+    readonly filters = input<TrophyFilters>({
+        showHidden: false,
+        earned: 'all',
+    });
     readonly showEarnedTrophyFilter = input<boolean>(true);
 
     readonly filterChange = output<'all' | 'earned' | 'notEarned'>();

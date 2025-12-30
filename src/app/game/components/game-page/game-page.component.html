@@ -21,7 +21,7 @@
             <button class="btn" (click)="retrieveTrophies()">Try again</button>
         </div>
     } @else if (hasLoadedTrophies()) {
-        <tq-trophy-filters [filter]="trophyFilters().earned"
+        <tq-trophy-filters [filters]="trophyFilters()"
                            [showEarnedTrophyFilter]="hasPlayerData()"
                            (filterChange)="toggleEarnedFilter($event)"
                            (showHiddenTrophyChange)="toggleShowHiddenTrophies($event)"
