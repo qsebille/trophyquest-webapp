@@ -1,7 +1,7 @@
 import {Component, computed, input} from '@angular/core';
 
 @Component({
-    selector: 'app-platform-label',
+    selector: 'tq-platform-label',
     imports: [],
     templateUrl: './platform-label.component.html',
     styleUrl: './platform-label.component.scss',

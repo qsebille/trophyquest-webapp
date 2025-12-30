@@ -4,7 +4,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-    selector: 'app-trophy-filters',
+    selector: 'tq-trophy-filters',
     imports: [
         MatSlideToggleModule,
         MatRadioModule,

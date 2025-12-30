@@ -1,20 +1,20 @@
 @if (player()) {
-    <app-trophyquest-block class="profile-summary">
-        <ng-template appBlockHeader>
+    <tq-trophyquest-block class="profile-summary">
+        <ng-template tqBlockHeader>
             <div class="summary-header">
                 <img [height]="100" [width]="100" alt="" class="avatar-image" ngSrc="{{player().avatarUrl}}"/>
                 <div class="player-pseudo">{{ player().pseudo }}</div>
             </div>
         </ng-template>
-        <ng-template appBlockContent>
+        <ng-template tqBlockContent>
             <div class="summary-content">
                 <div class="counts">
                     <div class="summary-count"><b>{{ totalGamesPlayed() | number }}</b> played games</div>
                     <div class="summary-count"><b>{{ totalEarnedTrophies() | number }}</b> earned trophies</div>
                 </div>
-                <app-trophy-count-displayer [iconSizePx]="32" [labelOrientation]="'vertical'" [textSizePx]="14"
-                                            [trophyCount]="trophyCount()" class="trophy-count"/>
+                <tq-trophy-count-displayer [iconSizePx]="32" [labelOrientation]="'vertical'" [textSizePx]="14"
+                                           [trophyCount]="trophyCount()" class="trophy-count"/>
             </div>
         </ng-template>
-    </app-trophyquest-block>
+    </tq-trophyquest-block>
 }

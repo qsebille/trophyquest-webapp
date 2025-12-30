@@ -13,7 +13,7 @@
         </div>
         <div class="platform-and-title">
             <a (click)="clickOnTitle.emit()" class="profile-game-title tq-link">{{ game().title }}</a>
-            <app-platform-label [platform]="game().platform" class="platform"/>
+            <tq-platform-label [platform]="game().platform" class="platform"/>
         </div>
     </div>
     <div class="game-block-end">

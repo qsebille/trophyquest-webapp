@@ -3,7 +3,7 @@ import {Player} from "../../../core/models/dto/player";
 import {DecimalPipe, NgOptimizedImage} from "@angular/common";
 
 @Component({
-    selector: 'app-home-player-card',
+    selector: 'tq-home-player-card',
     imports: [
         NgOptimizedImage,
         DecimalPipe

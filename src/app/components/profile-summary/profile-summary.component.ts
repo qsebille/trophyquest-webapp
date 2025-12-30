@@ -4,20 +4,19 @@ import {TrophyCountDisplayerComponent} from '../trophy-count-displayer/trophy-co
 import {DecimalPipe, NgOptimizedImage} from '@angular/common';
 import {Player} from '../../core/models/dto/player';
 import {TrophyCountPerType} from '../../core/models/dto/trophy-count-per-type';
-import {TrophyquestBlockComponent} from "../trophyquest-block/trophyquest-block.component";
+import {TrophyQuestBlockComponent} from "../trophyquest-block/trophy-quest-block.component";
 import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
 
 @Component({
-    selector: 'app-profile-summary',
+    selector: 'tq-profile-summary',
     imports: [
         MatCardModule,
         TrophyCountDisplayerComponent,
         NgOptimizedImage,
         DecimalPipe,
-        TrophyquestBlockComponent,
+        TrophyQuestBlockComponent,
         TrophyQuestBlockContentTemplate,
         TrophyQuestBlockHeaderTemplate,
-
     ],
     templateUrl: './profile-summary.component.html',
     styleUrl: './profile-summary.component.scss',

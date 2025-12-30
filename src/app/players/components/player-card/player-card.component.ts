@@ -7,7 +7,7 @@ import {PlayerSummary} from '../../../core/models/dto/player-summary';
 import {PlatformLabelComponent} from "../../../components/utils/platform-label/platform-label.component";
 
 @Component({
-    selector: 'app-player-card',
+    selector: 'tq-player-card',
     imports: [
         NgOptimizedImage,
         TrophyCountDisplayerComponent,

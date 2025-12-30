@@ -4,17 +4,17 @@ import {HomeGameCardComponent} from "../home-game-card/home-game-card.component"
 import {PopularGame} from "../../../core/models/dto/popular-game";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {TrophyQuestBlockComponent} from "../../../components/trophyquest-block/trophy-quest-block.component";
 import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../../templates/block.template";
-import {TrophyquestBlockComponent} from "../../../components/trophyquest-block/trophyquest-block.component";
 
 @Component({
-    selector: 'app-home-game-list',
+    selector: 'tq-home-game-list',
     imports: [
         MatProgressSpinnerModule,
         ErrorMessageComponent,
         HomeGameCardComponent,
+        TrophyQuestBlockComponent,
         TrophyQuestBlockHeaderTemplate,
-        TrophyquestBlockComponent,
         TrophyQuestBlockContentTemplate
     ],
     templateUrl: './home-game-list.component.html',

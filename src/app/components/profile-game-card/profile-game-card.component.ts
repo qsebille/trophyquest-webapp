@@ -6,7 +6,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 
 @Component({
-    selector: 'app-profile-game-card',
+    selector: 'tq-profile-game-card',
     imports: [
         DecimalPipe,
         MatProgressSpinnerModule,

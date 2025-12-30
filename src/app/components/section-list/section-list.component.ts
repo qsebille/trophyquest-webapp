@@ -3,7 +3,7 @@ import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../templ
 import {NgTemplateOutlet} from "@angular/common";
 
 @Component({
-    selector: 'app-section-list',
+    selector: 'tq-section-list',
     imports: [
         NgTemplateOutlet
     ],

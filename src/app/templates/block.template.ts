@@ -1,12 +1,12 @@
 import {Directive, TemplateRef} from '@angular/core';
 
-@Directive({selector: 'ng-template[appBlockHeader]'})
+@Directive({selector: 'ng-template[tqBlockHeader]'})
 export class TrophyQuestBlockHeaderTemplate {
     constructor(public tpl: TemplateRef<any>) {
     }
 }
 
-@Directive({selector: 'ng-template[appBlockContent]'})
+@Directive({selector: 'ng-template[tqBlockContent]'})
 export class TrophyQuestBlockContentTemplate {
     constructor(public tpl: TemplateRef<any>) {
     }

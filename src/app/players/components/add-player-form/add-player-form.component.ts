@@ -10,7 +10,7 @@ import {ErrorMessageComponent} from "../../../components/utils/error-message/err
 import {SuccessMessageComponent} from "../../../components/utils/success-message/success-message.component";
 
 @Component({
-    selector: 'app-add-player-form',
+    selector: 'tq-add-player-form',
     imports: [
         MatFormFieldModule,
         MatInputModule,

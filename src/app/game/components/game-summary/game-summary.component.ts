@@ -7,7 +7,7 @@ import {TrophyCountPerType} from "../../../core/models/dto/trophy-count-per-type
 import {PlatformLabelComponent} from "../../../components/utils/platform-label/platform-label.component";
 
 @Component({
-    selector: 'app-game-summary',
+    selector: 'tq-game-summary',
     imports: [
         TrophyCountDisplayerComponent,
         PlatformLabelComponent

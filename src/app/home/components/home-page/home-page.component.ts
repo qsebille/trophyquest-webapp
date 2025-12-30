@@ -10,7 +10,7 @@ import {HomePlayerListComponent} from "../home-player-list/home-player-list.comp
 
 
 @Component({
-    selector: 'app-home-page',
+    selector: 'tq-home-page',
     imports: [
         MatProgressSpinnerModule,
         HomeSummaryComponent,

@@ -4,17 +4,17 @@ import {MatIconModule} from "@angular/material/icon";
 import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {TrophyquestBlockComponent} from "../../../components/trophyquest-block/trophyquest-block.component";
+import {TrophyQuestBlockComponent} from "../../../components/trophyquest-block/trophy-quest-block.component";
 import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../../templates/block.template";
 
 @Component({
-    selector: 'app-home-summary',
+    selector: 'tq-home-summary',
     imports: [
         DecimalPipe,
         MatIconModule,
         ErrorMessageComponent,
         MatProgressSpinnerModule,
-        TrophyquestBlockComponent,
+        TrophyQuestBlockComponent,
         TrophyQuestBlockHeaderTemplate,
         TrophyQuestBlockContentTemplate,
     ],

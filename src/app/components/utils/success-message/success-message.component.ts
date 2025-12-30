@@ -3,7 +3,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 
 @Component({
-    selector: 'app-success-message',
+    selector: 'tq-success-message',
     imports: [
         MatIconModule,
         MatButton

@@ -3,14 +3,14 @@ import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from ".
 import {NgTemplateOutlet} from "@angular/common";
 
 @Component({
-    selector: 'app-trophyquest-block',
+    selector: 'tq-trophyquest-block',
     imports: [
         NgTemplateOutlet
     ],
-    templateUrl: './trophyquest-block.component.html',
-    styleUrl: './trophyquest-block.component.scss',
+    templateUrl: './trophy-quest-block.component.html',
+    styleUrl: './trophy-quest-block.component.scss',
 })
-export class TrophyquestBlockComponent {
+export class TrophyQuestBlockComponent {
     @ContentChild(TrophyQuestBlockHeaderTemplate) headerTemplate?: TrophyQuestBlockHeaderTemplate;
     @ContentChild(TrophyQuestBlockContentTemplate) contentTemplate?: TrophyQuestBlockContentTemplate;
 }

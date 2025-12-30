@@ -11,10 +11,10 @@ import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.se
 import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
 import {ErrorMessageComponent} from "../../components/utils/error-message/error-message.component";
 import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../templates/block.template";
-import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trophyquest-block.component";
+import {TrophyQuestBlockComponent} from "../../components/trophyquest-block/trophy-quest-block.component";
 
 @Component({
-    selector: 'app-profile-page',
+    selector: 'tq-profile-page',
     imports: [
         ProfileSummaryComponent,
         ProfileTrophyCardComponent,
@@ -23,7 +23,7 @@ import {TrophyquestBlockComponent} from "../../components/trophyquest-block/trop
         ErrorMessageComponent,
         TrophyQuestBlockContentTemplate,
         TrophyQuestBlockHeaderTemplate,
-        TrophyquestBlockComponent,
+        TrophyQuestBlockComponent,
     ],
     templateUrl: './profile-page.component.html',
     styleUrl: './profile-page.component.scss',

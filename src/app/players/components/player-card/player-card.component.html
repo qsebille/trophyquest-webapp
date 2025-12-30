@@ -11,12 +11,12 @@
         <span class="played-game-label">Last game played</span>
         <div class="last-game-title-platform">
             <a (click)="clickOnGame.emit()" class="game-title tq-link">{{ lastGamePlayedTitle() }}</a>
-            <app-platform-label [platform]="lastPlayedGamePlatform()"/>
+            <tq-platform-label [platform]="lastPlayedGamePlatform()"/>
         </div>
     </div>
-    <app-trophy-count-displayer [labelOrientation]="'vertical'"
-                                [textSizePx]="12"
-                                [iconSizePx]="16"
-                                [trophyCount]="trophyCount()"
-                                class="trophy-count"/>
+    <tq-trophy-count-displayer [labelOrientation]="'vertical'"
+                               [textSizePx]="12"
+                               [iconSizePx]="16"
+                               [trophyCount]="trophyCount()"
+                               class="trophy-count"/>
 </div>

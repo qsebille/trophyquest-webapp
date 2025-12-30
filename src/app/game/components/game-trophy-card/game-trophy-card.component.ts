@@ -5,7 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 
 @Component({
-    selector: 'app-game-trophy-card',
+    selector: 'tq-game-trophy-card',
     imports: [
         MatCardModule,
         MatIconModule,

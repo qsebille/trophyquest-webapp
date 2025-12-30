@@ -1,7 +1,7 @@
 import {Component, computed, input, output} from '@angular/core';
 import {RecentPlayerResponse} from "../../../core/models/dto/recent-player-response";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
-import {TrophyquestBlockComponent} from "../../../components/trophyquest-block/trophyquest-block.component";
+import {TrophyQuestBlockComponent} from "../../../components/trophyquest-block/trophy-quest-block.component";
 import {TrophyQuestBlockContentTemplate, TrophyQuestBlockHeaderTemplate} from "../../../templates/block.template";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
@@ -11,9 +11,9 @@ import {HomeTrophyCardComponent} from "../home-trophy-card/home-trophy-card.comp
 import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../../templates/section-list.template";
 
 @Component({
-    selector: 'app-home-player-list',
+    selector: 'tq-home-player-list',
     imports: [
-        TrophyquestBlockComponent,
+        TrophyQuestBlockComponent,
         TrophyQuestBlockHeaderTemplate,
         TrophyQuestBlockContentTemplate,
         MatProgressSpinnerModule,

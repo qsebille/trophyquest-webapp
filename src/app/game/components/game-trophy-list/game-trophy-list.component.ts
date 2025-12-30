@@ -5,7 +5,7 @@ import {GameGroupTrophies} from "../../../core/models/dto/game-group-trophies";
 import {TrophyFilters} from "../../../core/models/filters/trophy-filters";
 
 @Component({
-    selector: 'app-game-trophy-list',
+    selector: 'tq-game-trophy-list',
     imports: [
         GameTrophyCardComponent
     ],

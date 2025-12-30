@@ -8,7 +8,7 @@
                 <button class="btn" (click)="retrieveSummary()">Try again</button>
             </div>
         } @else if (hasLoadedSummary()) {
-            <app-game-summary [gameSummary]="gameSummary()" class="game-summary"/>
+            <tq-game-summary [gameSummary]="gameSummary()" class="game-summary"/>
         }
     </div>
 
@@ -21,13 +21,13 @@
             <button class="btn" (click)="retrieveTrophies()">Try again</button>
         </div>
     } @else if (hasLoadedTrophies()) {
-        <app-trophy-filters [filter]="trophyFilters().earned"
-                            [showEarnedTrophyFilter]="hasPlayerData()"
-                            (filterChange)="toggleEarnedFilter($event)"
-                            (showHiddenTrophyChange)="toggleShowHiddenTrophies($event)"
-                            class="trophy-filters"/>
+        <tq-trophy-filters [filter]="trophyFilters().earned"
+                           [showEarnedTrophyFilter]="hasPlayerData()"
+                           (filterChange)="toggleEarnedFilter($event)"
+                           (showHiddenTrophyChange)="toggleShowHiddenTrophies($event)"
+                           class="trophy-filters"/>
 
-        <app-game-trophy-list [trophies]="trophies()" [trophyFilters]="trophyFilters()"
-                              [style.animationDelay.ms]="200" animate.enter="block-enter"/>
+        <tq-game-trophy-list [trophies]="trophies()" [trophyFilters]="trophyFilters()"
+                             [style.animationDelay.ms]="200" animate.enter="block-enter"/>
     }
 </div>

@@ -4,8 +4,8 @@
     </div>
 } @else if (isError()) {
     <div class="failed-retrieve-players-block">
-        <app-error-message (retry)="retrievePlayers.emit()"
-                           [hasRetryButton]="true" [errorMessage]="'Failed to load players'"/>
+        <tq-error-message (retry)="retrievePlayers.emit()"
+                          [hasRetryButton]="true" [errorMessage]="'Failed to load players'"/>
     </div>
 } @else {
     <div class="player-list">
@@ -16,11 +16,11 @@
             @if (i !== 0) {
                 <hr class="separator"/>
             }
-            <app-player-card
+            <tq-player-card
                     (clickOnGame)="clickOnGame.emit({gameId: playerSummary.lastPlayedGameId, playerId: playerSummary.player.id})"
                     (clickOnPseudo)="clickOnPlayer.emit(playerSummary.player.id)"
                     [playerSummary]="playerSummary"
-                    class="player-card"></app-player-card>
+                    class="player-card"/>
         }
 
         @if (hasMorePlayersToLoad()) {

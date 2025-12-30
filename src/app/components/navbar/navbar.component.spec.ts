@@ -9,7 +9,7 @@ describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
 
-    @Component({selector: 'app-dummy-players', template: ''})
+    @Component({selector: 'tq-dummy-players', template: ''})
     class DummyPlayersComponent {
     }
 

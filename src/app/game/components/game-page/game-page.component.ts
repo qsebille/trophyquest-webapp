@@ -10,7 +10,7 @@ import {GameTrophyListComponent} from "../game-trophy-list/game-trophy-list.comp
 import {TrophyFilters} from "../../../core/models/filters/trophy-filters";
 
 @Component({
-    selector: 'app-game-page',
+    selector: 'tq-game-page',
     imports: [
         MatProgressSpinnerModule,
         TrophyFiltersComponent,

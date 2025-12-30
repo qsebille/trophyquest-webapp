@@ -1,31 +1,31 @@
 <div class="profile-page container container-fluid">
     @if (hasFailedLoading()) {
-        <app-error-message class="error-message" [hasRetryButton]="true" (retry)="loadProfileData()"
-                           [errorMessage]="'Failed to load profile information'"/>
+        <tq-error-message class="error-message" [hasRetryButton]="true" (retry)="loadProfileData()"
+                          [errorMessage]="'Failed to load profile information'"/>
     } @else {
         @if (isLoadingSummary()) {
             <mat-spinner/>
         } @else {
-            <app-profile-summary class="summary" [player]="player()" [style.animationDelay.ms]="100"
-                                 [totalEarnedTrophies]="totalEarnedTrophies()"
-                                 [totalGamesPlayed]="totalPlayedGames()"
-                                 [trophyCount]="trophyCountPerType()"
-                                 animate.enter="block-enter"/>
+            <tq-profile-summary class="summary" [player]="player()" [style.animationDelay.ms]="100"
+                                [totalEarnedTrophies]="totalEarnedTrophies()"
+                                [totalGamesPlayed]="totalPlayedGames()"
+                                [trophyCount]="trophyCountPerType()"
+                                animate.enter="block-enter"/>
         }
 
         <div class="profile-game-trophies-wrapper" [style.animationDelay.ms]="200" animate.enter="block-enter">
-            <app-trophyquest-block class="profile-game-list">
-                <ng-template appBlockHeader>
+            <tq-trophyquest-block class="profile-game-list">
+                <ng-template tqBlockHeader>
                     <span class="section-title">Last played games</span>
                 </ng-template>
-                <ng-template appBlockContent>
+                <ng-template tqBlockContent>
                     @for (game of games(); track game.id; let i = $index) {
                         @if (i !== 0) {
                             <hr class="separator"/>
                         }
-                        <app-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
-                                               [game]="game"
-                                               class="profile-game-card"/>
+                        <tq-profile-game-card (clickOnTitle)="navigateToPlayerGamePage(game.id)"
+                                              [game]="game"
+                                              class="profile-game-card"/>
                     }
                     @if (isLoadingGames()) {
                         <mat-spinner/>
@@ -34,20 +34,20 @@
                         <a (click)="loadMoreGames()" class="load-more-button">Load more games...</a>
                     }
                 </ng-template>
-            </app-trophyquest-block>
+            </tq-trophyquest-block>
 
-            <app-trophyquest-block class="profile-trophies-list">
-                <ng-template appBlockHeader>
+            <tq-trophyquest-block class="profile-trophies-list">
+                <ng-template tqBlockHeader>
                     <span class="section-title">Last earned trophies</span>
                 </ng-template>
-                <ng-template appBlockContent>
+                <ng-template tqBlockContent>
                     @for (trophy of trophies(); track trophy.id; let i = $index) {
                         @if (i !== 0) {
                             <div class="separator-wrapper">
                                 <hr class="separator"/>
                             </div>
                         }
-                        <app-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
+                        <tq-profile-trophy-card [trophy]="trophy" class="profile-trophy-card"/>
                     }
                     @if (isLoadingTrophies()) {
                         <mat-spinner/>
@@ -56,7 +56,7 @@
                         <a (click)="loadMoreTrophies()" class="load-more-button">Load more trophies...</a>
                     }
                 </ng-template>
-            </app-trophyquest-block>
+            </tq-trophyquest-block>
         </div>
     }
 </div>

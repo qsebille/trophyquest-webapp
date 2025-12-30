@@ -1,12 +1,12 @@
-<app-trophyquest-block>
-    <ng-template appBlockHeader>
+<tq-trophyquest-block>
+    <ng-template tqBlockHeader>
         <span class="summary-title">TrophyQuest</span>
     </ng-template>
-    <ng-template appBlockContent>
+    <ng-template tqBlockContent>
         @if (isLoading()) {
             <mat-spinner/>
         } @else if (hasFailed()) {
-            <app-error-message [errorMessage]="'Failed to load summary'"/>
+            <tq-error-message [errorMessage]="'Failed to load summary'"/>
         } @else {
             <div class="summary-stats">
                 <div class="summary-item">
@@ -24,4 +24,4 @@
             </div>
         }
     </ng-template>
-</app-trophyquest-block>
+</tq-trophyquest-block>

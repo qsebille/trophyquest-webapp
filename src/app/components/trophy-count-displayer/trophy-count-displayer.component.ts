@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgOptimizedImage} from '@angular/common';
 
 @Component({
-    selector: 'app-trophy-count-displayer',
+    selector: 'tq-trophy-count-displayer',
     imports: [
         MatIconModule,
         NgOptimizedImage,

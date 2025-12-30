@@ -1,12 +1,12 @@
 import {Component, computed, input, output} from '@angular/core';
 import {ErrorMessageComponent} from "../../../components/utils/error-message/error-message.component";
-import {PlayerCardComponent} from "../player-card/player-card.component";
 import {PlayerSummary} from "../../../core/models/dto/player-summary";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {PlayerCardComponent} from "../player-card/player-card.component";
 
 @Component({
-    selector: 'app-player-list',
+    selector: 'tq-player-list',
     imports: [
         ErrorMessageComponent,
         MatProgressSpinnerModule,

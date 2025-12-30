@@ -3,7 +3,7 @@ import {ObtainedTrophy} from '../../../core/models/dto/obtained-trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 
 @Component({
-    selector: 'app-home-trophy-card',
+    selector: 'tq-home-trophy-card',
     imports: [
         NgOptimizedImage,
         DatePipe

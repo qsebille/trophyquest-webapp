@@ -6,11 +6,11 @@
         <div class="summary-content">
             <div class="title-and-platform">
                 <span class="game-title">{{ gameSummary()?.title }}</span>
-                <app-platform-label [platform]="gameSummary()?.platform ?? 'PS4'" class="game-platform"/>
+                <tq-platform-label [platform]="gameSummary()?.platform ?? 'PS4'" class="game-platform"/>
             </div>
             <div class="trophy-count-wrapper">
-                <app-trophy-count-displayer [iconSizePx]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
-                                            [trophyCount]="trophyCount"/>
+                <tq-trophy-count-displayer [iconSizePx]="50" [labelOrientation]="'vertical'" [textSizePx]="18"
+                                           [trophyCount]="trophyCount"/>
             </div>
         </div>
     </div>

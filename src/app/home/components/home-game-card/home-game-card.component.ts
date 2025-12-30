@@ -3,7 +3,7 @@ import {DecimalPipe} from '@angular/common';
 import {PopularGame} from "../../../core/models/dto/popular-game";
 
 @Component({
-    selector: 'app-home-game-card',
+    selector: 'tq-home-game-card',
     imports: [
         DecimalPipe
     ],
