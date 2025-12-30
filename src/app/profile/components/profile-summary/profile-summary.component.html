@@ -1,0 +1,24 @@
+@if (isLoading()) {
+    <div class="spinner-container">
+        <mat-spinner/>
+    </div>
+} @else {
+    <tq-block class="profile-summary">
+        <ng-template tqBlockHeader>
+            <div class="summary-header">
+                <img [height]="100" [width]="100" alt="" class="avatar-image" ngSrc="{{player().avatarUrl}}"/>
+                <div class="player-pseudo">{{ player().pseudo }}</div>
+            </div>
+        </ng-template>
+        <ng-template tqBlockContent>
+            <div class="summary-content">
+                <div class="counts">
+                    <div class="summary-count"><b>{{ totalGamesPlayed() | number }}</b> played games</div>
+                    <div class="summary-count"><b>{{ totalEarnedTrophies() | number }}</b> earned trophies</div>
+                </div>
+                <tq-trophy-count-displayer [iconSizePx]="32" [labelOrientation]="'vertical'" [textSizePx]="14"
+                                           [trophyCount]="trophyCount()" class="trophy-count"/>
+            </div>
+        </ng-template>
+    </tq-block>
+}

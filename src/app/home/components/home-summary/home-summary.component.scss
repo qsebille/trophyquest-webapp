@@ -1,0 +1,30 @@
+@use "styles/colors" as *;
+
+.summary-title {
+  color: $tq-blue-medium;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat {
+  font-size: 24px;
+  color: $tq-blue-medium;
+}
+
+.label {
+  font-size: 18px;
+  color: $tq-blue-medium;
+}
+

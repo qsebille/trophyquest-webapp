@@ -1,0 +1,32 @@
+@if (isLoading()) {
+    <div class="spinner-container">
+        <mat-spinner class="progress-spinner"/>
+    </div>
+} @else if (isError()) {
+    <div class="failed-retrieve-players-block">
+        <tq-error-message (retry)="retrievePlayers.emit()"
+                          [hasRetryButton]="true" [errorMessage]="'Failed to load players'"/>
+    </div>
+} @else {
+    <div class="player-list">
+        <div class="total">
+            Total: {{ total() }} players
+        </div>
+        @for (playerSummary of players(); track playerSummary.player.id; let i = $index) {
+            @if (i !== 0) {
+                <hr class="separator"/>
+            }
+            <tq-player-card
+                    (clickOnGame)="clickOnGame.emit({gameId: playerSummary.lastPlayedGameId, playerId: playerSummary.player.id})"
+                    (clickOnPseudo)="clickOnPlayer.emit(playerSummary.player.id)"
+                    [playerSummary]="playerSummary"
+                    class="player-card"/>
+        }
+
+        @if (hasMorePlayersToLoad()) {
+            <div (click)="loadMorePlayers.emit()" class="load-more-button">
+                Load more players...
+            </div>
+        }
+    </div>
+}

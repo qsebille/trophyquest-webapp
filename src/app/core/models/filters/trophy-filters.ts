@@ -1,3 +1,4 @@
 export interface TrophyFilters {
-  earned: 'all' | 'earned' | 'notEarned';
+    showHidden: boolean;
+    earned: 'all' | 'earned' | 'notEarned';
 }

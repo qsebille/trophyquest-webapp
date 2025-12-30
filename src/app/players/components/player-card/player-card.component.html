@@ -1,0 +1,22 @@
+<div class="player-card">
+    <div class="avatar-wrapper">
+        <img [height]="50" [width]="50" alt="" class="avatar" ngSrc="{{ player().avatarUrl }}"/>
+    </div>
+    <a (click)="clickOnPseudo.emit()" class="pseudo tq-link">{{ player().pseudo }}</a>
+    <div class="played-games">
+        <b>{{ totalPlayedGames() }}</b>
+        <span>games</span>
+    </div>
+    <div class="last-played-game-wrapper">
+        <span class="played-game-label">Last game played</span>
+        <div class="last-game-title-platform">
+            <a (click)="clickOnGame.emit()" class="game-title tq-link">{{ lastGamePlayedTitle() }}</a>
+            <tq-platform-label [platform]="lastPlayedGamePlatform()"/>
+        </div>
+    </div>
+    <tq-trophy-count-displayer [labelOrientation]="'vertical'"
+                               [textSizePx]="12"
+                               [iconSizePx]="16"
+                               [trophyCount]="trophyCount()"
+                               class="trophy-count"/>
+</div>

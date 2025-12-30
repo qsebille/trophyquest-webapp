@@ -1,0 +1,21 @@
+@use "styles/colors" as *;
+
+
+.title {
+  color: $tq-blue-medium;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.no-popular-games {
+  color: $tq-blue-medium;
+}
+
+.home-game-card {
+  width: 100%;
+}
+
+.separator {
+  color: $tq-blue-medium;
+  margin: 2px;
+}

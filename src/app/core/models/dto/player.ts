@@ -4,4 +4,4 @@ export interface Player {
     avatarUrl: string;
 }
 
-export const EMPTY_PLAYER: Player = {id: '', pseudo: '', avatarUrl: ''};
+export const EMPTY_PLAYER: Player = {id: '', pseudo: '', avatarUrl: 'empty.png'};

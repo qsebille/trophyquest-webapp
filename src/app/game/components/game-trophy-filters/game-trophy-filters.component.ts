@@ -1,0 +1,37 @@
+import {Component, input, output} from '@angular/core';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatRadioModule} from '@angular/material/radio';
+import {FormsModule} from '@angular/forms';
+import {TrophyFilters} from "../../../core/models/filters/trophy-filters";
+
+@Component({
+    selector: 'tq-trophy-filters',
+    imports: [
+        MatSlideToggleModule,
+        MatRadioModule,
+        FormsModule,
+    ],
+    templateUrl: './game-trophy-filters.component.html',
+    styleUrl: './game-trophy-filters.component.scss',
+})
+export class GameTrophyFiltersComponent {
+    readonly filters = input<TrophyFilters>({
+        showHidden: false,
+        earned: 'all',
+    });
+    readonly showEarnedTrophyFilter = input<boolean>(true);
+
+    readonly filterChange = output<'all' | 'earned' | 'notEarned'>();
+    readonly showHiddenTrophyChange = output<boolean>();
+
+    private _showHiddenTrophies = false;
+
+    changeFilter(newFilter: 'all' | 'earned' | 'notEarned') {
+        this.filterChange.emit(newFilter);
+    }
+
+    hiddenFilterChanges() {
+        this._showHiddenTrophies = !this._showHiddenTrophies;
+        this.showHiddenTrophyChange.emit(this._showHiddenTrophies);
+    }
+}
