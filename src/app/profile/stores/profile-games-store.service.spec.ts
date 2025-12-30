@@ -1,10 +1,11 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {ProfileGamesStore} from './profile-games-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {PlayerGame} from "../../models/dto/player-game";
-import {SearchResult} from "../../models/dto/search-result";
+import {PlayerService} from "../../core/services/http/player.service";
+import {PlayerGame} from "../../core/models/dto/player-game";
+import {SearchResult} from "../../core/models/dto/search-result";
 import {of} from "rxjs";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('ProfileGamesStore', () => {
     let store: ProfileGamesStore;
@@ -35,6 +36,7 @@ describe('ProfileGamesStore', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should search for games', fakeAsync(() => {
@@ -45,8 +47,6 @@ describe('ProfileGamesStore', () => {
 
         expect(playerServiceSpy.searchGames).toHaveBeenCalledWith(mockPlayerId, 0, 20);
         expect(store.games()).toEqual(mockSearchResult.content);
-        expect(store.isError()).toBeFalse();
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isPartiallyLoaded()).toBeTrue();
+        expect(store.status()).toEqual(LoadingStatus.PARTIALLY_LOADED);
     }));
 });

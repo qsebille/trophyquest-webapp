@@ -1,22 +1,20 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {LoadingStatus} from "../../models/loading-status.enum";
-import {PlayerService} from "../../services/http/player.service";
-import {PlayerGame} from "../../models/dto/player-game";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
+import {PlayerService} from "../../core/services/http/player.service";
+import {PlayerGame} from "../../core/models/dto/player-game";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProfileGamesStore {
     private readonly _pageSize = 20;
+    private readonly _pageNumber = signal<number>(0);
 
-    private _pageNumber = signal<number>(0);
     private readonly _games = signal<PlayerGame[]>([]);
-    private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
-
     readonly games = computed(() => this._games());
-    readonly isLoading = computed(() => this._status() === LoadingStatus.LOADING);
-    readonly isError = computed(() => this._status() === LoadingStatus.ERROR);
-    readonly isPartiallyLoaded = computed(() => this._status() === LoadingStatus.PARTIALLY_LOADED);
+
+    private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
+    readonly status = computed(() => this._status());
 
     constructor(private readonly _playerService: PlayerService) {
     }
@@ -53,5 +51,4 @@ export class ProfileGamesStore {
         this._pageNumber.update(n => n + 1);
         this.searchGames(playerId);
     }
-
 }

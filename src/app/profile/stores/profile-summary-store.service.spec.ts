@@ -1,10 +1,11 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {ProfileSummaryStore} from './profile-summary-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {Player} from "../../models/dto/player";
+import {PlayerService} from "../../core/services/http/player.service";
+import {EMPTY_PLAYER, Player} from "../../core/models/dto/player";
 import {of} from "rxjs";
-import {TrophyCountPerType} from "../../models/dto/trophy-count-per-type";
+import {TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('ProfileSummaryStore', () => {
     let store: ProfileSummaryStore;
@@ -26,6 +27,8 @@ describe('ProfileSummaryStore', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.player()).toEqual(EMPTY_PLAYER);
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should load player summary when retrieve is called', fakeAsync(() => {
@@ -37,9 +40,8 @@ describe('ProfileSummaryStore', () => {
         flushMicrotasks();
 
         expect(store.player()).toEqual(mockPlayer);
-        expect(store.gameCount()).toEqual(mockGamesPlayed);
+        expect(store.totalGames()).toEqual(mockGamesPlayed);
         expect(store.trophyCountPerType()).toEqual(mockTrophyCount);
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isError()).toBeFalse();
+        expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 });

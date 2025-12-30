@@ -1,22 +1,20 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {Trophy} from "../../models/dto/trophy";
-import {LoadingStatus} from "../../models/loading-status.enum";
-import {PlayerService} from "../../services/http/player.service";
+import {Trophy} from "../../core/models/dto/trophy";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
+import {PlayerService} from "../../core/services/http/player.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProfileTrophiesStore {
     private readonly _pageSize = 20;
-
     private readonly _pageNumber = signal<number>(0);
-    private readonly _trophies = signal<Trophy[]>([]);
-    private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
+    private readonly _trophies = signal<Trophy[]>([]);
     readonly trophies = computed(() => this._trophies());
-    readonly isLoading = computed(() => this._status() === LoadingStatus.LOADING);
-    readonly isError = computed(() => this._status() === LoadingStatus.ERROR);
-    readonly isPartiallyLoaded = computed(() => this._status() === LoadingStatus.PARTIALLY_LOADED);
+
+    private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
+    readonly status = computed(() => this._status());
 
     constructor(private readonly _playerService: PlayerService) {
     }

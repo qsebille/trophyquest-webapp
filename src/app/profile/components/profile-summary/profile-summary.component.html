@@ -1,4 +1,8 @@
-@if (player()) {
+@if (isLoading()) {
+    <div class="spinner-container">
+        <mat-spinner/>
+    </div>
+} @else {
     <tq-block class="profile-summary">
         <ng-template tqBlockHeader>
             <div class="summary-header">

@@ -1,32 +1,33 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {EMPTY_PLAYER, Player} from "../../models/dto/player";
-import {EMPTY_TROPHY_COUNT_PER_TYPE, TrophyCountPerType} from "../../models/dto/trophy-count-per-type";
-import {LoadingStatus} from "../../models/loading-status.enum";
+import {EMPTY_PLAYER, Player} from "../../core/models/dto/player";
+import {EMPTY_TROPHY_COUNT_PER_TYPE, TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 import {forkJoin} from "rxjs";
-import {PlayerService} from "../../services/http/player.service";
+import {PlayerService} from "../../core/services/http/player.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProfileSummaryStore {
     private _player = signal<Player>(EMPTY_PLAYER);
-    private _gameCount = signal<number>(0);
-    private _trophyCount = signal<TrophyCountPerType>(EMPTY_TROPHY_COUNT_PER_TYPE);
-    private _status = signal<LoadingStatus>(LoadingStatus.NONE);
-
     readonly player = computed(() => this._player());
-    readonly gameCount = computed(() => this._gameCount());
-    readonly trophyCountPerType = computed(() => this._trophyCount());
-    readonly isLoading = computed(() => this._status() === LoadingStatus.LOADING);
-    readonly isError = computed(() => this._status() === LoadingStatus.ERROR);
+
+    private _totalGames = signal<number>(0);
+    readonly totalGames = computed(() => this._totalGames());
+
+    private _trophyCountPerType = signal<TrophyCountPerType>(EMPTY_TROPHY_COUNT_PER_TYPE);
+    readonly trophyCountPerType = computed(() => this._trophyCountPerType());
+
+    private _status = signal<LoadingStatus>(LoadingStatus.NONE);
+    readonly status = computed(() => this._status());
 
     constructor(private readonly _playerService: PlayerService) {
     }
 
     reset(): void {
         this._player.set(EMPTY_PLAYER);
-        this._gameCount.set(0);
-        this._trophyCount.set(EMPTY_TROPHY_COUNT_PER_TYPE);
+        this._totalGames.set(0);
+        this._trophyCountPerType.set(EMPTY_TROPHY_COUNT_PER_TYPE);
         this._status.set(LoadingStatus.NONE);
     }
 
@@ -45,8 +46,8 @@ export class ProfileSummaryStore {
         }).subscribe({
                 next: ({player, trophyCount, gameCount}) => {
                     this._player.set(player);
-                    this._gameCount.set(gameCount);
-                    this._trophyCount.set(trophyCount);
+                    this._totalGames.set(gameCount);
+                    this._trophyCountPerType.set(trophyCount);
                     this._status.set(LoadingStatus.FULLY_LOADED);
                 },
                 error: error => {

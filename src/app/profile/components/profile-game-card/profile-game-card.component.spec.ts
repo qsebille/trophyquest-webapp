@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ProfileGameCardComponent} from './profile-game-card.component';
-import {PlayerGame} from '../../core/models/dto/player-game';
+import {PlayerGame} from '../../../core/models/dto/player-game';
 
 describe('ProfileGameCardComponent', () => {
     let component: ProfileGameCardComponent;

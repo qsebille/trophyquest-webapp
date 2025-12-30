@@ -2,13 +2,14 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ProfilePageComponent} from './profile-page.component';
 import {ActivatedRoute} from '@angular/router';
-import {NavigatorService} from "../../core/services/navigator.service";
-import {ProfileSummaryComponent} from "../../components/profile-summary/profile-summary.component";
-import {ProfileTrophyCardComponent} from "../../components/profile-trophy-card/profile-trophy-card.component";
-import {ProfileSummaryStore} from "../../core/store/profile/profile-summary-store.service";
-import {ProfileGamesStore} from "../../core/store/profile/profile-games-store.service";
-import {ProfileTrophiesStore} from "../../core/store/profile/profile-trophies-store.service";
-import {EMPTY_TROPHY_COUNT_PER_TYPE} from "../../core/models/dto/trophy-count-per-type";
+import {NavigatorService} from "../../../core/services/navigator.service";
+import {ProfileSummaryComponent} from "../profile-summary/profile-summary.component";
+import {ProfileTrophyCardComponent} from "../profile-trophy-card/profile-trophy-card.component";
+import {ProfileSummaryStore} from "../../stores/profile-summary-store.service";
+import {ProfileGamesStore} from "../../stores/profile-games-store.service";
+import {ProfileTrophiesStore} from "../../stores/profile-trophies-store.service";
+import {EMPTY_TROPHY_COUNT_PER_TYPE} from "../../../core/models/dto/trophy-count-per-type";
+import {EMPTY_PLAYER} from "../../../core/models/dto/player";
 
 describe('ProfilePageComponent', () => {
     let component: ProfilePageComponent;
@@ -23,9 +24,9 @@ describe('ProfilePageComponent', () => {
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerGamePage']);
-        profileSummaryStoreSpy = jasmine.createSpyObj('ProfileSummaryStore', ['retrieve', 'reset', 'player', 'gameCount', 'trophyCountPerType', 'isLoading', 'isError']);
-        profileGamesStoreSpy = jasmine.createSpyObj('ProfileGamesStore', ['searchGames', 'reset', 'games', 'isLoading', 'isError', 'isPartiallyLoaded']);
-        profileTrophiesStoreSpy = jasmine.createSpyObj('ProfileTrophiesStore', ['searchTrophies', 'reset', 'trophies', 'isLoading', 'isError', 'isPartiallyLoaded']);
+        profileSummaryStoreSpy = jasmine.createSpyObj('ProfileSummaryStore', ['retrieve', 'reset', 'player', 'totalGames', 'trophyCountPerType', 'status']);
+        profileGamesStoreSpy = jasmine.createSpyObj('ProfileGamesStore', ['searchGames', 'reset', 'games', 'status']);
+        profileTrophiesStoreSpy = jasmine.createSpyObj('ProfileTrophiesStore', ['searchTrophies', 'reset', 'trophies', 'status']);
 
         const routeParamMap = new Map<string, string>();
         routeParamMap.set('playerId', playerId);
@@ -42,6 +43,7 @@ describe('ProfilePageComponent', () => {
         }).compileComponents();
 
         profileSummaryStoreSpy.trophyCountPerType.and.returnValue(EMPTY_TROPHY_COUNT_PER_TYPE);
+        profileSummaryStoreSpy.player.and.returnValue(EMPTY_PLAYER);
 
         fixture = TestBed.createComponent(ProfilePageComponent);
         component = fixture.componentInstance;

@@ -1,10 +1,11 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {ProfileTrophiesStore} from './profile-trophies-store.service';
-import {PlayerService} from "../../services/http/player.service";
-import {SearchResult} from "../../models/dto/search-result";
-import {Trophy} from "../../models/dto/trophy";
+import {PlayerService} from "../../core/services/http/player.service";
+import {SearchResult} from "../../core/models/dto/search-result";
+import {Trophy} from "../../core/models/dto/trophy";
 import {of} from "rxjs";
+import {LoadingStatus} from "../../core/models/loading-status.enum";
 
 describe('ProfileTrophiesStore', () => {
     let store: ProfileTrophiesStore;
@@ -38,6 +39,7 @@ describe('ProfileTrophiesStore', () => {
 
     it('should be created', () => {
         expect(store).toBeTruthy();
+        expect(store.status()).toEqual(LoadingStatus.NONE);
     });
 
     it('should search for earned trophies', fakeAsync(() => {
@@ -48,8 +50,6 @@ describe('ProfileTrophiesStore', () => {
 
         expect(playerServiceSpy.searchEarnedTrophies).toHaveBeenCalledWith(mockPlayerId, 0, 20);
         expect(store.trophies()).toEqual(mockSearchResult.content);
-        expect(store.isError()).toBeFalse();
-        expect(store.isLoading()).toBeFalse();
-        expect(store.isPartiallyLoaded()).toBeTrue();
+        expect(store.status()).toEqual(LoadingStatus.PARTIALLY_LOADED);
     }));
 });
