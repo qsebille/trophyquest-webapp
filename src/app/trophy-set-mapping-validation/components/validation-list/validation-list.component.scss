@@ -1,0 +1,16 @@
+@use "styles/colors" as *;
+
+.trophy-set-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+tq-validation-element {
+  width: 100%;
+}
+
+.separator {
+  color: $tq-blue-medium;
+  width: 95%;
+}

@@ -1,0 +1,21 @@
+<div class="container">
+    <tq-block class="header-block">
+        <ng-template tqBlockHeader>
+            <span class="title">Game metadata validation</span>
+        </ng-template>
+        <ng-template tqBlockContent>
+            <p class="content">These are the trophy sets with no game metadata.</p>
+            <p class="content">Each trophy set has a list of candidate games retrieved from IGDB database. You can
+                manually validate which game corresponds to the trophy set amongst the proposed ones. </p>
+        </ng-template>
+    </tq-block>
+
+    <tq-block class="candidate-list-block">
+        <ng-template tqBlockHeader>
+            <span class="title">List of trophy set to validate</span>
+        </ng-template>
+        <ng-template tqBlockContent>
+            <tq-validation-list [trophySetList]="trophySetList()" [status]="searchStatus()"/>
+        </ng-template>
+    </tq-block>
+</div>
