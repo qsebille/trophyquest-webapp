@@ -4,6 +4,9 @@ import {ProfilePageComponent} from './profile/components/profile-page/profile-pa
 import {ErrorPageComponent} from './core/components/error-page/error-page.component';
 import {GamePageComponent} from './game/components/game-page/game-page.component';
 import {HomePageComponent} from './home/components/home-page/home-page.component';
+import {
+    ValidationPageComponent
+} from "./trophy-set-mapping-validation/components/validation-page/validation-page.component";
 
 export const routes: Routes = [
     {path: 'home', component: HomePageComponent},
@@ -11,6 +14,7 @@ export const routes: Routes = [
     {path: 'profile/:playerId', component: ProfilePageComponent},
     {path: 'game/:gameId', component: GamePageComponent},
     {path: 'error', component: ErrorPageComponent},
+    {path: 'trophy-set-mapping-validation', component: ValidationPageComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: 'home'},
 ];

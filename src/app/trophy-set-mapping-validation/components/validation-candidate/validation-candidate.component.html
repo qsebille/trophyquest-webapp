@@ -1,0 +1,19 @@
+<div class="validation-candidate">
+    <div class="candidate-infos">
+        <img class="candidate-cover" src="{{candidate().cover}}" alt=""/>
+        <div class="candidate-description">
+            <span class="name">{{ candidate().name }}</span>
+            <span class="date">{{ candidate().releaseDate | date }}</span>
+        </div>
+    </div>
+    <div class="spinner-wrapper" matTooltip="Confidence">
+        <mat-spinner class="score-spinner confidence-{{ confidence() }}"
+                     [value]="candidate().score" diameter="50" mode="determinate"/>
+        <div class="score confidence-{{ confidence() }}">
+            {{ candidate().score }}
+        </div>
+    </div>
+    <button class="accept-mapping-button" mat-button disabled matTooltip="Link this game">
+        Accept
+    </button>
+</div>

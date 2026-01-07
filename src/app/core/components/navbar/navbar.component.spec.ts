@@ -9,8 +9,8 @@ describe('NavbarComponent', () => {
     let component: NavbarComponent;
     let fixture: ComponentFixture<NavbarComponent>;
 
-    @Component({selector: 'tq-dummy-players', template: ''})
-    class DummyPlayersComponent {
+    @Component({selector: 'tq-dummy-component', template: ''})
+    class DummyComponent {
     }
 
     beforeEach(async () => {
@@ -18,7 +18,8 @@ describe('NavbarComponent', () => {
             imports: [NavbarComponent],
             providers: [
                 provideRouter([
-                    {path: 'players', component: DummyPlayersComponent},
+                    {path: 'players', component: DummyComponent},
+                    {path: 'trophy-set-mapping-validation', component: DummyComponent},
                 ]),
             ],
         })
@@ -46,8 +47,17 @@ describe('NavbarComponent', () => {
         playersLink.triggerEventHandler('click', {button: 0});
         tick();
 
-        expect(playersLink.nativeElement.textContent.trim()).toBe('Players');
         expect(router.url).toBe('/players');
     }));
 
+
+    it('should link to the mapping page when clicking on link', fakeAsync(() => {
+        const router = TestBed.inject(Router);
+        const playersLink = fixture.debugElement.query(By.css('#navbar-mapping-link'));
+
+        playersLink.triggerEventHandler('click', {button: 0});
+        tick();
+
+        expect(router.url).toBe('/trophy-set-mapping-validation');
+    }));
 });

@@ -1,0 +1,103 @@
+@use "styles/colors" as *;
+@use '@angular/material' as mat;
+
+.validation-candidate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid $tq-blue-medium;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: $tq-white;
+}
+
+.candidate-infos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.candidate-cover {
+  border-radius: 10px;
+  max-width: 100px;
+}
+
+.candidate-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  .name {
+    font-size: 14px;
+    font-weight: bold;
+    color: $tq-blue-medium;
+  }
+
+  .date {
+    font-size: 12px;
+    color: $tq-blue-medium;
+  }
+}
+
+.spinner-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+
+  .score-spinner {
+    &.confidence-very-high {
+      @include mat.progress-spinner-overrides((
+              active-indicator-color: $tq-green-dark,
+      ));
+    }
+
+    &.confidence-high {
+      @include mat.progress-spinner-overrides((
+              active-indicator-color: #a58807,
+      ));
+    }
+
+    &.confidence-medium {
+      @include mat.progress-spinner-overrides((
+              active-indicator-color: #ac5900,
+      ));
+    }
+
+    &.confidence-low {
+      @include mat.progress-spinner-overrides((
+              active-indicator-color: $tq-red-dark,
+      ));
+    }
+  }
+
+  .score {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    font-size: 12px;
+    line-height: 1;
+
+    &.confidence-very-high {
+      color: $tq-green-dark;
+    }
+
+    &.confidence-high {
+      color: #a58807;
+    }
+
+    &.confidence-medium {
+      color: #ac5900;
+    }
+
+    &.confidence-low {
+      color: $tq-red-dark;
+    }
+  }
+}

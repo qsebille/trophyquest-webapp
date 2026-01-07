@@ -1,0 +1,16 @@
+@if (isLoadingTrophySets()) {
+    <div class="spinner-container">
+        <mat-spinner/>
+    </div>
+} @else if (hasFailedLoadingTrophySets()) {
+    <tq-error-message [errorMessage]="'Failed to load trophy sets'"/>
+} @else {
+    <div class="trophy-set-list">
+        @for (trophySet of trophySetList(); track trophySet.id) {
+            @if ($index !== 0) {
+                <hr class="separator"/>
+            }
+            <tq-validation-element [trophySet]="trophySet"/>
+        }
+    </div>
+}

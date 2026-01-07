@@ -1,0 +1,17 @@
+<div class="trophy-set-to-validate">
+    <div class="trophy-set">
+        <div class="trophy-set-description">
+            <div class="trophy-set-title">{{ trophySet().title }}</div>
+            <tq-platform-label [platform]="trophySet().platform"/>
+        </div>
+        <img class="trophy-set-image" src="{{trophySet().imageUrl}}" alt=""/>
+    </div>
+    <div class="candidate-list-block">
+        <span class="title">Mapping candidates</span>
+        <div class="candidate-list">
+            @for (candidate of sortedCandidates(); track candidate.id) {
+                <tq-validation-candidate [candidate]="candidate"/>
+            }
+        </div>
+    </div>
+</div>
