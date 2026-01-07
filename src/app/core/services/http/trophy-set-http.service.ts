@@ -21,6 +21,6 @@ export class TrophySetHttpService {
         const params = new HttpParams()
             .set('pageNumber', pageNumber)
             .set('pageSize', pageSize);
-        return this._http.get<SearchResult<IgdbGame>>(this.API_URL + "/search/igdb-candidates", {params});
+        return this._http.get<SearchResult<IgdbGame>>(this.API_URL + "/search", {params});
     }
 }
