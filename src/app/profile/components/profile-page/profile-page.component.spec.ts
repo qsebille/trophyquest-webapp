@@ -6,67 +6,72 @@ import {NavigatorService} from "../../../core/services/navigator.service";
 import {ProfileSummaryComponent} from "../profile-summary/profile-summary.component";
 import {ProfileTrophyCardComponent} from "../profile-trophy-card/profile-trophy-card.component";
 import {ProfileSummaryStore} from "../../stores/profile-summary-store.service";
-import {ProfileGamesStore} from "../../stores/profile-games-store.service";
+import {ProfileTrophySetListStore} from "../../stores/profile-trophy-set-list-store.service";
 import {ProfileTrophiesStore} from "../../stores/profile-trophies-store.service";
-import {EMPTY_TROPHY_COUNT_PER_TYPE} from "../../../core/models/dto/trophy-count-per-type";
-import {EMPTY_PLAYER} from "../../../core/models/dto/player";
+import {Player} from "../../../core/api/dtos/player/player";
+import {PlayerStats} from "../../../core/api/dtos/player/player-stats";
 
 describe('ProfilePageComponent', () => {
     let component: ProfilePageComponent;
     let fixture: ComponentFixture<ProfilePageComponent>;
     let profileSummaryStoreSpy: jasmine.SpyObj<ProfileSummaryStore>;
-    let profileGamesStoreSpy: jasmine.SpyObj<ProfileGamesStore>;
+    let profileTrophySetListStore: jasmine.SpyObj<ProfileTrophySetListStore>;
     let profileTrophiesStoreSpy: jasmine.SpyObj<ProfileTrophiesStore>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
 
-    const playerId: string = 'player-123';
-    const gameId: string = 'game-123';
+    const mockPlayer = {id: 'player-123', pseudo: 'PlayerId', avatar: 'avatar.png'} as Player;
+    const mockPlayerStats = {
+        totalTrophySetsPlayed: 100,
+        totalPlatinumTrophies: 1,
+        totalGoldTrophies: 2,
+        totalSilverTrophies: 3,
+        totalBronzeTrophies: 4,
+    } as PlayerStats;
 
     beforeEach(async () => {
-        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerGamePage']);
-        profileSummaryStoreSpy = jasmine.createSpyObj('ProfileSummaryStore', ['retrieve', 'reset', 'player', 'totalGames', 'trophyCountPerType', 'status']);
-        profileGamesStoreSpy = jasmine.createSpyObj('ProfileGamesStore', ['searchGames', 'reset', 'games', 'status']);
-        profileTrophiesStoreSpy = jasmine.createSpyObj('ProfileTrophiesStore', ['searchTrophies', 'reset', 'trophies', 'status']);
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayerTrophySetPage']);
+        profileSummaryStoreSpy = jasmine.createSpyObj('ProfileSummaryStore', ['retrieve', 'reset', 'player', 'playerStats', 'status']);
+        profileTrophySetListStore = jasmine.createSpyObj('ProfileTrophySetListStore', ['search', 'reset', 'loadMore', 'trophySets', 'status']);
+        profileTrophiesStoreSpy = jasmine.createSpyObj('ProfileTrophiesStore', ['search', 'reset', 'loadMore', 'trophies', 'status']);
+
+        profileSummaryStoreSpy.player.and.returnValue(mockPlayer);
+        profileSummaryStoreSpy.playerStats.and.returnValue(mockPlayerStats);
 
         const routeParamMap = new Map<string, string>();
-        routeParamMap.set('playerId', playerId);
+        routeParamMap.set('playerId', mockPlayer.id);
 
         await TestBed.configureTestingModule({
             imports: [ProfilePageComponent, ProfileSummaryComponent, ProfileTrophyCardComponent],
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
                 {provide: ProfileSummaryStore, useValue: profileSummaryStoreSpy},
-                {provide: ProfileGamesStore, useValue: profileGamesStoreSpy},
+                {provide: ProfileTrophySetListStore, useValue: profileTrophySetListStore},
                 {provide: ProfileTrophiesStore, useValue: profileTrophiesStoreSpy},
                 {provide: ActivatedRoute, useValue: {snapshot: {paramMap: routeParamMap}}},
             ]
         }).compileComponents();
-
-        profileSummaryStoreSpy.trophyCountPerType.and.returnValue(EMPTY_TROPHY_COUNT_PER_TYPE);
-        profileSummaryStoreSpy.player.and.returnValue(EMPTY_PLAYER);
 
         fixture = TestBed.createComponent(ProfilePageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
     it('should fetch profile infos on init', () => {
         expect(profileSummaryStoreSpy.reset).toHaveBeenCalled();
-        expect(profileSummaryStoreSpy.retrieve).toHaveBeenCalledWith(playerId);
-        expect(profileGamesStoreSpy.reset).toHaveBeenCalled();
-        expect(profileGamesStoreSpy.searchGames).toHaveBeenCalledWith(playerId);
+        expect(profileSummaryStoreSpy.retrieve).toHaveBeenCalledWith(mockPlayer.id);
+        expect(profileTrophySetListStore.reset).toHaveBeenCalled();
+        expect(profileTrophySetListStore.search).toHaveBeenCalledWith(mockPlayer.id);
         expect(profileTrophiesStoreSpy.reset).toHaveBeenCalled();
-        expect(profileTrophiesStoreSpy.searchTrophies).toHaveBeenCalledWith(playerId);
+        expect(profileTrophiesStoreSpy.search).toHaveBeenCalledWith(mockPlayer.id);
     });
 
     it('should navigate to game page when clicking on game card', () => {
-        component.navigateToPlayerGamePage(gameId);
+        const trophySetId: string = 'trophySet-123';
+        component.navigateToPlayerTrophySetPage(trophySetId);
 
-        expect(navigatorSpy.goToPlayerGamePage).toHaveBeenCalledOnceWith(gameId, playerId);
+        expect(navigatorSpy.goToPlayerTrophySetPage).toHaveBeenCalledOnceWith(trophySetId, mockPlayer.id);
     });
 
 });

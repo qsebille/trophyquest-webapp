@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {TrophySetMappingCandidatesStore} from './trophy-set-mapping-candidates-store.service';
-import {TrophySetHttpService} from "../../core/services/http/trophy-set-http.service";
+import {TrophySetHttpService} from "../../core/api/services/trophy-set-http.service";
 
 describe('TrophySetMappingCandidatesStore', () => {
     let store: TrophySetMappingCandidatesStore;
@@ -16,7 +16,5 @@ describe('TrophySetMappingCandidatesStore', () => {
         store = TestBed.inject(TrophySetMappingCandidatesStore);
     });
 
-    it('should be created', () => {
-        expect(store).toBeTruthy();
-    });
+    it('should be created', () => expect(store).toBeTruthy());
 });

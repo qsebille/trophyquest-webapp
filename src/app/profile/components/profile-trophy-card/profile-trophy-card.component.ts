@@ -1,6 +1,6 @@
 import {Component, input} from '@angular/core';
-import {Trophy} from '../../../core/models/dto/trophy';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
+import {EarnedTrophySearchItem} from "../../../core/api/dtos/trophy/earned-trophy-search-item";
 
 @Component({
     selector: 'tq-profile-trophy-card',
@@ -12,7 +12,7 @@ import {DatePipe, NgOptimizedImage} from '@angular/common';
     styleUrl: './profile-trophy-card.component.scss',
 })
 export class ProfileTrophyCardComponent {
-    readonly trophy = input.required<Trophy>();
+    readonly trophy = input.required<EarnedTrophySearchItem>();
 
     isExpanded: boolean = false;
 

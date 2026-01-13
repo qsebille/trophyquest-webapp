@@ -30,9 +30,7 @@ describe('NavbarComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
     it('should render the application title', () => {
         const title = fixture.nativeElement.querySelector('.navbar-title');

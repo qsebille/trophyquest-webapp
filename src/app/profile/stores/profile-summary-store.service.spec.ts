@@ -1,26 +1,21 @@
 import {fakeAsync, flushMicrotasks, TestBed} from '@angular/core/testing';
 
 import {ProfileSummaryStore} from './profile-summary-store.service';
-import {PlayerService} from "../../core/services/http/player.service";
-import {EMPTY_PLAYER, Player} from "../../core/models/dto/player";
+import {PlayerHttpService} from "../../core/api/services/player-http.service";
+import {EMPTY_PLAYER, Player} from "../../core/api/dtos/player/player";
 import {of} from "rxjs";
-import {TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
 import {LoadingStatus} from "../../core/models/loading-status.enum";
+import {PlayerStats} from "../../core/api/dtos/player/player-stats";
 
 describe('ProfileSummaryStore', () => {
     let store: ProfileSummaryStore;
 
-    let playerServiceSpy: jasmine.SpyObj<PlayerService>;
-
-    const mockPlayerId = 'player-123';
-    const mockPlayer: Player = {id: mockPlayerId, pseudo: 'John Doe', avatarUrl: 'avatar.png'};
-    const mockGamesPlayed = 10;
-    const mockTrophyCount: TrophyCountPerType = {platinum: 1, gold: 2, silver: 3, bronze: 4};
+    let playerHttpServiceSpy: jasmine.SpyObj<PlayerHttpService>;
 
     beforeEach(() => {
-        playerServiceSpy = jasmine.createSpyObj('PlayerService', ['retrieve', 'countPlayedGames', 'getTrophyCountPerType']);
+        playerHttpServiceSpy = jasmine.createSpyObj('PlayerHttpService', ['fetch', 'fetchStats']);
         TestBed.configureTestingModule({
-            providers: [{provide: PlayerService, useValue: playerServiceSpy}]
+            providers: [{provide: PlayerHttpService, useValue: playerHttpServiceSpy}]
         });
         store = TestBed.inject(ProfileSummaryStore);
     });
@@ -32,16 +27,24 @@ describe('ProfileSummaryStore', () => {
     });
 
     it('should load player summary when retrieve is called', fakeAsync(() => {
-        playerServiceSpy.retrieve.and.returnValue(of(mockPlayer));
-        playerServiceSpy.countPlayedGames.and.returnValue(of(mockGamesPlayed));
-        playerServiceSpy.getTrophyCountPerType.and.returnValue(of(mockTrophyCount));
+        const mockPlayerId = 'player-123';
+        const mockPlayer: Player = {id: mockPlayerId, pseudo: 'John Doe', avatar: 'avatar.png'};
+        const mockPlayerStats: PlayerStats = {
+            totalTrophySetsPlayed: 1,
+            totalPlatinumTrophies: 2,
+            totalGoldTrophies: 3,
+            totalSilverTrophies: 4,
+            totalBronzeTrophies: 5
+        };
+
+        playerHttpServiceSpy.fetch.and.returnValue(of(mockPlayer));
+        playerHttpServiceSpy.fetchStats.and.returnValue(of(mockPlayerStats));
 
         store.retrieve(mockPlayerId);
         flushMicrotasks();
 
         expect(store.player()).toEqual(mockPlayer);
-        expect(store.totalGames()).toEqual(mockGamesPlayed);
-        expect(store.trophyCountPerType()).toEqual(mockTrophyCount);
+        expect(store.playerStats()).toEqual(mockPlayerStats);
         expect(store.status()).toEqual(LoadingStatus.FULLY_LOADED);
     }));
 });

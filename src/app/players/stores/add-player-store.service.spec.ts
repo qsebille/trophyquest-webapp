@@ -1,31 +1,24 @@
 import {TestBed} from '@angular/core/testing';
 
 import {AddPlayerStore} from './add-player-store.service';
-import {PlayerService} from "../../core/services/http/player.service";
-import {PsnService} from "../../core/services/http/psn.service";
+import {PlayerHttpService} from "../../core/api/services/player-http.service";
 
 describe('AddPlayerStore', () => {
     let store: AddPlayerStore;
 
-    let playerServiceSpy: jasmine.SpyObj<PlayerService>;
-    let psnServiceSpy: jasmine.SpyObj<PsnService>;
-
+    let playerServiceSpy: jasmine.SpyObj<PlayerHttpService>;
 
     beforeEach(() => {
-        playerServiceSpy = jasmine.createSpyObj('PlayerService', ['fetchByPseudo']);
-        psnServiceSpy = jasmine.createSpyObj('PsnService', ['addPlayer']);
+        playerServiceSpy = jasmine.createSpyObj('PlayerService', ['fetchByPseudo', 'addPlayer']);
 
         TestBed.configureTestingModule({
             providers: [
-                {provide: PlayerService, useValue: playerServiceSpy},
-                {provide: PsnService, useValue: psnServiceSpy},
+                {provide: PlayerHttpService, useValue: playerServiceSpy},
             ]
         });
 
         store = TestBed.inject(AddPlayerStore);
     });
 
-    it('should be created', () => {
-        expect(store).toBeTruthy();
-    });
+    it('should be created', () => expect(store).toBeTruthy());
 });

@@ -1,38 +1,33 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {EMPTY_PLAYER, Player} from "../../core/models/dto/player";
-import {EMPTY_TROPHY_COUNT_PER_TYPE, TrophyCountPerType} from "../../core/models/dto/trophy-count-per-type";
+import {EMPTY_PLAYER, Player} from "../../core/api/dtos/player/player";
 import {LoadingStatus} from "../../core/models/loading-status.enum";
 import {forkJoin} from "rxjs";
-import {PlayerService} from "../../core/services/http/player.service";
+import {PlayerHttpService} from "../../core/api/services/player-http.service";
+import {EMPTY_PLAYER_STATS, PlayerStats} from "../../core/api/dtos/player/player-stats";
 
 @Injectable({
     providedIn: 'root',
 })
 export class ProfileSummaryStore {
     private _player = signal<Player>(EMPTY_PLAYER);
-    readonly player = computed(() => this._player());
-
-    private _totalGames = signal<number>(0);
-    readonly totalGames = computed(() => this._totalGames());
-
-    private _trophyCountPerType = signal<TrophyCountPerType>(EMPTY_TROPHY_COUNT_PER_TYPE);
-    readonly trophyCountPerType = computed(() => this._trophyCountPerType());
-
+    private _playerStats = signal<PlayerStats>(EMPTY_PLAYER_STATS);
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
+
+    readonly player = computed(() => this._player());
+    readonly playerStats = computed(() => this._playerStats());
     readonly status = computed(() => this._status());
 
-    constructor(private readonly _playerService: PlayerService) {
+    constructor(private readonly _playerService: PlayerHttpService) {
     }
 
     reset(): void {
         this._player.set(EMPTY_PLAYER);
-        this._totalGames.set(0);
-        this._trophyCountPerType.set(EMPTY_TROPHY_COUNT_PER_TYPE);
+        this._playerStats.set(EMPTY_PLAYER_STATS);
         this._status.set(LoadingStatus.NONE);
     }
 
     retrieve(playerId: string | null): void {
-        if (null == playerId) {
+        if (playerId == null) {
             console.error('Invalid player id');
             this._status.set(LoadingStatus.ERROR);
             return;
@@ -40,14 +35,12 @@ export class ProfileSummaryStore {
 
         this._status.set(LoadingStatus.LOADING);
         forkJoin({
-            player: this._playerService.retrieve(playerId),
-            gameCount: this._playerService.countPlayedGames(playerId),
-            trophyCount: this._playerService.getTrophyCountPerType(playerId),
+            player: this._playerService.fetch(playerId),
+            stats: this._playerService.fetchStats(playerId),
         }).subscribe({
-                next: ({player, trophyCount, gameCount}) => {
+                next: ({player, stats}) => {
                     this._player.set(player);
-                    this._totalGames.set(gameCount);
-                    this._trophyCountPerType.set(trophyCount);
+                    this._playerStats.set(stats);
                     this._status.set(LoadingStatus.FULLY_LOADED);
                 },
                 error: error => {

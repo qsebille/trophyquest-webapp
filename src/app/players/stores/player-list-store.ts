@@ -1,7 +1,8 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {PlayerService} from '../../core/services/http/player.service';
+import {PlayerHttpService} from '../../core/api/services/player-http.service';
 import {LoadingStatus} from '../../core/models/loading-status.enum';
-import {PlayerSummary} from '../../core/models/dto/player-summary';
+import {PlayerSearchItem} from "../../core/api/dtos/player/player-search-item";
+import {forkJoin} from "rxjs";
 
 @Injectable({
     providedIn: 'root',
@@ -10,15 +11,15 @@ export class PlayerListStore {
     private readonly _pageSize = 20;
 
     private _pageNumber = signal<number>(0);
-    private _results = signal<PlayerSummary[]>([]);
+    private _results = signal<PlayerSearchItem[]>([]);
     private _total = signal<number>(0);
     private _status = signal<LoadingStatus>(LoadingStatus.NONE);
 
-    readonly playerSummaries = computed(() => this._results());
+    readonly results = computed(() => this._results());
     readonly total = computed(() => this._total());
     readonly status = computed(() => this._status());
 
-    constructor(private readonly _playerService: PlayerService) {
+    constructor(private readonly _playerService: PlayerHttpService) {
     }
 
     reset(): void {
@@ -30,12 +31,16 @@ export class PlayerListStore {
 
     search(): void {
         this._status.set(LoadingStatus.LOADING);
-        this._playerService.search(this._pageNumber(), this._pageSize).subscribe({
-            next: searchResult => {
-                const players = [...this._results(), ...searchResult.content] as PlayerSummary[];
-                const loadingStatus: LoadingStatus = players.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
+
+        forkJoin({
+            list: this._playerService.search(this._pageNumber(), this._pageSize),
+            count: this._playerService.count()
+        }).subscribe({
+            next: ({list, count}) => {
+                const players = [...this.results(), ...list];
+                const loadingStatus: LoadingStatus = players.length < count ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
                 this._results.update(() => players);
-                this._total.set(searchResult.total);
+                this._total.set(count);
                 this._status.set(loadingStatus);
             },
             error: error => {

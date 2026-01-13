@@ -1,17 +1,18 @@
 <div class="player-card">
     <div class="avatar-wrapper">
-        <img [height]="50" [width]="50" alt="" class="avatar" ngSrc="{{ player().avatarUrl }}"/>
+        <img [height]="50" [width]="50" alt="" class="avatar" ngSrc="{{ playerSearchItem().avatar }}"/>
     </div>
-    <a (click)="clickOnPseudo.emit()" class="pseudo tq-link">{{ player().pseudo }}</a>
+    <a (click)="clickOnPseudo.emit()" class="pseudo tq-link">{{ playerSearchItem().pseudo }}</a>
     <div class="played-games">
-        <b>{{ totalPlayedGames() }}</b>
+        <b>{{ playerSearchItem().totalPlayedTrophySets }}</b>
         <span>games</span>
     </div>
     <div class="last-played-game-wrapper">
         <span class="played-game-label">Last game played</span>
         <div class="last-game-title-platform">
-            <a (click)="clickOnGame.emit()" class="game-title tq-link">{{ lastGamePlayedTitle() }}</a>
-            <tq-platform-label [platform]="lastPlayedGamePlatform()"/>
+            <a (click)="clickOnGame.emit()"
+               class="game-title tq-link">{{ playerSearchItem().lastPlayedTrophySetTitle }}</a>
+            <tq-platform-label [platform]="playerSearchItem().lastPlayedTrophySetPlatform"/>
         </div>
     </div>
     <tq-trophy-count-displayer [labelOrientation]="'vertical'"

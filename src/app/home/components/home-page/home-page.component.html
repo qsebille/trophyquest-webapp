@@ -1,15 +1,10 @@
 <div class="home-page container container-fluid">
     <div class="left-column">
-        <tq-home-summary class="home-summary"
-                         (clickOnPlayers)="navigateToPlayersPage()"
-                         [status]="summaryStatus()"
-                         [nbGames]="totalGames()"
-                         [nbPlayers]="totalPlayers()"
-                         [nbTrophies]="totalEarnedTrophies()"/>
-        <tq-home-game-list class="home-game-list"
-                           [status]="gamesStatus()"
-                           [games]="games()"
-                           (clickOnGameTitle)="navigateToGamePage($event)"/>
+        <tq-home-stats class="home-stats" [status]="statsLoadingStatus()" [stats]="stats()"/>
+        <tq-home-trophy-set-list class="home-trophy-set-list"
+                                 [status]="trophySetsStatus()"
+                                 [trophySets]="trophySets()"
+                                 (clickOnTrophySet)="navigateToTrophySetPage($event)"/>
     </div>
 
     <div class="right-column">
@@ -17,6 +12,6 @@
                              [status]="playersStatus()"
                              [players]="players()"
                              (clickOnPlayer)="navigateToProfilePage($event)"
-                             (clickOnGame)="navigateToPlayerGamePage($event.gameId, $event.playerId)"/>
+                             (clickOnGame)="navigateToPlayerTrophySetPage($event.trophySetId, $event.playerId)"/>
     </div>
 </div>

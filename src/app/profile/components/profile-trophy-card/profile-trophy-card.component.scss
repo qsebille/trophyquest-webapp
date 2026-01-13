@@ -19,7 +19,7 @@
     align-items: center;
   }
 
-  .trophy-image {
+  .trophy-icon {
     border-radius: 5px;
   }
 
@@ -50,17 +50,4 @@
     font-size: 0.6rem;
     color: rgb(0, 0, 0, 0.54);
   }
-
-  .trophy-description-wrapper {
-    min-height: 30px;
-    width: 90%;
-  }
-
-  .trophy-description {
-    font-size: 12px;
-    font-style: italic;
-    font-weight: 300;
-    color: rgb(0, 0, 0, 0.54);
-  }
-
 }

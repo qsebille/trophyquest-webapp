@@ -1,8 +1,11 @@
 import {Component, computed, input, output} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
-import {TrophyCountDisplayerComponent} from '../../../core/trophy-count-displayer/trophy-count-displayer.component';
-import {PlayerSummary} from '../../../core/models/dto/player-summary';
+import {
+    TrophyCountDisplayerComponent
+} from '../../../core/components/trophy-count-displayer/trophy-count-displayer.component';
 import {PlatformLabelComponent} from "../../../core/components/platform-label/platform-label.component";
+import {PlayerSearchItem} from "../../../core/api/dtos/player/player-search-item";
+import {TrophyCountPerType} from "../../../core/models/dto/trophy-count-per-type";
 
 @Component({
     selector: 'tq-player-card',
@@ -15,13 +18,16 @@ import {PlatformLabelComponent} from "../../../core/components/platform-label/pl
     styleUrl: './player-card.component.scss',
 })
 export class PlayerCardComponent {
-    readonly playerSummary = input.required<PlayerSummary>();
+    readonly playerSearchItem = input.required<PlayerSearchItem>();
     readonly clickOnPseudo = output();
     readonly clickOnGame = output();
 
-    readonly player = computed(() => this.playerSummary().player);
-    readonly trophyCount = computed(() => this.playerSummary().trophyCount);
-    readonly totalPlayedGames = computed(() => this.playerSummary().totalGamesPlayed);
-    readonly lastGamePlayedTitle = computed(() => this.playerSummary().lastPlayedGameTitle);
-    readonly lastPlayedGamePlatform = computed(() => this.playerSummary().lastPlayedGamePlatform);
+    readonly trophyCount = computed(() => (
+        {
+            platinum: this.playerSearchItem().totalEarnedPlatinum,
+            gold: this.playerSearchItem().totalEarnedGold,
+            silver: this.playerSearchItem().totalEarnedSilver,
+            bronze: this.playerSearchItem().totalEarnedBronze,
+        } as TrophyCountPerType
+    ));
 }

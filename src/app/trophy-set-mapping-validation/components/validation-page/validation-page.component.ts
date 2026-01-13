@@ -1,4 +1,4 @@
-import {Component, computed} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {BlockComponent} from "../../../core/components/trophyquest-block/block.component";
 import {BlockContentTemplate, BlockHeaderTemplate} from "../../../core/templates/block.template";
 import {ValidationListComponent} from "../validation-list/validation-list.component";
@@ -16,7 +16,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     templateUrl: './validation-page.component.html',
     styleUrl: './validation-page.component.scss',
 })
-export class ValidationPageComponent {
+export class ValidationPageComponent implements OnInit {
     constructor(private readonly _trophySetMappingStore: TrophySetMappingCandidatesStore) {
     }
 

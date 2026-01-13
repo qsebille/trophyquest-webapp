@@ -1,22 +1,22 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ProfileTrophyCardComponent} from './profile-trophy-card.component';
-import {Trophy} from '../../../core/models/dto/trophy';
+import {EarnedTrophySearchItem} from "../../../core/api/dtos/trophy/earned-trophy-search-item";
 
 describe('ProfileTrophyCardComponent', () => {
     let component: ProfileTrophyCardComponent;
     let fixture: ComponentFixture<ProfileTrophyCardComponent>;
 
-    const trophyMock: Trophy = {
-        id: '001',
-        trophyTitle: 'Trophy 1',
-        trophyDescription: 'Description 1',
-        trophyType: 'platinum',
-        isHidden: false,
-        iconUrl: 'trophy.png',
-        gameTitle: 'Game 1',
-        gameGroup: 'default',
-        earnedDate: null,
-    }
+
+    const mockTrophy = {
+        id: 'trophy-1',
+        title: 'Trophy 1',
+        trophyType: 'bronze',
+        icon: 'trophy.png',
+        description: 'A trophy',
+        trophySetId: 'ts-1',
+        trophySetTitle: 'Set 1',
+        earnedAt: new Date(),
+    } as EarnedTrophySearchItem;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -25,12 +25,10 @@ describe('ProfileTrophyCardComponent', () => {
 
         fixture = TestBed.createComponent(ProfileTrophyCardComponent);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('trophy', trophyMock);
+        fixture.componentRef.setInput('trophy', mockTrophy);
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
 });

@@ -1,10 +1,9 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {PlayerService} from "../../core/services/http/player.service";
+import {PlayerHttpService} from "../../core/api/services/player-http.service";
 import {AddPlayerStatus} from "../../core/models/add-player-status.enum";
-import {PlayerByPseudoResponse} from "../../core/models/dto/response/player-by-pseudo-response";
-import {PsnService} from "../../core/services/http/psn.service";
-import {PsnFetchResponse} from "../../core/models/dto/response/psn-fetch-response";
+import {PlayerAddResponse} from "../../core/api/dtos/player/player-add-response";
 import {catchError, EMPTY, switchMap, tap} from "rxjs";
+import {Player} from "../../core/api/dtos/player/player";
 
 @Injectable({
     providedIn: 'root',
@@ -14,27 +13,25 @@ export class AddPlayerStore {
 
     readonly status = computed(() => this._status());
 
-    constructor(
-        private _playerService: PlayerService,
-        private _psnService: PsnService,
-    ) {
+    constructor(private _playerService: PlayerHttpService) {
     }
 
     addPlayer(pseudo: string): void {
         this._status.set(AddPlayerStatus.LOADING);
 
         this._playerService.fetchByPseudo(pseudo).pipe(
-            switchMap((response: PlayerByPseudoResponse) => {
-                switch (response.status) {
-                    case 'FOUND':
-                        this._status.set(AddPlayerStatus.ALREADY_IN_DATABASE);
-                        return EMPTY;
-                    case 'NOT_FOUND':
-                        this._status.set(AddPlayerStatus.LOADING);
-                        return this._psnService.addPlayer(pseudo);
+            switchMap((response: Player | null) => {
+                if (response === null) {
+                    console.info("Player not found in database, adding it to database...");
+                    this._status.set(AddPlayerStatus.LOADING);
+                    return this._playerService.addPlayer(pseudo);
+                } else {
+                    console.info("Player already in database, not adding it to database");
+                    this._status.set(AddPlayerStatus.ALREADY_IN_DATABASE);
+                    return EMPTY;
                 }
             }),
-            tap((lambdaResponse: PsnFetchResponse) => {
+            tap((lambdaResponse: PlayerAddResponse) => {
                 switch (lambdaResponse.status) {
                     case 'OK':
                         this._status.set(AddPlayerStatus.ADDED);

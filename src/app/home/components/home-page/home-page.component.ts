@@ -1,49 +1,57 @@
-import {Component, computed} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../../core/services/navigator.service";
-import {HomeSummaryStoreService} from "../../stores/home-summary-store.service";
-import {HomeRecentPlayerStoreService} from "../../stores/home-recent-player-store.service";
-import {HomePopularGamesStore} from "../../stores/home-popular-games-store.service";
-import {HomeSummaryComponent} from "../home-summary/home-summary.component";
-import {HomeGameListComponent} from "../home-game-list/home-game-list.component";
 import {HomePlayerListComponent} from "../home-player-list/home-player-list.component";
+import {HomeStatsStore} from "../../stores/home-stats-store.service";
+import {HomeStats} from "../../../core/models/dto/home-stats";
+import {HomeStatsComponent} from "../home-stats/home-stats.component";
+import {HomeRecentPlayersStore} from "../../stores/home-recent-players-store.service";
+import {HomeRecentTrophySetsStore} from "../../stores/home-recent-trophy-sets-store.service";
+import {HomeTrophySetListComponent} from "../home-trophy-set-list/home-trophy-set-list.component";
 
 
 @Component({
     selector: 'tq-home-page',
     imports: [
         MatProgressSpinnerModule,
-        HomeSummaryComponent,
-        HomeGameListComponent,
+        HomeTrophySetListComponent,
         HomePlayerListComponent,
+        HomeStatsComponent,
+        HomeStatsComponent,
     ],
     templateUrl: './home-page.component.html',
     styleUrl: './home-page.component.scss',
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
     constructor(
-        private readonly _homeSummaryStore: HomeSummaryStoreService,
-        private readonly _homeRecentPlayerStore: HomeRecentPlayerStoreService,
-        private readonly _homeGameStore: HomePopularGamesStore,
+        private readonly _statsStore: HomeStatsStore,
+        private readonly _recentPlayersStore: HomeRecentPlayersStore,
+        private readonly _recentTrophySetsStore: HomeRecentTrophySetsStore,
         private readonly _navigator: NavigatorService,
     ) {
     }
 
-    readonly totalGames = computed(() => this._homeSummaryStore.nbGames());
-    readonly totalPlayers = computed(() => this._homeSummaryStore.nbPlayers());
-    readonly totalEarnedTrophies = computed(() => this._homeSummaryStore.nbEarnedTrophies());
-    readonly summaryStatus = computed(() => this._homeSummaryStore.status());
+    readonly stats = computed(() =>
+        ({
+            totalPlayers: this._statsStore.playerCount(),
+            totalTrophySets: this._statsStore.trophySetCount(),
+            totalTrophies: this._statsStore.trophyCount(),
+            recentPlayers: this._statsStore.recentPlayerCount(),
+            recentTrophySets: this._statsStore.recentTrophySetCount(),
+            recentTrophies: this._statsStore.recentTrophyCount(),
+        } as HomeStats));
+    readonly statsLoadingStatus = computed(() => this._statsStore.status());
 
-    readonly games = computed(() => this._homeGameStore.games())
-    readonly gamesStatus = computed(() => this._homeGameStore.status());
+    readonly trophySets = computed(() => this._recentTrophySetsStore.trophySets());
+    readonly trophySetsStatus = computed(() => this._recentTrophySetsStore.status());
 
-    readonly players = computed(() => this._homeRecentPlayerStore.players());
-    readonly playersStatus = computed(() => this._homeRecentPlayerStore.status());
+    readonly players = computed(() => this._recentPlayersStore.players());
+    readonly playersStatus = computed(() => this._recentPlayersStore.status());
 
     ngOnInit(): void {
-        this._homeSummaryStore.fetch();
-        this._homeRecentPlayerStore.fetch();
-        this._homeGameStore.fetch();
+        this._statsStore.retrieve();
+        this._recentPlayersStore.fetch();
+        this._recentTrophySetsStore.fetch();
     }
 
     navigateToPlayersPage(): void {
@@ -54,14 +62,14 @@ export class HomePageComponent {
         this._navigator.goToProfilePage(playerId);
     }
 
-    navigateToGamePage(gameId: string): void {
-        this._navigator.goToGamePage(gameId);
+    navigateToTrophySetPage(trophySetId: string): void {
+        this._navigator.goToTrophySetPage(trophySetId);
     }
 
-    navigateToPlayerGamePage(
-        gameId: string,
+    navigateToPlayerTrophySetPage(
+        trophySetId: string,
         playerId: string
     ): void {
-        this._navigator.goToPlayerGamePage(gameId, playerId);
+        this._navigator.goToPlayerTrophySetPage(trophySetId, playerId);
     }
 }

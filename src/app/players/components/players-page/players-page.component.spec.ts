@@ -18,11 +18,11 @@ describe('PlayersPageComponent', () => {
     const playerId: string = 'player-123';
 
     beforeEach(async () => {
-        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerGamePage']);
-        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'loadMore', 'playerSummaries', 'total', 'status']);
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerTrophySetPage']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'loadMore', 'results', 'total', 'status']);
         addPlayerStoreSpy = jasmine.createSpyObj('AddPlayerStore', ['addPlayer', 'status']);
 
-        playerListStoreSpy.playerSummaries.and.returnValue([]);
+        playerListStoreSpy.results.and.returnValue([]);
 
         await TestBed.configureTestingModule({
             imports: [PlayersPageComponent, PlayerCardComponent, AddPlayerFormComponent],
@@ -38,9 +38,7 @@ describe('PlayersPageComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
     it('should reset search on init', () => {
         expect(playerListStoreSpy.reset).toHaveBeenCalled();
@@ -54,9 +52,9 @@ describe('PlayersPageComponent', () => {
     });
 
     it('should navigate to player last game page', () => {
-        component.navigateToPlayerGamePage(gameId, playerId);
+        component.navigateToPlayerTrophySetPage(gameId, playerId);
 
-        expect(navigatorSpy.goToPlayerGamePage).toHaveBeenCalledWith(gameId, playerId);
+        expect(navigatorSpy.goToPlayerTrophySetPage).toHaveBeenCalledWith(gameId, playerId);
     });
 
 });

@@ -2,42 +2,39 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomePageComponent} from './home-page.component';
 import {NavigatorService} from "../../../core/services/navigator.service";
-import {HomeSummaryStoreService} from "../../stores/home-summary-store.service";
-import {HomeRecentPlayerStoreService} from "../../stores/home-recent-player-store.service";
-import {HomePopularGamesStore} from "../../stores/home-popular-games-store.service";
-import {HomeGameCardComponent} from "../home-game-card/home-game-card.component";
+import {HomeStatsStore} from "../../stores/home-stats-store.service";
+import {HomeRecentPlayersStore} from "../../stores/home-recent-players-store.service";
+import {HomeRecentTrophySetsStore} from "../../stores/home-recent-trophy-sets-store.service";
 
 describe('HomePageComponent', () => {
     let component: HomePageComponent;
     let fixture: ComponentFixture<HomePageComponent>;
 
-    let homeSummaryStoreSpy: jasmine.SpyObj<HomeSummaryStoreService>;
-    let homeRecentPlayerStoreSpy: jasmine.SpyObj<HomeRecentPlayerStoreService>;
-    let homeGameStoreSpy: jasmine.SpyObj<HomePopularGamesStore>;
+    let statsStoreSpy: jasmine.SpyObj<HomeStatsStore>;
+    let recentPlayersStoreSpy: jasmine.SpyObj<HomeRecentPlayersStore>;
+    let recentTrophySetsStoreSpy: jasmine.SpyObj<HomeRecentTrophySetsStore>;
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
 
     const gameId: string = 'game-123';
     const playerId: string = 'player-123';
 
     beforeEach(async () => {
-        homeSummaryStoreSpy = jasmine.createSpyObj('HomeSummaryStoreService', ['fetch', 'nbGames', 'nbPlayers', 'nbEarnedTrophies', 'status']);
-        homeRecentPlayerStoreSpy = jasmine.createSpyObj('HomeRecentPlayerStoreService', ['fetch', 'players', 'status']);
-        homeGameStoreSpy = jasmine.createSpyObj('HomeGameStoreService', ['fetch', 'games', 'status']);
-        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayersPage', 'goToGamePage', 'goToPlayerGamePage']);
+        statsStoreSpy = jasmine.createSpyObj('HomeStatsStore', ['retrieve', 'playerCount', 'trophySetCount', 'trophyCount', 'recentPlayerCount', 'recentTrophySetCount', 'recentTrophyCount', 'status']);
+        recentPlayersStoreSpy = jasmine.createSpyObj('HomeRecentPlayersStore', ['fetch', 'players', 'status']);
+        recentTrophySetsStoreSpy = jasmine.createSpyObj('HomeRecentTrophySetsStore', ['fetch', 'trophySets', 'status']);
+        navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToPlayersPage', 'goToProfilePage', 'goToTrophySetPage', 'goToPlayerTrophySetPage']);
 
-        await TestBed.configureTestingModule({
-            imports: [HomeGameCardComponent],
-        }).compileComponents();
+        recentPlayersStoreSpy.players.and.returnValue([]);
+        recentTrophySetsStoreSpy.trophySets.and.returnValue([]);
 
-        homeGameStoreSpy.games.and.returnValue([]);
-        homeRecentPlayerStoreSpy.players.and.returnValue([]);
+        await TestBed.configureTestingModule({}).compileComponents();
 
         TestBed.overrideComponent(HomePageComponent, {
             set: {
                 providers: [
-                    {provide: HomeSummaryStoreService, useValue: homeSummaryStoreSpy},
-                    {provide: HomeRecentPlayerStoreService, useValue: homeRecentPlayerStoreSpy},
-                    {provide: HomePopularGamesStore, useValue: homeGameStoreSpy},
+                    {provide: HomeStatsStore, useValue: statsStoreSpy},
+                    {provide: HomeRecentPlayersStore, useValue: recentPlayersStoreSpy},
+                    {provide: HomeRecentTrophySetsStore, useValue: recentTrophySetsStoreSpy},
                     {provide: NavigatorService, useValue: navigatorSpy},
                 ],
             }
@@ -48,14 +45,12 @@ describe('HomePageComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
     it('should fetch store data on init', () => {
-        expect(homeSummaryStoreSpy.fetch).toHaveBeenCalled();
-        expect(homeRecentPlayerStoreSpy.fetch).toHaveBeenCalled();
-        expect(homeGameStoreSpy.fetch).toHaveBeenCalled();
+        expect(statsStoreSpy.retrieve).toHaveBeenCalled();
+        expect(recentPlayersStoreSpy.fetch).toHaveBeenCalled();
+        expect(recentTrophySetsStoreSpy.fetch).toHaveBeenCalled();
     });
 
     it('should navigate to players page', () => {
@@ -69,12 +64,12 @@ describe('HomePageComponent', () => {
     });
 
     it('should navigate to game page', () => {
-        component.navigateToGamePage(gameId);
-        expect(navigatorSpy.goToGamePage).toHaveBeenCalledWith(gameId);
+        component.navigateToTrophySetPage(gameId);
+        expect(navigatorSpy.goToTrophySetPage).toHaveBeenCalledWith(gameId);
     });
 
     it('should navigate to player game page', () => {
-        component.navigateToPlayerGamePage(gameId, playerId);
-        expect(navigatorSpy.goToPlayerGamePage).toHaveBeenCalledWith(gameId, playerId)
+        component.navigateToPlayerTrophySetPage(gameId, playerId);
+        expect(navigatorSpy.goToPlayerTrophySetPage).toHaveBeenCalledWith(gameId, playerId)
     });
 });

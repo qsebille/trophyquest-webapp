@@ -1,0 +1,25 @@
+@for (trophy of baseGameTrophies(); track trophy.id; let i = $index) {
+    <div class="group-trophy-list">
+        @if (i !== 0) {
+            <hr class="trophy-separator"/>
+        }
+        <tq-trophy-set-trophy-card [showHiddenTrophies]="trophyFilters().showHidden"
+                                   class="trophy-card"
+                                   [trophy]="trophy"/>
+    </div>
+}
+@for (dlc of dlcs(); track dlc.groupName) {
+    @if (dlc.trophies.length > 0) {
+        <div class="group-trophy-list">
+            <h2 class="game-group-name">DLC Trophy Pack {{ dlc.groupName }}</h2>
+            @for (trophy of dlc.trophies; track trophy.id; let i = $index) {
+                @if (i !== 0) {
+                    <hr class="trophy-separator"/>
+                }
+                <tq-trophy-set-trophy-card [showHiddenTrophies]="trophyFilters().showHidden"
+                                           class="trophy-card"
+                                           [trophy]="trophy"/>
+            }
+        </div>
+    }
+}

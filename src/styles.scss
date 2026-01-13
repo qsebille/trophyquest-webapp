@@ -46,31 +46,6 @@ body {
   color: $tq-blue-darker;
 }
 
-
-/** GLOBAL STYLES FOR ANGULAR MATERIAL **/
-.game-card {
-  .mat-mdc-card-header-text {
-    min-width: 0;
-  }
-}
-
-.game-list {
-  .panel-even {
-    background-color: #e9f3ff;
-  }
-
-  .panel-odd {
-    background-color: #ffffff;
-  }
-
-  .game-list-element {
-    .mat-expansion-indicator {
-      visibility: hidden;
-    }
-
-  }
-}
-
 .tq-link {
   text-decoration: none;
   cursor: pointer;

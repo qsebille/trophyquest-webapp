@@ -18,6 +18,9 @@
             @if (hasMoreTrophiesToLoad()) {
                 <a (click)="loadMoreTrophies.emit()" class="load-more-button">Load more trophies...</a>
             }
+            @if (isError()) {
+                <tq-error-message [errorMessage]="'Failed to load trophies'"/>
+            }
         </div>
     </ng-template>
 </tq-block>

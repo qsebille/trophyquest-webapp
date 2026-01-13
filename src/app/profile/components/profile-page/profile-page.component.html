@@ -4,20 +4,18 @@
                           [errorMessage]="'Failed to load profile information'"/>
     } @else {
         <tq-profile-summary class="summary"
-                            [player]="playerSummary()"
+                            [player]="player()"
+                            [playerStats]="playerStats()"
                             [status]="summaryStatus()"
                             [style.animationDelay.ms]="100"
-                            [totalEarnedTrophies]="totalEarnedTrophies()"
-                            [totalGamesPlayed]="totalPlayedGames()"
-                            [trophyCount]="trophyCountPerType()"
                             animate.enter="block-enter"/>
 
         <div class="games-trophies-wrapper" [style.animationDelay.ms]="200" animate.enter="block-enter">
-            <tq-profile-game-list class="game-list"
-                                  [games]="games()"
-                                  [status]="gamesStatus()"
-                                  (clickOnGame)="navigateToPlayerGamePage($event)"
-                                  (loadMoreGames)="loadMoreGames()"/>
+            <tq-profile-trophy-set-list class="game-list"
+                                        [trophySets]="trophySets()"
+                                        [status]="trophySetListStatus()"
+                                        (clickOnGame)="navigateToPlayerTrophySetPage($event)"
+                                        (loadMoreGames)="loadMoreGames()"/>
 
             <tq-profile-trophy-list class="trophy-list"
                                     [trophies]="trophies()"

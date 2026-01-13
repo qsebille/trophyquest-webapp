@@ -1,9 +1,9 @@
 import {Component, computed, input, output} from '@angular/core';
 import {ErrorMessageComponent} from "../../../core/components/error-message/error-message.component";
-import {PlayerSummary} from "../../../core/models/dto/player-summary";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {PlayerCardComponent} from "../player-card/player-card.component";
+import {PlayerSearchItem} from "../../../core/api/dtos/player/player-search-item";
 
 @Component({
     selector: 'tq-player-list',
@@ -16,7 +16,7 @@ import {PlayerCardComponent} from "../player-card/player-card.component";
     styleUrl: './player-list.component.scss',
 })
 export class PlayerListComponent {
-    readonly players = input<PlayerSummary[]>([]);
+    readonly players = input<PlayerSearchItem[]>([]);
     readonly total = input<number>(0);
     readonly status = input<LoadingStatus>(LoadingStatus.NONE);
 

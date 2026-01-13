@@ -6,11 +6,11 @@
     <tq-error-message [errorMessage]="'Failed to load trophy sets'"/>
 } @else {
     <div class="trophy-set-list">
-        @for (trophySet of trophySetList(); track trophySet.id) {
+        @for (element of trophySetList(); track element.trophySet.id) {
             @if ($index !== 0) {
                 <hr class="separator"/>
             }
-            <tq-validation-element [trophySet]="trophySet"/>
+            <tq-validation-element [trophySet]="element"/>
         }
     </div>
 }

@@ -1,13 +1,13 @@
 <div class="home-trophy-card">
-    <div class="image-title-game">
-        <img [height]="32" [width]="32" alt="Trophy" class="trophy-image" ngSrc="{{trophy().trophyIconUrl}}"/>
+    <div class="left-block">
+        <img [height]="36" [width]="36" alt="Trophy" class="trophy-icon" ngSrc="{{trophy().icon }}"/>
         <div class="title-game">
-            <div class="trophy-title">{{ trophy().trophyTitle }}</div>
-            <a class="game-title tq-link" (click)="clickOnGameTitle.emit()">{{ trophy().gameTitle }}</a>
+            <div class="trophy-title">{{ trophy().title }}</div>
+            <a class="game-title tq-link" (click)="clickOnGameTitle.emit()">{{ trophy().trophySetTitle }}</a>
         </div>
     </div>
-    <div class="icon-and-earned-date">
-        <img [height]="30" [width]="30" alt="" ngSrc="assets/icons/trophy-{{trophy().trophyType}}.png"/>
-        <div class="trophy-earned-date">{{ trophy().obtainedDate | date: 'dd/MM/yyyy HH:mm' }}</div>
+    <div class="right-block">
+        <img [height]="24" [width]="24" alt="" ngSrc="assets/icons/trophy-{{trophy().trophyType}}.png"/>
+        <div class="trophy-earned-date">{{ trophy().earnedAt | date: 'dd/MM/yyyy HH:mm' }}</div>
     </div>
 </div>

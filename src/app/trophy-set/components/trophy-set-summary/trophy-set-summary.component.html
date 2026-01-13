@@ -1,0 +1,15 @@
+<div class="trophy-set-summary">
+    <img alt="" class="cover" src="{{trophySet().image}}"/>
+    <div class="summary-content">
+        <div class="title-and-platform">
+            <span class="title">{{ trophySet().title }}</span>
+            <tq-platform-label [platform]="trophySet().platform"/>
+        </div>
+        <div class="trophy-count-wrapper">
+            <tq-trophy-count-displayer [iconSizePx]="32"
+                                       [labelOrientation]="'vertical'"
+                                       [textSizePx]="18"
+                                       [trophyCount]="trophyCount()"/>
+        </div>
+    </div>
+</div>

@@ -12,14 +12,14 @@
         <div class="total">
             Total: {{ total() }} players
         </div>
-        @for (playerSummary of players(); track playerSummary.player.id; let i = $index) {
+        @for (playerSearchItem of players(); track playerSearchItem.id; let i = $index) {
             @if (i !== 0) {
                 <hr class="separator"/>
             }
             <tq-player-card
-                    (clickOnGame)="clickOnGame.emit({gameId: playerSummary.lastPlayedGameId, playerId: playerSummary.player.id})"
-                    (clickOnPseudo)="clickOnPlayer.emit(playerSummary.player.id)"
-                    [playerSummary]="playerSummary"
+                    (clickOnGame)="clickOnGame.emit({gameId: playerSearchItem.lastPlayedTrophySetId, playerId: playerSearchItem.id})"
+                    (clickOnPseudo)="clickOnPlayer.emit(playerSearchItem.id)"
+                    [playerSearchItem]="playerSearchItem"
                     class="player-card"/>
         }
 

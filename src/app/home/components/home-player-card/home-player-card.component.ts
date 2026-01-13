@@ -1,5 +1,5 @@
 import {Component, input, output} from '@angular/core';
-import {Player} from "../../../core/models/dto/player";
+import {Player} from "../../../core/api/dtos/player/player";
 import {DecimalPipe, NgOptimizedImage} from "@angular/common";
 
 @Component({
