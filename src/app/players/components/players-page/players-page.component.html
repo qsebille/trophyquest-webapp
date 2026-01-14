@@ -1,6 +1,6 @@
 <div class="players-page container container-fluid">
     <tq-add-player-form [status]="addPlayerStatus()"
-                        (refreshPlayers)="retrievePlayers()"
+                        (validateSuccess)="resetAddPlayerForm()"
                         (addPlayer)="addPlayer($event)"/>
 
     <tq-player-list [status]="playerListStatus()"
