@@ -27,7 +27,7 @@ import {SuccessMessageComponent} from "../../../core/components/success-message/
 export class AddPlayerFormComponent {
     readonly status = input.required<AddPlayerStatus>();
     readonly addPlayer = output<string>();
-    readonly refreshPlayers = output<void>();
+    readonly validateSuccess = output<void>();
 
     inputValue = '';
 

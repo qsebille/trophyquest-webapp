@@ -24,6 +24,6 @@
         <tq-error-message [errorMessage]="'An error occurred when adding player ' + inputValue +' in Trophyquest'"/>
     } @else if (hasSucceededAddPlayer()) {
         <tq-success-message [message]="inputValue + ' has been added to TrophyQuest!'" [hasButton]="true"
-                            (onClick)="refreshPlayers.emit()"/>
+                            (onClick)="validateSuccess.emit()"/>
     }
 </div>

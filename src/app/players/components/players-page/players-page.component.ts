@@ -3,7 +3,6 @@ import {PlayerListStore} from '../../stores/player-list-store';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../../core/services/navigator.service";
 import {AddPlayerFormComponent} from "../add-player-form/add-player-form.component";
-import {AddPlayerStore} from "../../stores/add-player-store.service";
 import {PlayerListComponent} from "../player-list/player-list.component";
 
 @Component({
@@ -20,21 +19,20 @@ export class PlayersPageComponent implements OnInit {
     constructor(
         private readonly _navigator: NavigatorService,
         private readonly _playerListStore: PlayerListStore,
-        private readonly _addPlayerStore: AddPlayerStore,
     ) {
     }
 
     readonly players = computed(() => this._playerListStore.results());
     readonly totalPlayers = computed(() => this._playerListStore.total());
     readonly playerListStatus = computed(() => this._playerListStore.status());
-    readonly addPlayerStatus = computed(() => this._addPlayerStore.status());
+    readonly addPlayerStatus = computed(() => this._playerListStore.addStatus());
 
     ngOnInit(): void {
         this.retrievePlayers();
     }
 
     retrievePlayers(): void {
-        this._playerListStore.reset();
+        this._playerListStore.resetSearch();
         this._playerListStore.search();
     }
 
@@ -54,7 +52,11 @@ export class PlayersPageComponent implements OnInit {
     }
 
     addPlayer(pseudo: string): void {
-        this._addPlayerStore.addPlayer(pseudo);
+        this._playerListStore.addPlayer(pseudo);
+    }
+
+    resetAddPlayerForm(): void {
+        this._playerListStore.resetAddPlayerStatus();
     }
 
 }

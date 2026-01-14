@@ -2,7 +2,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {PlayersPageComponent} from './players-page.component';
 import {PlayerListStore} from '../../stores/player-list-store';
 import {NavigatorService} from "../../../core/services/navigator.service";
-import {AddPlayerStore} from "../../stores/add-player-store.service";
 import {PlayerCardComponent} from "../player-card/player-card.component";
 import {AddPlayerFormComponent} from "../add-player-form/add-player-form.component";
 
@@ -12,15 +11,13 @@ describe('PlayersPageComponent', () => {
 
     let navigatorSpy: jasmine.SpyObj<NavigatorService>;
     let playerListStoreSpy: jasmine.SpyObj<PlayerListStore>;
-    let addPlayerStoreSpy: jasmine.SpyObj<AddPlayerStore>;
 
     const gameId: string = 'game-123';
     const playerId: string = 'player-123';
 
     beforeEach(async () => {
         navigatorSpy = jasmine.createSpyObj('NavigatorService', ['goToProfilePage', 'goToPlayerTrophySetPage']);
-        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['reset', 'search', 'loadMore', 'results', 'total', 'status']);
-        addPlayerStoreSpy = jasmine.createSpyObj('AddPlayerStore', ['addPlayer', 'status']);
+        playerListStoreSpy = jasmine.createSpyObj('PlayerListStore', ['resetSearch', 'search', 'loadMore', 'addPlayer', 'resetAddPlayerStatus', 'results', 'total', 'status', 'addStatus']);
 
         playerListStoreSpy.results.and.returnValue([]);
 
@@ -29,7 +26,6 @@ describe('PlayersPageComponent', () => {
             providers: [
                 {provide: NavigatorService, useValue: navigatorSpy},
                 {provide: PlayerListStore, useValue: playerListStoreSpy},
-                {provide: AddPlayerStore, useValue: addPlayerStoreSpy},
             ]
         }).compileComponents();
 
@@ -41,7 +37,7 @@ describe('PlayersPageComponent', () => {
     it('should create', () => expect(component).toBeTruthy());
 
     it('should reset search on init', () => {
-        expect(playerListStoreSpy.reset).toHaveBeenCalled();
+        expect(playerListStoreSpy.resetSearch).toHaveBeenCalled();
         expect(playerListStoreSpy.search).toHaveBeenCalled();
     });
 
