@@ -1,22 +1,13 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {HomeTrophyCardComponent} from './home-trophy-card.component';
-import {ObtainedTrophy} from '../../../core/models/dto/obtained-trophy';
+import {EarnedTrophy} from "../../../core/api/dtos/trophy/earned-trophy";
 
 describe('HomeTrophyCardComponent', () => {
     let component: HomeTrophyCardComponent;
     let fixture: ComponentFixture<HomeTrophyCardComponent>;
 
-    const mockObtainedTrophy: ObtainedTrophy = {
-        id: '001',
-        trophyTitle: 'Trophy 1',
-        trophyType: 'bronze',
-        trophyDescription: 'Get trophy 1',
-        trophyIconUrl: 'trophy.png',
-        gameId: 'g001',
-        gameTitle: 'Game',
-        obtainedDate: '2025-01-01T00:00:00',
-    }
+    const mockEarnedTrophy = {id: '001', rank: 0, title: 'Trophy 1', icon: 'trophy.png'} as EarnedTrophy;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -27,12 +18,9 @@ describe('HomeTrophyCardComponent', () => {
         fixture = TestBed.createComponent(HomeTrophyCardComponent);
         component = fixture.componentInstance;
 
-        fixture.componentRef.setInput('trophy', mockObtainedTrophy);
-
+        fixture.componentRef.setInput('trophy', mockEarnedTrophy);
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 });

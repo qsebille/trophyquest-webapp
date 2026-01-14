@@ -19,16 +19,13 @@ export class NavigatorService {
             .then(() => console.info(`Navigated to profile page: ${playerId}`));
     }
 
-    goToPlayerGamePage(
-        gameId: string,
-        playerId: string
-    ): void {
-        this._router.navigate(['/game', gameId], {queryParams: {playerId}})
-            .then(() => console.info(`Navigated to game page: ${gameId} for player ${playerId}`));
+    goToPlayerTrophySetPage(trophySetId: string, playerId: string): void {
+        this._router.navigate(['/trophy-set', trophySetId], {queryParams: {playerId}})
+            .then(() => console.info(`Navigated to trophy set page: ${trophySetId} for player ${playerId}`));
     }
 
-    goToGamePage(gameId: string): void {
-        this._router.navigate(['/game', gameId])
-            .then(() => console.info(`Navigated to game page: ${gameId}`));
+    goToTrophySetPage(trophySetId: string): void {
+        this._router.navigate(['/trophy-set', trophySetId])
+            .then(() => console.info(`Navigated to trophy set page: ${trophySetId}`));
     }
 }

@@ -1,7 +1,7 @@
 import {computed, Injectable, signal} from '@angular/core';
-import {Trophy} from "../../core/models/dto/trophy";
 import {LoadingStatus} from "../../core/models/loading-status.enum";
-import {PlayerService} from "../../core/services/http/player.service";
+import {PlayerHttpService} from "../../core/api/services/player-http.service";
+import {EarnedTrophySearchItem} from "../../core/api/dtos/trophy/earned-trophy-search-item";
 
 @Injectable({
     providedIn: 'root',
@@ -9,14 +9,13 @@ import {PlayerService} from "../../core/services/http/player.service";
 export class ProfileTrophiesStore {
     private readonly _pageSize = 20;
     private readonly _pageNumber = signal<number>(0);
-
-    private readonly _trophies = signal<Trophy[]>([]);
-    readonly trophies = computed(() => this._trophies());
-
+    private readonly _trophies = signal<EarnedTrophySearchItem[]>([]);
     private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
+
+    readonly trophies = computed(() => this._trophies());
     readonly status = computed(() => this._status());
 
-    constructor(private readonly _playerService: PlayerService) {
+    constructor(private readonly _playerService: PlayerHttpService) {
     }
 
     reset(): void {
@@ -25,8 +24,8 @@ export class ProfileTrophiesStore {
         this._status.set(LoadingStatus.NONE);
     }
 
-    searchTrophies(playerId: string | null): void {
-        if (null == playerId) {
+    search(playerId: string | null): void {
+        if (playerId == null) {
             console.error('Invalid player id');
             this._status.set(LoadingStatus.ERROR);
             return;
@@ -35,7 +34,7 @@ export class ProfileTrophiesStore {
         this._status.set(LoadingStatus.LOADING);
         this._playerService.searchEarnedTrophies(playerId, this._pageNumber(), this._pageSize).subscribe({
             next: searchResult => {
-                const trophies = [...this._trophies(), ...searchResult.content] as Trophy[];
+                const trophies = [...this._trophies(), ...searchResult.content];
                 const loadingStatus: LoadingStatus = trophies.length < searchResult.total ? LoadingStatus.PARTIALLY_LOADED : LoadingStatus.FULLY_LOADED;
                 this._trophies.update(() => trophies);
                 this._status.set(loadingStatus);
@@ -47,8 +46,8 @@ export class ProfileTrophiesStore {
         });
     }
 
-    loadMoreTrophies(playerId: string | null): void {
+    loadMore(playerId: string | null): void {
         this._pageNumber.update(n => n + 1);
-        this.searchTrophies(playerId);
+        this.search(playerId);
     }
 }

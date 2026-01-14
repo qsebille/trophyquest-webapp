@@ -1,4 +1,4 @@
-import {Component, computed} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {PlayerListStore} from '../../stores/player-list-store';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NavigatorService} from "../../../core/services/navigator.service";
@@ -15,7 +15,7 @@ import {PlayerListComponent} from "../player-list/player-list.component";
     templateUrl: './players-page.component.html',
     styleUrl: './players-page.component.scss',
 })
-export class PlayersPageComponent {
+export class PlayersPageComponent implements OnInit {
 
     constructor(
         private readonly _navigator: NavigatorService,
@@ -24,7 +24,7 @@ export class PlayersPageComponent {
     ) {
     }
 
-    readonly players = computed(() => this._playerListStore.playerSummaries());
+    readonly players = computed(() => this._playerListStore.results());
     readonly totalPlayers = computed(() => this._playerListStore.total());
     readonly playerListStatus = computed(() => this._playerListStore.status());
     readonly addPlayerStatus = computed(() => this._addPlayerStore.status());
@@ -46,11 +46,11 @@ export class PlayersPageComponent {
         this._navigator.goToProfilePage(playerId);
     }
 
-    navigateToPlayerGamePage(
+    navigateToPlayerTrophySetPage(
         gameId: string,
         playerId: string
     ): void {
-        this._navigator.goToPlayerGamePage(gameId, playerId);
+        this._navigator.goToPlayerTrophySetPage(gameId, playerId);
     }
 
     addPlayer(pseudo: string): void {

@@ -1,0 +1,9 @@
+<div class="home-game-card">
+    <div class="game-infos">
+        <img alt="" [src]="trophySet().image" class="game-image"/>
+        <a class="game-title tq-link" (click)="clickOnTrophySet.emit()">{{ trophySet().title }}</a>
+    </div>
+    <div class="players">
+        {{ trophySet().recentPlayers | number }} players
+    </div>
+</div>

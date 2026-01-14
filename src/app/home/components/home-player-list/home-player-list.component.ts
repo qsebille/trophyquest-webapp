@@ -1,5 +1,5 @@
 import {Component, computed, input, output} from '@angular/core';
-import {RecentPlayerResponse} from "../../../core/models/dto/recent-player-response";
+import {RecentPlayerTrophies} from "../../../core/api/dtos/player/recent-player-trophies";
 import {LoadingStatus} from "../../../core/models/loading-status.enum";
 import {BlockComponent} from "../../../core/components/trophyquest-block/block.component";
 import {BlockContentTemplate, BlockHeaderTemplate} from "../../../core/templates/block.template";
@@ -28,11 +28,11 @@ import {SectionListContentTemplate, SectionListHeaderTemplate} from "../../../co
     styleUrl: './home-player-list.component.scss',
 })
 export class HomePlayerListComponent {
-    readonly players = input<RecentPlayerResponse[]>([]);
+    readonly players = input<RecentPlayerTrophies[]>([]);
     readonly status = input<LoadingStatus>(LoadingStatus.NONE);
 
     readonly clickOnPlayer = output<string>();
-    readonly clickOnGame = output<{ gameId: string, playerId: string }>();
+    readonly clickOnGame = output<{ trophySetId: string, playerId: string }>();
 
     readonly isLoadingPlayers = computed(() => this.status() === LoadingStatus.LOADING);
     readonly hasFailedLoadingPlayers = computed(() => this.status() === LoadingStatus.ERROR);

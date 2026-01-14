@@ -28,9 +28,7 @@ describe('ValidationCandidateComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should create', () => expect(component).toBeTruthy());
 
     it('should return the correct confidence level depending on score', () => {
         mockCandidate.update(c => ({...c, score: 100}));

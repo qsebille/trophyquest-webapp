@@ -19,9 +19,9 @@
                                                  (clickOnPseudo)="clickOnPlayer.emit(recentPlayer.player.id)"/>
                         </ng-template>
                         <ng-template tqSectionListContent>
-                            @for (trophy of recentPlayer.lastObtainedTrophies; track trophy.id) {
+                            @for (trophy of recentPlayer.lastTrophies; track trophy.id) {
                                 <tq-home-trophy-card [trophy]="trophy" class="home-trophy-card"
-                                                     (clickOnGameTitle)="clickOnGame.emit({gameId: trophy.gameId, playerId: recentPlayer.player.id})"/>
+                                                     (clickOnGameTitle)="clickOnGame.emit({trophySetId: trophy.trophySetId, playerId: recentPlayer.player.id})"/>
                             }
                         </ng-template>
                     </tq-section-list>

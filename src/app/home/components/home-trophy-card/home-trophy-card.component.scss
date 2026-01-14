@@ -7,44 +7,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
 
-  .image-title-game {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.left-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .trophy-image {
-    border-radius: 5px;
-    border: 1px solid $tq-blue-medium;
-  }
+.trophy-icon {
+  border-radius: 5px;
+  border: 1px solid $tq-blue-medium;
+}
 
-  .title-game {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.title-game {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .trophy-title {
-    font-weight: 600;
-    font-size: 16px;
-  }
+.trophy-title {
+  font-weight: 600;
+  font-size: 16px;
+}
 
-  .game-title {
-    font-size: 12px;
-    color: rgb(0, 0, 0, 0.54);
-  }
+.game-title {
+  font-size: 12px;
+  color: rgb(0, 0, 0, 0.54);
+}
 
-  .icon-and-earned-date {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 5px;
-  }
+.right-block {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2px;
+}
 
-  .trophy-earned-date {
-    font-size: 0.6rem;
-    color: rgb(0, 0, 0, 0.54);
-  }
-
+.trophy-earned-date {
+  font-size: 8px;
+  color: rgb(0, 0, 0, 0.54);
 }

@@ -1,0 +1,23 @@
+<tq-block>
+    <ng-template tqBlockHeader>
+        <span class="title">Most recent popular games</span>
+    </ng-template>
+    <ng-template tqBlockContent>
+        @if (isEmpty()) {
+            <div class="no-popular-games">No popular games</div>
+        } @else if (isLoading()) {
+            <mat-spinner/>
+        } @else if (hasFailedLoading()) {
+            <tq-error-message [errorMessage]="'Failed to load games'"/>
+        } @else {
+            @for (trophySet of trophySets(); track trophySet.id) {
+                @if ($index !== 0) {
+                    <hr class="separator"/>
+                }
+                <tq-home-trophy-set-card [trophySet]="trophySet"
+                                         (clickOnTrophySet)="clickOnTrophySet.emit(trophySet.id)"
+                                         class="home-game-card"/>
+            }
+        }
+    </ng-template>
+</tq-block>

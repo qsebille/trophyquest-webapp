@@ -1,25 +1,34 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {PlayerCardComponent} from './player-card.component';
-import {PlayerSummary} from '../../../core/models/dto/player-summary';
-import {Player} from '../../../core/models/dto/player';
-import {TrophyCountPerType} from '../../../core/models/dto/trophy-count-per-type';
+import {PlayerSearchItem} from "../../../core/api/dtos/player/player-search-item";
 
 describe('PlayerCardComponent', () => {
     let component: PlayerCardComponent;
     let fixture: ComponentFixture<PlayerCardComponent>;
 
-    const mockPlayer: Player = {id: '001', pseudo: 'Pseudo', avatarUrl: 'avatar.png'}
-    const mockTrophyCount: TrophyCountPerType = {platinum: 1, gold: 2, silver: 3, bronze: 4};
-    const mockPlayerSummary: PlayerSummary = {
-        player: mockPlayer,
-        trophyCount: mockTrophyCount,
-        totalGamesPlayed: 100,
-        lastPlayedGameId: 'game-001',
-        lastPlayedGameTitle: 'Horizon: Forbidden West',
-        lastPlayedGamePlatform: 'PS5',
-        lastPlayedGameImageUrl: 'horizon.png'
-    }
+    const mockPlayerSearchItem = {
+        id: 'player-1',
+        pseudo: 'Player 1',
+        avatar: 'player.png',
+        lastPlayedTrophySetId: '',
+        lastPlayedTrophySetTitle: '',
+        lastPlayedTrophySetPlatform: '',
+        lastPlayedTrophySetImage: 'set.png',
+        lastPlayedTrophySetDate: new Date(),
+        lastEarnedTrophyId: '',
+        lastEarnedTrophyTitle: '',
+        lastEarnedTrophyType: '',
+        lastEarnedTrophyIcon: 'trophy.png',
+        lastEarnedTrophyTrophySetId: '',
+        lastEarnedTrophyTrophySetTitle: '',
+        lastEarnedTrophyDate: new Date(),
+        totalPlayedTrophySets: 10,
+        totalEarnedPlatinum: 1,
+        totalEarnedGold: 2,
+        totalEarnedSilver: 3,
+        totalEarnedBronze: 4,
+    } as PlayerSearchItem;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -30,12 +39,16 @@ describe('PlayerCardComponent', () => {
         fixture = TestBed.createComponent(PlayerCardComponent);
         component = fixture.componentInstance;
 
-        fixture.componentRef.setInput('playerSummary', mockPlayerSummary);
-
+        fixture.componentRef.setInput('playerSearchItem', mockPlayerSearchItem);
         fixture.detectChanges();
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should create', () => expect(component).toBeTruthy());
+
+    it('should compute trophy count per type', () => {
+        fixture.componentRef.setInput('playerSearchItem', mockPlayerSearchItem);
+        fixture.detectChanges();
+
+        expect(component.trophyCount()).toEqual({platinum: 1, gold: 2, silver: 3, bronze: 4});
     });
 });
