@@ -22,9 +22,14 @@ export class ValidationPageComponent implements OnInit {
 
     trophySetList = computed(() => this._trophySetMappingStore.trophySets());
     searchStatus = computed(() => this._trophySetMappingStore.status());
+    validationStatus = computed(() => this._trophySetMappingStore.validationStatus())
 
     ngOnInit(): void {
-        this._trophySetMappingStore.reset();
+        this._trophySetMappingStore.resetSearch();
         this._trophySetMappingStore.search();
+    }
+
+    acceptMapping(event: { trophySetId: string, candidateId: number }): void {
+        this._trophySetMappingStore.validateCandidate(event.trophySetId, event.candidateId);
     }
 }

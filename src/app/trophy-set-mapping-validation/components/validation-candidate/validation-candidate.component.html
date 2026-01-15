@@ -13,7 +13,8 @@
             {{ candidate().score }}
         </div>
     </div>
-    <button class="accept-mapping-button" mat-button disabled matTooltip="Link this game">
+    <button class="accept-mapping-button" mat-button [disabled]="isValidationDisabled()" matTooltip="Link this game"
+            (click)="acceptCandidate()">
         Accept
     </button>
 </div>

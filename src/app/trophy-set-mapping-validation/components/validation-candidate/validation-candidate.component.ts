@@ -1,9 +1,10 @@
-import {Component, computed, input} from '@angular/core';
+import {Component, computed, input, output} from '@angular/core';
 import {IgdbGame} from "../../../core/models/dto/igdb-game";
 import {DatePipe} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {ValidateCandidateStatus} from "../../../core/models/validate-candidate-status";
 
 @Component({
     selector: 'tq-validation-candidate',
@@ -18,6 +19,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 })
 export class ValidationCandidateComponent {
     readonly candidate = input.required<IgdbGame>();
+    readonly validationStatus = input<ValidateCandidateStatus>(ValidateCandidateStatus.NONE);
+    readonly candidateAccepted = output<number>();
+
+    readonly isValidationDisabled = computed(() => this.validationStatus() === ValidateCandidateStatus.LOADING);
 
     readonly confidence = computed((): 'very-high' | 'high' | 'medium' | 'low' => {
         if (this.candidate().score === 100) {
@@ -30,4 +35,8 @@ export class ValidationCandidateComponent {
             return "low"
         }
     });
+
+    acceptCandidate(): void {
+        this.candidateAccepted.emit(this.candidate().id);
+    }
 }

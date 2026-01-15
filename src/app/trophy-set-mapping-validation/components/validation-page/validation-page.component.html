@@ -15,7 +15,9 @@
             <span class="title">List of trophy set to validate</span>
         </ng-template>
         <ng-template tqBlockContent>
-            <tq-validation-list [trophySetList]="trophySetList()" [status]="searchStatus()"/>
+            <tq-validation-list [trophySetList]="trophySetList()" [status]="searchStatus()"
+                                [validationStatus]="validationStatus()"
+                                (candidateAccepted)="acceptMapping($event)"/>
         </ng-template>
     </tq-block>
 </div>
