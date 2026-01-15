@@ -32,4 +32,8 @@ export class ValidationPageComponent implements OnInit {
     acceptMapping(event: { trophySetId: string, candidateId: number }): void {
         this._trophySetMappingStore.validateCandidate(event.trophySetId, event.candidateId);
     }
+
+    rejectCandidates(event: { trophySetId: string }): void {
+        this._trophySetMappingStore.rejectCandidates(event.trophySetId);
+    }
 }

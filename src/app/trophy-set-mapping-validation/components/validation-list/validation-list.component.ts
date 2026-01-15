@@ -21,11 +21,17 @@ export class ValidationListComponent {
     readonly status = input<LoadingStatus>(LoadingStatus.NONE);
     readonly validationStatus = input<ValidateCandidateStatus>(ValidateCandidateStatus.NONE);
     readonly candidateAccepted = output<{ trophySetId: string, candidateId: number }>();
+    readonly rejectCandidates = output<{ trophySetId: string }>();
 
-    isLoadingTrophySets = computed(() => this.status() === LoadingStatus.LOADING);
-    hasFailedLoadingTrophySets = computed(() => this.status() === LoadingStatus.ERROR);
+    isLoading = computed(() => this.status() === LoadingStatus.LOADING);
+    hasFailed = computed(() => this.status() === LoadingStatus.ERROR);
+    hasNoResults = computed(() => this.trophySetList().length === 0);
 
     acceptCandidate(trophySetId: string, candidateId: number): void {
         this.candidateAccepted.emit({trophySetId, candidateId});
+    }
+
+    rejectAllCandidates(trophySetId: string): void {
+        this.rejectCandidates.emit({trophySetId});
     }
 }

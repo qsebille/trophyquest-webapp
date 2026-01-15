@@ -17,6 +17,7 @@
         <ng-template tqBlockContent>
             <tq-validation-list [trophySetList]="trophySetList()" [status]="searchStatus()"
                                 [validationStatus]="validationStatus()"
+                                (rejectCandidates)="rejectCandidates($event)"
                                 (candidateAccepted)="acceptMapping($event)"/>
         </ng-template>
     </tq-block>

@@ -15,5 +15,10 @@
                                          (candidateAccepted)="acceptCandidate($event)"/>
             }
         </div>
+        <div class="reject-button-container">
+            <button mat-raised-button color="error" [disabled]="isRejectButtonDisabled()" (click)="rejectMapping()">
+                Reject all
+            </button>
+        </div>
     </div>
 </div>
