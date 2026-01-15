@@ -1,9 +1,11 @@
-@if (isLoadingTrophySets()) {
+@if (isLoading()) {
     <div class="spinner-container">
         <mat-spinner/>
     </div>
-} @else if (hasFailedLoadingTrophySets()) {
+} @else if (hasFailed()) {
     <tq-error-message [errorMessage]="'Failed to load trophy sets'"/>
+} @else if (hasNoResults()) {
+    <div class="no-results">No results</div>
 } @else {
     <div class="trophy-set-list">
         @for (element of trophySetList(); track element.trophySet.id) {
@@ -12,6 +14,7 @@
             }
             <tq-validation-element [trophySet]="element"
                                    [validationStatus]="validationStatus()"
+                                   (allRejected)="rejectAllCandidates(element.trophySet.id)"
                                    (candidateAccepted)="acceptCandidate(element.trophySet.id, $event)"/>
         }
     </div>

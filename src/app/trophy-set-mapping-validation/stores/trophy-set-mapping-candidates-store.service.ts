@@ -73,4 +73,19 @@ export class TrophySetMappingCandidatesStore {
             })
         ).subscribe();
     }
+
+    rejectCandidates(trophySetId: string): void {
+        this._validationStatus.set(ValidateCandidateStatus.LOADING);
+        this._trophySetHttpService.rejectCandidates(trophySetId).subscribe({
+            next: () => {
+                this._validationStatus.set(ValidateCandidateStatus.SUCCESS);
+                this.resetSearch();
+                this.search();
+            },
+            error: error => {
+                console.error(error);
+                this._validationStatus.set(ValidateCandidateStatus.ERROR);
+            }
+        })
+    }
 }

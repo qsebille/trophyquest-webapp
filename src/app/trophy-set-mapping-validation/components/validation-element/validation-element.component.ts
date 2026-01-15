@@ -21,11 +21,18 @@ export class ValidationElementComponent {
     readonly trophySet = input.required<TrophySetWithCandidates>();
     readonly validationStatus = input<ValidateCandidateStatus>(ValidateCandidateStatus.NONE);
     readonly candidateAccepted = output<number>();
+    readonly allRejected = output<void>();
 
     private readonly _candidates = computed(() => this.trophySet().mappingCandidates ?? []);
     readonly sortedCandidates = computed(() => this._candidates().sort((a, b) => b.score - a.score));
 
+    readonly isRejectButtonDisabled = computed(() => this.validationStatus() === ValidateCandidateStatus.LOADING);
+
     acceptCandidate(candidateId: number): void {
         this.candidateAccepted.emit(candidateId);
+    }
+
+    rejectMapping(): void {
+        this.allRejected.emit();
     }
 }

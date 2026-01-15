@@ -50,6 +50,10 @@ export class TrophySetHttpService {
     }
 
     validateCandidate(trophySetId: string, candidateId: number): Observable<boolean> {
-        return this._http.post<boolean>(`${this.API_URL}/${trophySetId}/validate-candidate`, candidateId, {headers: {'Content-Type': 'application/json'}});
+        return this._http.post<boolean>(`${this.API_URL}/${trophySetId}/candidate/${candidateId}/validate`, null);
+    }
+
+    rejectCandidates(trophySetId: string): Observable<boolean> {
+        return this._http.put<boolean>(`${this.API_URL}/${trophySetId}/candidate/reject-all`, null);
     }
 }
