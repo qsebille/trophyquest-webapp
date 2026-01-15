@@ -20,6 +20,8 @@ describe('ValidationPageComponent', () => {
             ]
         }).compileComponents();
 
+        mockStore.trophySets.and.returnValue([]);
+
         fixture = TestBed.createComponent(ValidationPageComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
