@@ -49,4 +49,7 @@ export class TrophySetHttpService {
         }
     }
 
+    validateCandidate(trophySetId: string, candidateId: number): Observable<boolean> {
+        return this._http.post<boolean>(`${this.API_URL}/${trophySetId}/validate-candidate`, candidateId, {headers: {'Content-Type': 'application/json'}});
+    }
 }

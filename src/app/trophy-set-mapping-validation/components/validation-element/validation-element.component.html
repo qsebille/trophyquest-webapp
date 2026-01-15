@@ -10,7 +10,9 @@
         <span class="title">Mapping candidates</span>
         <div class="candidate-list">
             @for (candidate of sortedCandidates(); track candidate.id) {
-                <tq-validation-candidate [candidate]="candidate"/>
+                <tq-validation-candidate [candidate]="candidate"
+                                         [validationStatus]="validationStatus()"
+                                         (candidateAccepted)="acceptCandidate($event)"/>
             }
         </div>
     </div>

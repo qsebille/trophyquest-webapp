@@ -2,6 +2,8 @@ import {computed, Injectable, signal} from '@angular/core';
 import {TrophySetHttpService} from "../../core/api/services/trophy-set-http.service";
 import {LoadingStatus} from "../../core/models/loading-status.enum";
 import {TrophySetWithCandidates} from "../../core/api/dtos/trophy-set/trophy-set-with-candidates";
+import {ValidateCandidateStatus} from "../../core/models/validate-candidate-status";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Injectable({
     providedIn: 'root',
@@ -12,16 +14,18 @@ export class TrophySetMappingCandidatesStore {
     private readonly _total = signal<number>(0);
     private readonly _content = signal<TrophySetWithCandidates[]>([]);
     private readonly _status = signal<LoadingStatus>(LoadingStatus.NONE);
+    private readonly _validationStatus = signal<ValidateCandidateStatus>(ValidateCandidateStatus.NONE);
 
     readonly trophySets = computed(() => this._content());
     readonly total = computed(() => this._total());
     readonly status = computed(() => this._status());
+    readonly validationStatus = computed(() => this._validationStatus());
 
 
     constructor(private readonly _trophySetHttpService: TrophySetHttpService) {
     }
 
-    reset(): void {
+    resetSearch(): void {
         this._pageNumber.set(0);
         this._content.set([]);
         this._total.set(0);
@@ -48,5 +52,25 @@ export class TrophySetMappingCandidatesStore {
     loadMore(): void {
         this._pageNumber.update(n => n + 1);
         this.search();
+    }
+
+    validateCandidate(trophySetId: string, candidateId: number): void {
+        this._validationStatus.set(ValidateCandidateStatus.LOADING);
+        this._trophySetHttpService.validateCandidate(trophySetId, candidateId).pipe(
+            tap((success: boolean) => {
+                if (success) {
+                    this._validationStatus.set(ValidateCandidateStatus.SUCCESS);
+                    this.resetSearch();
+                    this.search();
+                } else {
+                    this._validationStatus.set(ValidateCandidateStatus.ERROR);
+                }
+            }),
+            catchError(() => {
+                console.error('Failed to validate candidate');
+                this._validationStatus.set(ValidateCandidateStatus.ERROR);
+                return EMPTY;
+            })
+        ).subscribe();
     }
 }

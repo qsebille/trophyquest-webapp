@@ -10,7 +10,9 @@
             @if ($index !== 0) {
                 <hr class="separator"/>
             }
-            <tq-validation-element [trophySet]="element"/>
+            <tq-validation-element [trophySet]="element"
+                                   [validationStatus]="validationStatus()"
+                                   (candidateAccepted)="acceptCandidate(element.trophySet.id, $event)"/>
         }
     </div>
 }

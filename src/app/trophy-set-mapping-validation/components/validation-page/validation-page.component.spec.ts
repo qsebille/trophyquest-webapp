@@ -11,15 +11,14 @@ describe('ValidationPageComponent', () => {
 
 
     beforeEach(async () => {
-        mockStore = jasmine.createSpyObj('TrophySetMappingCandidatesStore', ['reset', 'search', 'loadMore', 'trophySets', 'total', 'status']);
+        mockStore = jasmine.createSpyObj('TrophySetMappingCandidatesStore', ['resetSearch', 'search', 'loadMore', 'trophySets', 'total', 'status', 'validationStatus']);
 
         await TestBed.configureTestingModule({
             imports: [ValidationPageComponent],
             providers: [
                 {provide: TrophySetMappingCandidatesStore, useValue: mockStore}
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
 
         fixture = TestBed.createComponent(ValidationPageComponent);
         component = fixture.componentInstance;

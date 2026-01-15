@@ -1,9 +1,10 @@
-import {Component, computed, input} from '@angular/core';
+import {Component, computed, input, output} from '@angular/core';
 import {PlatformLabelComponent} from "../../../core/components/platform-label/platform-label.component";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ValidationCandidateComponent} from "../validation-candidate/validation-candidate.component";
 import {TrophySetWithCandidates} from "../../../core/api/dtos/trophy-set/trophy-set-with-candidates";
+import {ValidateCandidateStatus} from "../../../core/models/validate-candidate-status";
 
 @Component({
     selector: 'tq-validation-element',
@@ -18,7 +19,13 @@ import {TrophySetWithCandidates} from "../../../core/api/dtos/trophy-set/trophy-
 })
 export class ValidationElementComponent {
     readonly trophySet = input.required<TrophySetWithCandidates>();
+    readonly validationStatus = input<ValidateCandidateStatus>(ValidateCandidateStatus.NONE);
+    readonly candidateAccepted = output<number>();
 
     private readonly _candidates = computed(() => this.trophySet().mappingCandidates ?? []);
     readonly sortedCandidates = computed(() => this._candidates().sort((a, b) => b.score - a.score));
+
+    acceptCandidate(candidateId: number): void {
+        this.candidateAccepted.emit(candidateId);
+    }
 }
